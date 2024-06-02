@@ -1,0 +1,8 @@
+{
+    "services": {
+        "new_todo": "mdi:clipboard-list",
+        "update_todo": "mdi:clipboard-list",
+        "delete_todo": "mdi:clipboard-list",
+        "complete_todo": "mdi:clipboard-list"
+    }
+}

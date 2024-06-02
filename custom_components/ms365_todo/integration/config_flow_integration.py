@@ -1,0 +1,198 @@
+"""Configuration flow for the skyq platform."""
+
+from copy import deepcopy
+
+import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from homeassistant import (
+    config_entries,
+)
+from homeassistant.const import CONF_NAME
+from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers import entity_registry
+from homeassistant.helpers.selector import BooleanSelector
+
+from ..const import (
+    CONF_ACCOUNT_NAME,
+)
+from ..helpers.config_entry import MS365ConfigEntry
+from ..helpers.filemgmt import build_config_file_path
+from ..helpers.utils import add_attribute_to_item
+from .const_integration import (
+    CONF_DUE_HOURS_BACKWARD_TO_GET,
+    CONF_DUE_HOURS_FORWARD_TO_GET,
+    CONF_ENABLE_UPDATE,
+    CONF_SHOW_COMPLETED,
+    CONF_TODO_LIST,
+    CONF_TRACK,
+    CONF_TRACK_NEW,
+    YAML_TODO_LISTS_FILENAME,
+)
+from .filemgmt_integration import (
+    build_yaml_filename,
+    read_todo_yaml_file,
+    write_todo_yaml_file,
+)
+from .utils_integration import build_todo_entity_id
+
+BOOLEAN_SELECTOR = BooleanSelector()
+
+
+def integration_reconfigure_schema(entry_data):
+    """Extend the schame with integration specific attributes."""
+    return {
+        vol.Optional(
+            CONF_ENABLE_UPDATE, default=entry_data[CONF_ENABLE_UPDATE]
+        ): cv.boolean,
+    }
+
+
+class MS365OptionsFlowHandler(config_entries.OptionsFlow):
+    """Config flow options for MS365."""
+
+    def __init__(self, entry: MS365ConfigEntry):
+        """Initialize MS365 options flow."""
+
+        self._track_new = entry.options.get(CONF_TRACK_NEW, True)
+        self._entry = entry
+        self._todos = []
+        self._todo_list = []
+        self._todo_list_selected = []
+        self._todo_list_selected_original = []
+        self._yaml_filename = build_yaml_filename(self._entry, YAML_TODO_LISTS_FILENAME)
+        self._yaml_filepath = None
+        self._todo_no = 0
+
+    async def async_step_init(
+        self,
+        user_input=None,  # pylint: disable=unused-argument
+    ) -> FlowResult:
+        """Set up the option flow."""
+
+        self._yaml_filepath = build_config_file_path(self.hass, self._yaml_filename)
+        self._todos = await self.hass.async_add_executor_job(
+            read_todo_yaml_file,
+            self._yaml_filepath,
+        )
+
+        for todo in self._todos:
+            self._todo_list.append(todo[CONF_NAME])
+            if todo[CONF_TRACK]:
+                self._todo_list_selected.append(todo[CONF_NAME])
+
+        self._todo_list_selected_original = deepcopy(self._todo_list_selected)
+        return await self.async_step_user()
+
+    async def async_step_user(self, user_input=None) -> FlowResult:
+        """Handle a flow initialized by the user."""
+        errors = {}
+
+        if user_input:
+            self._track_new = user_input[CONF_TRACK_NEW]
+            self._todo_list_selected = user_input[CONF_TODO_LIST]
+
+            for todo in self._todos:
+                todo[CONF_TRACK] = todo[CONF_NAME] in self._todo_list_selected
+
+            return await self.async_step_todo_config()
+
+        return self.async_show_form(
+            step_id="user",
+            description_placeholders={
+                CONF_ACCOUNT_NAME: self._entry.data[CONF_ACCOUNT_NAME]
+            },
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
+                        CONF_TODO_LIST, default=self._todo_list_selected
+                    ): cv.multi_select(self._todo_list),
+                    vol.Optional(
+                        CONF_TRACK_NEW,
+                        default=self._track_new,
+                    ): BOOLEAN_SELECTOR,
+                }
+            ),
+            errors=errors,
+            last_step=False,
+        )
+
+    async def async_step_todo_config(self, user_input=None) -> FlowResult:
+        """Handle todo setup."""
+        if user_input is not None:
+            for todo in self._todos:
+                if todo[CONF_NAME] == self._todo_list_selected[self._todo_no - 1]:
+                    add_attribute_to_item(todo, user_input, CONF_SHOW_COMPLETED)
+                    add_attribute_to_item(
+                        todo, user_input, CONF_DUE_HOURS_BACKWARD_TO_GET
+                    )
+                    add_attribute_to_item(
+                        todo, user_input, CONF_DUE_HOURS_FORWARD_TO_GET
+                    )
+
+                    return await self.async_step_todo_config()
+
+        if self._todo_no == len(self._todo_list_selected):
+            return await self._async_tidy_up(user_input)
+
+        todo_item = self._get_todo_item()
+        last_step = self._todo_no == len(self._todo_list_selected)
+        return self.async_show_form(
+            step_id="todo_config",
+            description_placeholders={
+                CONF_ACCOUNT_NAME: self._entry.data[CONF_ACCOUNT_NAME],
+                CONF_NAME: todo_item[CONF_NAME],
+            },
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_SHOW_COMPLETED,
+                        default=todo_item[CONF_SHOW_COMPLETED],
+                    ): BOOLEAN_SELECTOR,
+                    vol.Optional(
+                        CONF_DUE_HOURS_BACKWARD_TO_GET,
+                        description={
+                            "suggested_value": todo_item.get(
+                                CONF_DUE_HOURS_BACKWARD_TO_GET
+                            )
+                        },
+                    ): int,
+                    vol.Optional(
+                        CONF_DUE_HOURS_FORWARD_TO_GET,
+                        description={
+                            "suggested_value": todo_item.get(
+                                CONF_DUE_HOURS_FORWARD_TO_GET
+                            )
+                        },
+                    ): int,
+                }
+            ),
+            last_step=last_step,
+        )
+
+    def _get_todo_item(self):
+        self._todo_no += 1
+        for todo in self._todos:
+            if todo[CONF_NAME] == self._todo_list_selected[self._todo_no - 1]:
+                return todo
+
+    async def _async_tidy_up(self, user_input):
+        await self.hass.async_add_executor_job(
+            write_todo_yaml_file, self._yaml_filepath, self._todos
+        )
+        for todo in self._todo_list_selected_original:
+            if todo not in self._todo_list_selected:
+                await self._async_delete_todo(todo)
+        update = self.async_create_entry(title="", data=user_input)
+        await self.hass.config_entries.async_reload(self._entry.entry_id)
+        return update
+
+    async def _async_delete_todo(self, todo):
+        entity_id = build_todo_entity_id(todo, self._entry.data[CONF_ACCOUNT_NAME])
+        ent_reg = entity_registry.async_get(self.hass)
+        entities = entity_registry.async_entries_for_config_entry(
+            ent_reg, self._entry.entry_id
+        )
+        for entity in entities:
+            if entity.entity_id == entity_id:
+                ent_reg.async_remove(entity_id)
+                return
