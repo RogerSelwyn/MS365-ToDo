@@ -127,7 +127,7 @@ async def _async_setup_todo_services(entry: MS365ConfigEntry, perms):
 
 
 class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-method
-    """MS365 To-Do processing."""
+    """MS365 To Do processing."""
 
     def __init__(
         self,
@@ -140,7 +140,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         entity_id,
         unique_id,
     ):
-        """Initialise the To-Do List."""
+        """Initialise the To Do List."""
         super().__init__(coordinator, entry, name, entity_id, unique_id)
         self.todolist = ms365_todo_folder
         self._show_completed = yaml_todo_list.get(CONF_SHOW_COMPLETED)
@@ -269,7 +269,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         return extra_attributes
 
     async def async_create_todo_item(self, item: TodoItem) -> None:
-        """Add an item to the To-do list."""
+        """Add an item to the To Do list."""
         await self.async_new_todo(
             subject=item.summary, description=item.description, due=item.due
         )
@@ -287,7 +287,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         return True
 
     async def async_update_todo_item(self, item: TodoItem) -> None:
-        """Add an item to the To-do list."""
+        """Add an item to the To Do list."""
         ms365_todo = await self.hass.async_add_executor_job(
             self.todolist.get_task, item.uid
         )
@@ -341,7 +341,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         return True
 
     async def async_delete_todo_items(self, uids: list[str]) -> None:
-        """Delete items from the To-do list."""
+        """Delete items from the To Do list."""
         for todo_id in uids:
             await self.async_delete_todo(todo_id)
 
@@ -438,7 +438,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
     def _validate_task_permissions(self):
         return self._validate_permissions(
             PERM_TASKS_READWRITE,
-            f"Not authorised to create new To-Do - requires permission: {PERM_TASKS_READWRITE}",
+            f"Not authorised to create new To Do - requires permission: {PERM_TASKS_READWRITE}",
         )
 
 
@@ -451,7 +451,7 @@ def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):
 
 
 def build_todo_query(key, todo):
-    """Build query for To-Do."""
+    """Build query for To Do."""
     ms365_task = key[CONF_TODO_LIST]
     show_completed = ms365_task[CONF_SHOW_COMPLETED]
     query = todo.new_query()
