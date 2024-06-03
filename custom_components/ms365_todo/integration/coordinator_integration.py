@@ -54,7 +54,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         )
         self._entry = entry
         self._account = account
-        self._account_name = entry.data[CONF_ENTITY_NAME]
+        self._entity_name = entry.data[CONF_ENTITY_NAME]
         self._keys = []
         self._data = {}
 
@@ -89,7 +89,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 continue
 
             ms365_todo_list_id = ms365_todo_list.get(CONF_TODO_LIST_ID)
-            name = f"{ms365_todo_list.get(CONF_NAME)} {self._account_name}"
+            name = f"{ms365_todo_list.get(CONF_NAME)} {self._entity_name}"
 
             try:
                 ms365_todo = await self.hass.async_add_executor_job(  # pylint: disable=no-member
@@ -98,7 +98,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                         folder_id=ms365_todo_list_id,
                     )
                 )
-                unique_id = f"{ms365_todo_list_id}_{self._account_name}"
+                unique_id = f"{ms365_todo_list_id}_{self._entity_name}"
                 new_key = {
                     CONF_ENTITY_KEY: _build_entity_id(
                         self.hass, ENTITY_ID_FORMAT_TODO, name
@@ -116,13 +116,13 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 _LOGGER.warning(
                     "MS365 To Do list not found for: %s - Please remove from MS365_todo_%s.yaml",
                     name,
-                    self._account_name,
+                    self._entity_name,
                 )
         return keys
 
     async def _async_update_data(self):
         _LOGGER.debug(
-            "Doing %s sensor update(s) for: %s", len(self._keys), self._account_name
+            "Doing %s sensor update(s) for: %s", len(self._keys), self._entity_name
         )
 
         for key in self._keys:

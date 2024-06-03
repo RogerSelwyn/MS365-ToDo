@@ -5,6 +5,7 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
+from .const_integration import PLATFORMS
 from .coordinator_integration import MS365SensorCordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,4 +20,4 @@ async def async_do_setup(hass: HomeAssistant, entry: ConfigEntry, account):
     if sensor_keys:
         await sensor_coordinator.async_config_entry_first_refresh()
     _LOGGER.debug("Sensor setup - finish")
-    return sensor_coordinator, sensor_keys
+    return sensor_coordinator, sensor_keys, PLATFORMS
