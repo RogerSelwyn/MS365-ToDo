@@ -13,7 +13,8 @@ from homeassistant.helpers import entity_registry
 from homeassistant.helpers.selector import BooleanSelector
 
 from ..const import (
-    CONF_ACCOUNT_NAME,
+    CONF_ENABLE_UPDATE,
+    CONF_ENTITY_NAME,
 )
 from ..helpers.config_entry import MS365ConfigEntry
 from ..helpers.filemgmt import build_config_file_path
@@ -21,7 +22,6 @@ from ..helpers.utils import add_attribute_to_item
 from .const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
-    CONF_ENABLE_UPDATE,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST,
     CONF_TRACK,
@@ -99,7 +99,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="user",
             description_placeholders={
-                CONF_ACCOUNT_NAME: self._entry.data[CONF_ACCOUNT_NAME]
+                CONF_ENTITY_NAME: self._entry.data[CONF_ENTITY_NAME]
             },
             data_schema=vol.Schema(
                 {
@@ -139,7 +139,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="todo_config",
             description_placeholders={
-                CONF_ACCOUNT_NAME: self._entry.data[CONF_ACCOUNT_NAME],
+                CONF_ENTITY_NAME: self._entry.data[CONF_ENTITY_NAME],
                 CONF_NAME: todo_item[CONF_NAME],
             },
             data_schema=vol.Schema(
@@ -187,7 +187,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         return update
 
     async def _async_delete_todo(self, todo):
-        entity_id = build_todo_entity_id(todo, self._entry.data[CONF_ACCOUNT_NAME])
+        entity_id = build_todo_entity_id(todo, self._entry.data[CONF_ENTITY_NAME])
         ent_reg = entity_registry.async_get(self.hass)
         entities = entity_registry.async_entries_for_config_entry(
             ent_reg, self._entry.entry_id

@@ -1,15 +1,12 @@
 """Permissions processes for todo."""
 
-import logging
-
 from ..classes.permissions import BasePermissions
 from ..const import (
+    CONF_ENABLE_UPDATE,
     PERM_OFFLINE_ACCESS,
     PERM_USER_READ,
 )
-from .const_integration import CONF_ENABLE_UPDATE, PERM_TASKS_READ, PERM_TASKS_READWRITE
-
-_LOGGER = logging.getLogger(__name__)
+from .const_integration import PERM_TASKS_READ, PERM_TASKS_READWRITE
 
 
 class Permissions(BasePermissions):

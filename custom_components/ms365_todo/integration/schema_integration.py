@@ -4,6 +4,7 @@ import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from homeassistant.const import CONF_NAME
 
+from ..const import CONF_ENABLE_UPDATE
 from .const_integration import (
     ATTR_COMPLETED,
     ATTR_DESCRIPTION,
@@ -13,7 +14,6 @@ from .const_integration import (
     ATTR_TODO_ID,
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
-    CONF_ENABLE_UPDATE,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST_ID,
     CONF_TRACK,

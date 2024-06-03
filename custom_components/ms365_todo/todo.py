@@ -15,6 +15,8 @@ from homeassistant.util import dt
 from .classes.entity import MS365Entity
 from .const import (
     ATTR_DATA,
+    CONF_ENABLE_UPDATE,
+    CONF_ENTITY_KEY,
     CONF_ENTITY_TYPE,
     DATETIME_FORMAT,
     EVENT_HA_EVENT,
@@ -33,8 +35,6 @@ from .integration.const_integration import (
     ATTR_TODO_ID,
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
-    CONF_ENABLE_UPDATE,
-    CONF_ENTITY_KEY,
     CONF_MS365_TODO_FOLDER,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST,

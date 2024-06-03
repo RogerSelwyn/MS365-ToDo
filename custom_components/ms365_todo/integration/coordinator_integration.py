@@ -15,7 +15,8 @@ from ..const import (
     ATTR_DATA,
     ATTR_ERROR,
     ATTR_STATE,
-    CONF_ACCOUNT_NAME,
+    CONF_ENTITY_KEY,
+    CONF_ENTITY_NAME,
     CONF_ENTITY_TYPE,
 )
 from ..helpers.filemgmt import (
@@ -24,7 +25,6 @@ from ..helpers.filemgmt import (
 from ..todo import async_scan_for_todo_lists, build_todo_query
 from .const_integration import (
     ATTR_TODOS,
-    CONF_ENTITY_KEY,
     CONF_MS365_TODO_FOLDER,
     CONF_TODO_LIST,
     CONF_TODO_LIST_ID,
@@ -54,7 +54,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         )
         self._entry = entry
         self._account = account
-        self._account_name = entry.data[CONF_ACCOUNT_NAME]
+        self._account_name = entry.data[CONF_ENTITY_NAME]
         self._keys = []
         self._data = {}
 

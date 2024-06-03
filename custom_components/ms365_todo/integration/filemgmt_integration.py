@@ -7,7 +7,7 @@ from homeassistant.const import CONF_NAME
 from voluptuous.error import Error as VoluptuousError
 
 from ..const import (
-    CONF_ACCOUNT_NAME,
+    CONF_ENTITY_NAME,
 )
 from ..helpers.config_entry import MS365ConfigEntry
 from ..helpers.filemgmt import build_config_file_path
@@ -78,7 +78,7 @@ async def async_update_todo_list_file(
 def build_yaml_filename(conf: MS365ConfigEntry, filename):
     """Create the token file name."""
 
-    return filename.format(f"_{conf.data.get(CONF_ACCOUNT_NAME)}")
+    return filename.format(f"_{conf.data.get(CONF_ENTITY_NAME)}")
 
 
 def read_todo_yaml_file(yaml_filepath):

@@ -19,8 +19,6 @@ ATTR_TODO_ID = "todo_id"
 
 CONF_DUE_HOURS_BACKWARD_TO_GET = "due_start_offset"
 CONF_DUE_HOURS_FORWARD_TO_GET = "due_end_offset"
-CONF_ENABLE_UPDATE = "enable_update"
-CONF_ENTITY_KEY = "entity_key"
 CONF_MS365_TODO_FOLDER = "MS365_todo_folder"
 CONF_SHOW_COMPLETED = "show_completed"
 CONF_TODO_LIST = "todo_list"
