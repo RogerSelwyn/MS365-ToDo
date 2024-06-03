@@ -48,7 +48,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             hass,
             _LOGGER,
             # Name of the data. For logging purposes.
-            name="MS365 To-Do",
+            name="MS365 To Do",
             # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=30),
         )
@@ -114,7 +114,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
             except HTTPError:
                 _LOGGER.warning(
-                    "MS365 To-Do list not found for: %s - Please remove from MS365_todo_%s.yaml",
+                    "MS365 To Do list not found for: %s - Please remove from MS365_todo_%s.yaml",
                     name,
                     self._account_name,
                 )
@@ -159,12 +159,12 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 ft.partial(ms365_todo.get_tasks, batch=100, query=full_query)
             )
             if error:
-                _LOGGER.info("MS365 To-Do list reconnected for: %s", name)
+                _LOGGER.info("MS365 To Do list reconnected for: %s", name)
                 error = False
         except HTTPError:
             if not error:
                 _LOGGER.error(
-                    "MS365 To-Do list not found for: %s - Has it been deleted?",
+                    "MS365 To Do list not found for: %s - Has it been deleted?",
                     name,
                 )
                 error = True

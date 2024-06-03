@@ -7,17 +7,17 @@ nav_order: 16
 
 The attribute `ha_event` shows whether the event is triggered by an HA initiated action
 
-##  To-Do Events
+##  To Do Events
 
 Events will be raised for the following items.
 
-- ms365_new_todo - New to-do created either by the MS365 integration or via some external app
-- ms365_update_todo - Update of a to-do via the MS365 integration
-- ms365_delete_todo - Deletion of a to-do via the MS365 integration
-- ms365_completed_todo - To-do marked complete either by the MS365 integration or via some external app (`show_completed` must be enabled for to-do list in `ms365_todos_xxxx.yaml`)
-- ms365_uncompleted_todo - To-do marked incomplete via the MS365 integration
+- ms365_new_todo - New To Do task created either by the MS365 integration or via some external app
+- ms365_update_todo - Update of a To Do task via the MS365 integration
+- ms365_delete_todo - Deletion of a To Do task via the MS365 integration
+- ms365_completed_todo - To Do task marked complete either by the MS365 integration or via some external app (`show_completed` must be enabled for To Do list in `ms365_todos_xxxx.yaml`)
+- ms365_uncompleted_todo - To Do task marked incomplete via the MS365 integration
 
-It should be noted that actions occurring external to HA are identified via a 30-second poll, so will very likely be delayed by up to that time. Any new or completed to-do occurring within 5 minutes before HA restart will very likely have a new event sent after the restart.
+It should be noted that actions occurring external to HA are identified via a 30-second poll, so will very likely be delayed by up to that time. Any new or completed To Do task occurring within 5 minutes before HA restart will very likely have a new event sent after the restart.
 
 The events have the following general structure. A `created` or `completed` attribute will be included where the action happened outside HA:
 
