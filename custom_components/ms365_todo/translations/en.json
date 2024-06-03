@@ -35,8 +35,8 @@
         "step": {
             "user": {
                 "data": {
-                    "track_new": "Enable new To-Do lists",
-                    "todo_list": "Enabled To-Do lists"
+                    "track_new": "Enable new To Do lists",
+                    "todo_list": "Enabled To Do lists"
                 },
                 "description": "Setup options for {account_name}"
             },
@@ -46,7 +46,7 @@
                     "due_start_offset": "Hours to offset the due time for retrieval",
                     "show_completed": "Show completed items"
                 },
-                "description": "Setup options for {account_name} - To-Do list {name}"
+                "description": "Setup options for {account_name} - To Do list {name}"
             }
         }
     },
