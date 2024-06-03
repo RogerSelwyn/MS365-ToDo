@@ -1,6 +1,6 @@
 new_todo:
-  name: Create a To-Do
-  description: Create a new To-Do
+  name: Create a To Do
+  description: Create a new To Do
   target:
     device:
       integration: ms365_todo
@@ -10,20 +10,20 @@ new_todo:
   fields:
     subject:
       name: Subject
-      description: The subject of the To-Do
+      description: The subject of the To Do
       example: Pick up the mail
       required: true
       selector:
         text:
     description:
       name: Description
-      description: Description of the To-Do
+      description: Description of the To Do
       example: Walk to the post box and collect the mail
       selector:
         text:
     due:
       name: Due date
-      description: When the To-Do is due by
+      description: When the To Do is due by
       example: '"2025-01-01"'
       selector:
         date:
@@ -35,8 +35,8 @@ new_todo:
         datetime:
 
 update_todo:
-  name: Update a To-Do
-  description: Update a To-Do
+  name: Update a To Do
+  description: Update a To Do
   target:
     device:
       integration: ms365_todo
@@ -45,27 +45,27 @@ update_todo:
       domain: todo
   fields:
     todo_id:
-      name: To-Do ID
-      description: ID for the To-Do, can be found as an attribute on your todo
+      name: To Do ID
+      description: ID for the To Do, can be found as an attribute on your todo
       example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       required: true
       selector:
         text:
     subject:
       name: Subject
-      description: The subject of the To-Do
+      description: The subject of the To Do
       example: Pick up the mail
       selector:
         text:
     description:
       name: Description
-      description: Description of the To-Do
+      description: Description of the To Do
       example: Walk to the post box and collect the mail
       selector:
         text:
     due:
       name: Due date
-      description: When the To-Do is due by
+      description: When the To Do is due by
       example: '"2025-01-01"'
       selector:
         date:
@@ -77,8 +77,8 @@ update_todo:
         datetime:
 
 delete_todo:
-  name: Delete a To-Do
-  description: Delete a To-Do
+  name: Delete a To Do
+  description: Delete a To Do
   target:
     device:
       integration: ms365_todo
@@ -87,16 +87,16 @@ delete_todo:
       domain: todo
   fields:
     todo_id:
-      name: To-Do ID
-      description: ID for the To-Do, can be found as an attribute on your todo
+      name: To Do ID
+      description: ID for the To Do, can be found as an attribute on your todo
       example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       required: true
       selector:
         text:
 
 complete_todo:
-  name: Complete a To-Do
-  description: Complete a To-Do
+  name: Complete a To Do
+  description: Complete a To Do
   target:
     device:
       integration: ms365_todo
@@ -105,15 +105,15 @@ complete_todo:
       domain: todo
   fields:
     todo_id:
-      name: To-Do ID
-      description: ID for the To-Do, can be found as an attribute on your todo
+      name: To Do ID
+      description: ID for the To Do, can be found as an attribute on your todo
       example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       required: true
       selector:
         text:
     completed:
       name: Completed
-      description: Set whether To-Do is completed or not
+      description: Set whether To Do is completed or not
       example: True
       required: true
       selector:
