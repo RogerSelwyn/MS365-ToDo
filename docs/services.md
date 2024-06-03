@@ -9,13 +9,13 @@ These MS365 services must be targeted at a `todo` sensor. Alternatively the core
 The intention is to phase out the MS365 services once the core services provide full functionality.
 
 ### ms365.new_todo
-Create a new To Do - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+Create a new To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365.update_todo
-Update a To Do - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+Update a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365.delete_todo
-Delete a To Do - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+Delete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365.complete_todo
-(Un)complete a To Do - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+(Un)complete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365.scan_for_todo_lists
 Scan for new for To Do lists and add to ms365_todos.yaml - No parameters.
 
