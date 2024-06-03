@@ -37,7 +37,7 @@ nav_order: 19
   * Reconfigure your MS365 configuration to authenticate again and generate a new token.
 
 * **MS365 config requests permission: 'xxxxxx.xxxxxxx'. Not available in token 'ms365_xxxxxxxx.token' for account 'xxxxxxxx'**
-Validate your Azure permissions match those required as detailed on the [permissions page](./permissions.md). If they are correct, Reconfigure your MS365 configuration to authenticate again and generate a new token.
+Validate your Entra ID App Registration permissions match those required as detailed on the [permissions page](./permissions.md). If they are correct, Reconfigure your MS365 configuration to authenticate again and generate a new token.
 
 **_Please note that any changes made to your Entra ID App Registration settings takes a few minutes to propagate. Please wait around 5 minutes between changes to your settings and any auth attempts from Home Assistant._**
 

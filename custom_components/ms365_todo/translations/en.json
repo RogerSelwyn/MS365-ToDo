@@ -15,7 +15,7 @@
                     "alt_auth_method": "Use alternate (more complex) authentication",
                     "enable_update": "Enable update services"
                 },
-                "description": "Enter previously created Azure App credentials"
+                "description": "Enter previously created Entra ID App Registration credentials"
             },
             "request_default": {
                 "title": "Authorization Required - {account_name}",
