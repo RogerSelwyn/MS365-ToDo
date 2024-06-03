@@ -11,8 +11,8 @@ Under "API Permissions" click Add a permission, then Microsoft Graph, then Deleg
    |----------|----------------------------|:------:|----------------------------------------------------------------|-------|
    | All      | offline_access             |        | *Maintain access to data you have given it access to*          |       |
    | All      | User.Read                  |        | *Sign in and read user profile*                                |       |
-   | ToDo     | Tasks.Read                 |        | *Read user's tasks and task lists*                             | Not for shared mailboxes |
-   | ToDo     | Tasks.ReadWrite            | Y      | *Create, read, update, and delete user’s tasks and task lists* | Not for shared mailboxes |
+   | To Do     | Tasks.Read                 |        | *Read user's tasks and task lists*                             | Not for shared mailboxes |
+   | To Do     | Tasks.ReadWrite            | Y      | *Create, read, update, and delete user’s tasks and task lists* | Not for shared mailboxes |
    
 
 ## Changing Features and Permissions
