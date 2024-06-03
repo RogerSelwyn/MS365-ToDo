@@ -5,8 +5,6 @@ nav_order: 9
 
 # To Do Lists
 
-Note that in this documentation you will see the occasional mention `tasks`. This is because in the Microsoft Graph API a To Do is managed via the `tasks` endpoint, even though it is known as a To Do in MS parlance (this is due to product renaming and changes).
-
 One To Do task list entity is created for each to-do list on the user account. Each sensor shows the number of incomplete To Do task items as the status of the sensor. The `all_todos` attribute is an array of incomplete To Do tasks. The `overdue_todos` attribute shows any To Do tasks which have a due date and are overdue as an array.
 
 ### Display
