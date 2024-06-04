@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.0.3 (2024/06/04)
+### 💥 Breaking Changes
+- [Standardise entity name](https://github.com/RogerSelwyn/MS365-ToDo/commit/c6c12eac2649ef8435cd85e0e86df30e47328ea4) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Rename account_name to entity_name](https://github.com/RogerSelwyn/MS365-ToDo/commit/7cff96025aae170cf7ba7b8c88d989146e1ec2ea) - @RogerSelwyn
+- [Add translations for services](https://github.com/RogerSelwyn/MS365-ToDo/commit/cd4a598bdd535ba358cb2f04ece52f18d61a9be2) - @RogerSelwyn
+
+### 📚 Documentation
+- [Updates](https://github.com/RogerSelwyn/MS365-ToDo/commit/30830342a68c5662cb723e0c05dd4315bc9f40b4) - @RogerSelwyn
+- [Tweak](https://github.com/RogerSelwyn/MS365-ToDo/commit/2cc89912dcb5470125f124b3b5c26b3d83bf93d3) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.0.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/4584f3b38e23c4529d847c398a43f330b13d8eef) - @RogerSelwyn
 
 ## v0.0.2 (2024/06/03)
 ### 💥 Breaking Changes
