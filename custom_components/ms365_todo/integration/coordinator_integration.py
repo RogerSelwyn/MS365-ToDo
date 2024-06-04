@@ -89,7 +89,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 continue
 
             ms365_todo_list_id = ms365_todo_list.get(CONF_TODO_LIST_ID)
-            name = f"{ms365_todo_list.get(CONF_NAME)} {self._entity_name}"
+            name = f"{self._entity_name} {ms365_todo_list.get(CONF_NAME)}"
 
             try:
                 ms365_todo = await self.hass.async_add_executor_job(  # pylint: disable=no-member
@@ -98,7 +98,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                         folder_id=ms365_todo_list_id,
                     )
                 )
-                unique_id = f"{ms365_todo_list_id}_{self._entity_name}"
+                unique_id = f"{self._entity_name}_{ms365_todo_list_id}"
                 new_key = {
                     CONF_ENTITY_KEY: _build_entity_id(
                         self.hass, ENTITY_ID_FORMAT_TODO, name
