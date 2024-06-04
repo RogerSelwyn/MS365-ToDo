@@ -42,4 +42,8 @@ Key | Type | Required | Description
 `alt_auth_method` | `boolean` | `False` | If False (default), authentication is not dependent on internet access to your HA instance. [See Authentication](./authentication.md)
 `enable_update` | `boolean` | `False` | If True (**default is False**), this will enable the various services that allow the creation and update of To Do list items
 
+### Options variables
 
+Key | Type | Required | Description
+-- | -- | -- | --
+`track_new_` | `boolean` | `False` | If True (default), will automatically generate a todo_entity when a new To Do list is detected. The system scans for new lists only on startup or reconfiguration/reload.

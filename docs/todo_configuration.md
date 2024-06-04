@@ -4,7 +4,7 @@ nav_order: 7
 ---
 
 # To Do configuration
-The integration uses an external `ms365_todos_<account_name>.yaml` file which is stored in the `ms365_storage` directory.
+The integration uses an external `ms365_todos_<account_name>.yaml` file which is stored in the `ms365_storage` directory. This can be entirely managed via the UI.
 ## Example To Do tasks YAML:
 ```yaml
 

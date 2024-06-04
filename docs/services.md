@@ -8,21 +8,21 @@ nav_order: 15
 These MS365 services must be targeted at a `todo` sensor. Alternatively the core To Do services (e.g.`todo.add_item`) can be used. The core services do not support reminder date/time setting. 
 The intention is to phase out the MS365 services once the core services provide full functionality.
 
-### ms365.new_todo
+### ms365_todo.new_todo
 Create a new To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
-### ms365.update_todo
+### ms365_todo.update_todo
 Update a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
-### ms365.delete_todo
+### ms365_todo.delete_todo
 Delete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
-### ms365.complete_todo
+### ms365_todo.complete_todo
 (Un)complete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
-### ms365.scan_for_todo_lists
+### ms365_todo.scan_for_todo_lists
 Scan for new for To Do lists and add to ms365_todos.yaml - No parameters.
 
 #### Example create To Do service call
 
 ```yaml
-service: ms365.new_todo
+service: ms365_todo.new_todo
 target:
   entity_id: todo.hass_primary
 data:
