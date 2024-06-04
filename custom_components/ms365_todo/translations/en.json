@@ -9,7 +9,7 @@
         "step": {
             "user": {
                 "data": {
-                    "entity_name": "Uniquely identifying name for the account",
+                    "entity_name": "Uniquely identifying name for the entities",
                     "client_id": "Client ID",
                     "client_secret": "Client Secret",
                     "alt_auth_method": "Use alternate (more complex) authentication",
@@ -80,6 +80,80 @@
     "exceptions": {
         "not_authorised": {
             "message": "Not authorisied requires permission: {required_permission}"
+        }
+    },
+    "services": {
+        "new_todo": {
+            "name": "Create a To Do",
+            "description": "Create a To Do",
+            "fields": {
+                "subject": {
+                    "description": "The subject of the To Do",
+                    "name": "Subject"
+                },
+                "description": {
+                    "description": "Description of the To Do",
+                    "name": "Description"
+                },
+                "due": {
+                    "description": "When the To Do is due by",
+                    "name": "Due"
+                },
+                "reminder": {
+                    "description": "When a reminder is needed",
+                    "name": "Reminder"
+                }
+            }
+        },
+        "update_todo": {
+            "name": "Update a To Do",
+            "description": "Update a To Do",
+            "fields": {
+                "todo_id": {
+                    "description": "ID for the To Do, can be found as an attribute on your todo",
+                    "name": "To Do ID"
+                },
+                "subject": {
+                    "description": "The subject of the To Do",
+                    "name": "Subject"
+                },
+                "description": {
+                    "description": "Description of the To Do",
+                    "name": "Description"
+                },
+                "due": {
+                    "description": "When the To Do is due by",
+                    "name": "Due"
+                },
+                "reminder": {
+                    "description": "When a reminder is needed",
+                    "name": "Reminder"
+                }
+            }
+        },
+        "delete_todo": {
+            "name": "Delete a To Do",
+            "description": "Delete a To Do",
+            "fields": {
+                "todo_id": {
+                    "description": "ID for the To Do, can be found as an attribute on your todo",
+                    "name": "To Do ID"
+                }
+            }
+        },
+        "complete_todo": {
+            "name": "Complete a To Do",
+            "description": "Complete a To Do",
+            "fields": {
+                "todo_id": {
+                    "description": "ID for the To Do, can be found as an attribute on your todo",
+                    "name": "To Do ID"
+                },
+                "completed": {
+                    "description": "Set whether To Do is completed or not",
+                    "name": "Completed"
+                }
+            }
         }
     }
 }
