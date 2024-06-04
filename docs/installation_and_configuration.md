@@ -14,7 +14,7 @@ nav_order: 4
 1. Restart your Home Assistant instance to enable the integration
 1. Add the integration via the `Devices & Services` dialogue. Follow the instructions in the install process (or see [Authentication](./authentication.md)) to establish the link between this integration and the Entra ID App Registration
     * A persistent token will be created in the hidden directory config/ms365_storage/.MS365-token-cache
-    * The `ms365_todos_<account_name>.yaml` will be created under the config directory in the `ms365_storage` directory.
+    * The `ms365_todos_<entity_name>.yaml` will be created under the config directory in the `ms365_storage` directory.
 1. [Configure To Do](./todo_configuration.md)
 1. Restart your Home Assistant instance.
 
