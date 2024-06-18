@@ -235,7 +235,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             todo = {
                 ATTR_SUBJECT: item.subject,
                 ATTR_TODO_ID: item.task_id,
-                ATTR_STATUS: item._Task__status,
+                ATTR_STATUS: item.status,
             }
             if item.body:
                 todo[ATTR_DESCRIPTION] = item.body
