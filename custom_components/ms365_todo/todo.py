@@ -196,7 +196,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     summary=todo.subject,
                     status=completed,
                     description=todo.body,
-                    due=todo.due,
+                    due=todo.due.date() if todo.due else None,
                 )
             )
 
