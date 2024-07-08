@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.0.4 (2024/07/08)
+### 🐛 Fixes
+- [Fix incorrect Due date shown for To Do](https://github.com/RogerSelwyn/MS365-ToDo/commit/66660f94f2e04db7eaa8e3184ca62849c87aea98) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Update codeql.yml](https://github.com/RogerSelwyn/MS365-ToDo/commit/ebd812891b07d06ad01be72519847944ab6e2250) - @RogerSelwyn
+- [Remove use of internal attribute](https://github.com/RogerSelwyn/MS365-ToDo/commit/294cfac9cd802f309ed14ab24c6901ff51d59a6a) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Bump O365 to 2.0.35](https://github.com/RogerSelwyn/MS365-ToDo/commit/c67b16a271913b126370d2f9dfa23c307b067ce1) - @RogerSelwyn
+- [Bump O365 to 2.0.36](https://github.com/RogerSelwyn/MS365-ToDo/commit/fd793c0628b42179bd844a5559c151e3f39915d0) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/8a9b9693a66bc274e06f427b42d00efeb355e6b4) - @actions-user
+
+### 📚 Documentation
+- [Update CHANGELOG.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/10409964a8de6bde592af7af3ea8ed643e7eaf39) - @RogerSelwyn
+- [Update README.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/3e04a2adc96e9cfac6904d78c976193693c67f29) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.0.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/bf71a0463ed5e96a316d68886cdaa8f9773bf8e5) - @RogerSelwyn
+
+
 ## v0.0.3 (2024/06/04)
 ### 💥 Breaking Changes
 - [Standardise entity name](https://github.com/RogerSelwyn/MS365-ToDo/commit/c6c12eac2649ef8435cd85e0e86df30e47328ea4) - @RogerSelwyn
