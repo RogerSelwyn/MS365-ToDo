@@ -7,7 +7,6 @@ from datetime import timedelta
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import async_generate_entity_id
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from requests.exceptions import HTTPError
 
@@ -22,6 +21,7 @@ from ..const import (
 from ..helpers.filemgmt import (
     build_config_file_path,
 )
+from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
     CONF_MS365_TODO_FOLDER,
@@ -100,7 +100,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 )
                 unique_id = f"{self._entity_name}_{ms365_todo_list_id}"
                 new_key = {
-                    CONF_ENTITY_KEY: _build_entity_id(
+                    CONF_ENTITY_KEY: build_entity_id(
                         self.hass, ENTITY_ID_FORMAT_TODO, name
                     ),
                     CONF_UNIQUE_ID: unique_id,
@@ -170,12 +170,3 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 error = True
 
         return data, error
-
-
-def _build_entity_id(hass, entity_id_format, name):
-    """Build and entity ID."""
-    return async_generate_entity_id(
-        entity_id_format,
-        name,
-        hass=hass,
-    )
