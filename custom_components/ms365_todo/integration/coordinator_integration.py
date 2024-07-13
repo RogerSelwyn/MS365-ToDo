@@ -22,7 +22,6 @@ from ..const import (
 from ..helpers.filemgmt import (
     build_config_file_path,
 )
-from ..todo import async_scan_for_todo_lists, build_todo_query
 from .const_integration import (
     ATTR_TODOS,
     CONF_MS365_TODO_FOLDER,
@@ -35,6 +34,7 @@ from .const_integration import (
 )
 from .filemgmt_integration import build_yaml_filename, load_yaml_file
 from .schema_integration import YAML_TODO_LIST_SCHEMA
+from .todo_integration import async_scan_for_todo_lists, build_todo_query
 
 _LOGGER = logging.getLogger(__name__)
 
