@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.0 (2024/07/18)
+### ✨ Enhancements
+- [Add diagnostics support](https://github.com/RogerSelwyn/MS365-ToDo/commit/9ed9c2ac1fb917d533403404ab70f31fc29414b9) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Code updates in support of standardisation across MS365 integrations](https://github.com/RogerSelwyn/MS365-ToDo/commit/6271f197d6fded7e26563b40192cc216d657b429) - @RogerSelwyn
+- [Consolidate sensor code to one place](https://github.com/RogerSelwyn/MS365-ToDo/commit/1314391a6a0b0d0e4ded92d935be68fd0b7653c8) - @RogerSelwyn
+- [Consolidate duplicate code](https://github.com/RogerSelwyn/MS365-ToDo/commit/4f054a9904ce82df23292938cc09ede29d817b51) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.1.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/a03892c7029435354aa713fda4cebd890be47c43) - @RogerSelwyn
+
 ## v0.0.4 (2024/07/08)
 ### 🐛 Fixes
 - [Fix incorrect Due date shown for To Do](https://github.com/RogerSelwyn/MS365-ToDo/commit/66660f94f2e04db7eaa8e3184ca62849c87aea98) - @RogerSelwyn
