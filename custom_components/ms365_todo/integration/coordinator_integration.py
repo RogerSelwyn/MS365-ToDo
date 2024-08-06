@@ -55,14 +55,14 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         self._entry = entry
         self._account = account
         self._entity_name = entry.data[CONF_ENTITY_NAME]
-        self._keys = []
+        self.keys = []
         self._data = {}
 
-    async def async_setup_entries(self):
+    async def _async_setup(self):
         """Do the initial setup of the entities."""
         todo_keys = await self._async_todo_sensors()
-        self._keys = todo_keys
-        return self._keys
+        self.keys = todo_keys
+        return self.keys
 
     async def _async_todo_sensors(self):
         await async_scan_for_todo_lists(self.hass, self._account, self._entry)
@@ -122,10 +122,10 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         _LOGGER.debug(
-            "Doing %s sensor update(s) for: %s", len(self._keys), self._entity_name
+            "Doing %s sensor update(s) for: %s", len(self.keys), self._entity_name
         )
 
-        for key in self._keys:
+        for key in self.keys:
             entity_type = key[CONF_ENTITY_TYPE]
             if entity_type == TODO_TODO:
                 await self._async_todos_update(key)
