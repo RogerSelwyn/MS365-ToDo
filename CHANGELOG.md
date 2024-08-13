@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.1 (2024/08/13)
+### 🐛 Fixes
+- [Handle corrupted token file gracefully with repair](https://github.com/RogerSelwyn/MS365-ToDo/commit/f054ffa414b0405e409bb78fc60c4e43aaab2df5) - @RogerSelwyn
+- [Extraneous letter](https://github.com/RogerSelwyn/MS365-ToDo/commit/d95c08d7f9553f0a269ca8d1f6bae09abe7ffdb8) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Move coordinator setup code to new _async_setup method](https://github.com/RogerSelwyn/MS365-ToDo/commit/72be021f12887f6b6ac65b1827d2940f7d59cea6) - @RogerSelwyn
+- [Minimum HA version 2024.8.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/84aeb02d4b89630a737a9ac3fad8fce9b7e45dab) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.1.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/aa4cf23d156c9ee05af6c816709fc1d5a8015d35) - @RogerSelwyn
+
 ## v0.1.0 (2024/07/18)
 ### ✨ Enhancements
 - [Add diagnostics support](https://github.com/RogerSelwyn/MS365-ToDo/commit/9ed9c2ac1fb917d533403404ab70f31fc29414b9) - @RogerSelwyn
