@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.2 (2024/09/04)
+### 🐛 Fixes
+- [Fix issue of o365 library accessing token within the event loop](https://github.com/RogerSelwyn/MS365-ToDo/commit/1fae1a788d960edc6b9e01f9b5cc9b848dcff341) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Implement Sourcery.ai recomendations](https://github.com/RogerSelwyn/MS365-ToDo/commit/48edfa39e37484cbe3a6371f098bc895e8860bbc) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.1.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/cd1b9c8c4d4a70b428fa75f45e85823aeb432da7) - @RogerSelwyn
+
 ## v0.1.1 (2024/08/13)
 ### 🐛 Fixes
 - [Handle corrupted token file gracefully with repair](https://github.com/RogerSelwyn/MS365-ToDo/commit/f054ffa414b0405e409bb78fc60c4e43aaab2df5) - @RogerSelwyn
