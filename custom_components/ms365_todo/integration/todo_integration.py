@@ -66,10 +66,7 @@ async def async_integration_setup_entry(
 ) -> None:
     """Set up the MS365 platform."""
 
-    account = entry.runtime_data.account
-
-    is_authenticated = account.is_authenticated
-    if not is_authenticated:
+    if not entry.runtime_data.is_authenticated:
         return False
 
     coordinator = entry.runtime_data.coordinator
@@ -279,7 +276,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         if not self._validate_task_permissions():
             return False
 
-        new_ms365_todo = self.todolist.new_task()
+        new_ms365_todo = await self.hass.async_add_executor_job(self.todolist.new_task)
         await self._async_save_todo(new_ms365_todo, subject, description, due, reminder)
         self._raise_event(EVENT_NEW_TODO, new_ms365_todo.task_id)
         self.todo_last_created = new_ms365_todo.created
@@ -381,7 +378,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 translation_domain=DOMAIN,
                 translation_key="todo_completed",
             )
-        ms365_todo.mark_completed()
+        self.hass.async_add_executor_job(ms365_todo.mark_completed)
         self.hass.async_add_executor_job(ms365_todo.save)
         self._raise_event(EVENT_COMPLETED_TODO, todo_id)
         self.todo_last_completed = dt.utcnow()
@@ -392,7 +389,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 translation_domain=DOMAIN,
                 translation_key="todo_not_completed",
             )
-        ms365_todo.mark_uncompleted()
+        self.hass.async_add_executor_job(ms365_todo.mark_uncompleted)
         self.hass.async_add_executor_job(ms365_todo.save)
         self._raise_event(EVENT_UNCOMPLETED_TODO, todo_id)
 
@@ -450,11 +447,11 @@ def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):
     _LOGGER.debug("%s - %s - %s", event_type, todo_id, task_datetime)
 
 
-def build_todo_query(key, todo):
+async def async_build_todo_query(hass, key, todo):
     """Build query for To Do."""
     ms365_task = key[CONF_TODO_LIST]
     show_completed = ms365_task[CONF_SHOW_COMPLETED]
-    query = todo.new_query()
+    query = await hass.async_add_executor_job(todo.new_query)
     if not show_completed:
         query = query.on_attribute("status").unequal("completed")
     start_offset = ms365_task.get(CONF_DUE_HOURS_BACKWARD_TO_GET)
@@ -475,7 +472,7 @@ def build_todo_query(key, todo):
 async def async_scan_for_todo_lists(hass, account, entry):
     """Scan for new task lists."""
 
-    todos = account.tasks()
+    todos = await hass.async_add_executor_job(account.tasks)
 
     todolists = await hass.async_add_executor_job(todos.list_folders)
     track = entry.options.get(CONF_TRACK_NEW, True)

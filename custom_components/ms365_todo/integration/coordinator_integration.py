@@ -34,7 +34,7 @@ from .const_integration import (
 )
 from .filemgmt_integration import build_yaml_filename, load_yaml_file
 from .schema_integration import YAML_TODO_LIST_SCHEMA
-from .todo_integration import async_scan_for_todo_lists, build_todo_query
+from .todo_integration import async_build_todo_query, async_scan_for_todo_lists
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -82,7 +82,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_todo_entities(self, ms365_todo_lists):
         keys = []
-        ms365_todos = self._account.tasks()
+        ms365_todos = await self.hass.async_add_executor_job(self._account.tasks)
         for ms365_todo_list in ms365_todo_lists:
             track = ms365_todo_list.get(CONF_TRACK)
             if not track:
@@ -151,7 +151,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
     async def _async_todos_update_query(self, key, error):
         data = None
         ms365_todo = key[CONF_MS365_TODO_FOLDER]
-        full_query = build_todo_query(key, ms365_todo)
+        full_query = await async_build_todo_query(self.hass, key, ms365_todo)
         name = key[CONF_NAME]
 
         try:
