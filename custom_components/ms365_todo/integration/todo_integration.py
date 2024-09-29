@@ -288,6 +288,18 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         ms365_todo = await self.hass.async_add_executor_job(
             self.todolist.get_task, item.uid
         )
+        if item.status:
+            completed = None
+            if item.status == TodoItemStatus.COMPLETED and not ms365_todo.completed:
+                completed = True
+            elif item.status == TodoItemStatus.NEEDS_ACTION and ms365_todo.completed:
+                completed = False
+            if completed is not None:
+                await self.async_complete_todo(
+                    item.uid, completed, ms365_todo=ms365_todo
+                )
+                return
+
         if (
             item.summary != ms365_todo.subject
             or item.description != ms365_todo.body
@@ -301,16 +313,6 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 ms365_todo=ms365_todo,
                 hatodo=True,
             )
-        if item.status:
-            completed = None
-            if item.status == TodoItemStatus.COMPLETED and not ms365_todo.completed:
-                completed = True
-            elif item.status == TodoItemStatus.NEEDS_ACTION and ms365_todo.completed:
-                completed = False
-            if completed is not None:
-                await self.async_complete_todo(
-                    item.uid, completed, ms365_todo=ms365_todo
-                )
 
     async def async_update_todo(
         self,
