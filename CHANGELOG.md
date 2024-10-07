@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.1.3 (2024/10/07)
+### 🐛 Fixes
+- [Ensure all calls to O365 library methods are async](https://github.com/RogerSelwyn/MS365-ToDo/commit/57439a7f2ee9058e0a438cfc2726e96a6314ae03) - @RogerSelwyn
+- [Don't update todo if status is being changed](https://github.com/RogerSelwyn/MS365-ToDo/commit/1c359f71fcd4f3124300cdbba95d2de9241c63f0) - @RogerSelwyn
+
+### 📚 Documentation
+- [Capitalization for valid URL](https://github.com/RogerSelwyn/MS365-ToDo/commit/e72a3b071957a0c74abfe790159c8920fc615ee5) - @adam-allmer
+
+### 🔖 Release
+- [Release v0.1.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/90f2d7261279768e4632be78fbe6f35d80126ea6) - @RogerSelwyn
+
 ## v0.1.2 (2024/09/04)
 ### 🐛 Fixes
 - [Fix issue of o365 library accessing token within the event loop](https://github.com/RogerSelwyn/MS365-ToDo/commit/1fae1a788d960edc6b9e01f9b5cc9b848dcff341) - @RogerSelwyn
