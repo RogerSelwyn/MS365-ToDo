@@ -18,9 +18,6 @@ from ..const import (
     CONF_ENTITY_NAME,
     CONF_ENTITY_TYPE,
 )
-from ..helpers.filemgmt import (
-    build_config_file_path,
-)
 from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
@@ -32,7 +29,11 @@ from .const_integration import (
     TODO_TODO,
     YAML_TODO_LISTS_FILENAME,
 )
-from .filemgmt_integration import build_yaml_filename, load_yaml_file
+from .filemgmt_integration import (
+    build_yaml_file_path,
+    build_yaml_filename,
+    load_yaml_file,
+)
 from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_build_todo_query, async_scan_for_todo_lists
 
@@ -68,7 +69,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         await async_scan_for_todo_lists(self.hass, self._account, self._entry)
 
         yaml_filename = build_yaml_filename(self._entry, YAML_TODO_LISTS_FILENAME)
-        yaml_filepath = build_config_file_path(self.hass, yaml_filename)
+        yaml_filepath = build_yaml_file_path(self.hass, yaml_filename)
         ms365_task_dict = await self.hass.async_add_executor_job(
             load_yaml_file,
             yaml_filepath,

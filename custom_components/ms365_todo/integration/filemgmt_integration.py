@@ -81,6 +81,11 @@ def build_yaml_filename(conf: MS365ConfigEntry, filename):
     return filename.format(f"_{conf.data.get(CONF_ENTITY_NAME)}")
 
 
+def build_yaml_file_path(hass, yaml_filename):
+    """Create yaml path."""
+    return build_config_file_path(hass, yaml_filename)
+
+
 def read_todo_yaml_file(yaml_filepath):
     """Read the yaml file."""
     with open(yaml_filepath, encoding="utf8") as file:

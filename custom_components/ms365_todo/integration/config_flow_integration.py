@@ -17,7 +17,6 @@ from ..const import (
     CONF_ENTITY_NAME,
 )
 from ..helpers.config_entry import MS365ConfigEntry
-from ..helpers.filemgmt import build_config_file_path
 from ..helpers.utils import add_attribute_to_item
 from .const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
@@ -29,6 +28,7 @@ from .const_integration import (
     YAML_TODO_LISTS_FILENAME,
 )
 from .filemgmt_integration import (
+    build_yaml_file_path,
     build_yaml_filename,
     read_todo_yaml_file,
     write_todo_yaml_file,
@@ -74,7 +74,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
     ) -> FlowResult:
         """Set up the option flow."""
 
-        self._yaml_filepath = build_config_file_path(self.hass, self._yaml_filename)
+        self._yaml_filepath = build_yaml_file_path(self.hass, self._yaml_filename)
         self._todos = await self.hass.async_add_executor_job(
             read_todo_yaml_file,
             self._yaml_filepath,
