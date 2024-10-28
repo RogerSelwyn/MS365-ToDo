@@ -47,3 +47,31 @@ Key | Type | Required | Description
 Key | Type | Required | Description
 -- | -- | -- | --
 `track_new_` | `boolean` | `False` | If True (default), will automatically generate a todo_entity when a new To Do list is detected. The system scans for new lists only on startup or reconfiguration/reload.
+
+## Note
+If you are using Due Dates on your To Dos and create them outside Home Assistant, it is recommended that the time zone on your Home Assistant instance is set the same as the time zone you habitually use on the device you create To Dos from. This is due to the way the To Do information is returned to the integration, it needs to be corrected for the time zone difference it was saved in, however unfortunately MS do not make this time zone information available via it's api. Due Dates are always set midnight (Reminders are time specific).
+
+Example of the problem:
+* A To Do with a Due Date created in a -1000 time zone for 2024/10/24 returns data as below:
+```json
+    "dueDateTime": {
+        "dateTime": "2024-10-24T10:00:00.0000000",
+        "timeZone": "UTC"
+    }
+```
+* A To Do with a Due Date created in a +1400 time zone for 2024/10/24 returns data as below:
+```json
+    "dueDateTime": {
+        "dateTime": "2024-10-23T10:00:00.0000000",
+        "timeZone": "UTC"
+    }
+```
+* A To Do created by HA, will have data that returns as below:
+```json
+    "dueDateTime": {
+        "dateTime": "2024-10-24T00:00:00.0000000",
+        "timeZone": "UTC"
+    }
+```
+
+As can be seen there it is not possible for the integration to know, just by looking at this data, what the correct date should be. Therefore, it will correct by the HA time zone if time on the due date is something other than 0.
