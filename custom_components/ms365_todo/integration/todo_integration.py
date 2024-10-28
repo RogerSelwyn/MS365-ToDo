@@ -1,7 +1,7 @@
 """Todo processing."""
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 
 from homeassistant.components.todo import TodoItem, TodoListEntity
 from homeassistant.components.todo.const import TodoItemStatus, TodoListEntityFeature
@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.util import dt
+from homeassistant.util import dt as dt_util
 
 from ..classes.entity import MS365Entity
 from ..const import (
@@ -65,9 +65,6 @@ async def async_integration_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the MS365 platform."""
-
-    if not entry.runtime_data.is_authenticated:
-        return False
 
     coordinator = entry.runtime_data.coordinator
     todoentities = [
@@ -142,9 +139,10 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self.todolist = ms365_todo_folder
         self._show_completed = yaml_todo_list.get(CONF_SHOW_COMPLETED)
 
-        self.todo_last_created = dt.utcnow() - timedelta(minutes=5)
-        self.todo_last_completed = dt.utcnow() - timedelta(minutes=5)
-        self._zero_date = datetime(1, 1, 1, 0, 0, 0, tzinfo=dt.DEFAULT_TIME_ZONE)
+        self.todo_last_created = dt_util.utcnow() - timedelta(minutes=5)
+        self.todo_last_completed = dt_util.utcnow() - timedelta(minutes=5)
+        self._ha_timezone = dt_util.DEFAULT_TIME_ZONE
+        self._zero_date = datetime(1, 1, 1, 0, 0, 0, tzinfo=self._ha_timezone)
         self._state = None
         self._todo_items = None
         self._extra_attributes = None
@@ -243,9 +241,12 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     else False
                 )
             if item.due:
-                due = item.due.date()
+                if item.due.time() != time(0, 0, 0):
+                    due = item.due.astimezone(self._ha_timezone).date()
+                else:
+                    due = item.due.date()
                 todo[ATTR_DUE] = due
-                if due < dt.utcnow().date():
+                if due < dt_util.utcnow().date():
                     overdue_todo = {
                         ATTR_SUBJECT: item.subject,
                         ATTR_TODO_ID: item.task_id,
@@ -383,7 +384,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self.hass.async_add_executor_job(ms365_todo.mark_completed)
         self.hass.async_add_executor_job(ms365_todo.save)
         self._raise_event(EVENT_COMPLETED_TODO, todo_id)
-        self.todo_last_completed = dt.utcnow()
+        self.todo_last_completed = dt_util.utcnow()
 
     async def _async_uncomplete_task(self, ms365_todo, todo_id):
         if not ms365_todo.completed:
@@ -408,9 +409,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             if isinstance(due, str):
                 try:
                     if len(due) > 10:
-                        ms365_todo.due = dt.parse_datetime(due).date()
+                        ms365_todo.due = dt_util.parse_datetime(due).date()
                     else:
-                        ms365_todo.due = dt.parse_date(due)
+                        ms365_todo.due = dt_util.parse_date(due)
                 except ValueError:
                     raise ServiceValidationError(  # pylint: disable=raise-missing-from
                         translation_domain=DOMAIN,
@@ -421,6 +422,10 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     )
             else:
                 ms365_todo.due = due
+
+            # Possibly required at a future date to store tasks with the HA timezone
+            # duedate = ms365_todo.due.replace(tzinfo=self._ha_timezone)
+            # ms365_todo.due = duedate
 
         if reminder:
             ms365_todo.reminder = reminder
@@ -459,12 +464,12 @@ async def async_build_todo_query(hass, key, todo):
     start_offset = ms365_task.get(CONF_DUE_HOURS_BACKWARD_TO_GET)
     end_offset = ms365_task.get(CONF_DUE_HOURS_FORWARD_TO_GET)
     if start_offset:
-        start = dt.utcnow() + timedelta(hours=start_offset)
+        start = dt_util.utcnow() + timedelta(hours=start_offset)
         query.chain("and").on_attribute("due").greater_equal(
             start.strftime("%Y-%m-%dT%H:%M:%S")
         )
     if end_offset:
-        end = dt.utcnow() + timedelta(hours=end_offset)
+        end = dt_util.utcnow() + timedelta(hours=end_offset)
         query.chain("and").on_attribute("due").less_equal(
             end.strftime("%Y-%m-%dT%H:%M:%S")
         )
