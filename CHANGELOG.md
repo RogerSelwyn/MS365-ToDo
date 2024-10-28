@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.1.4 (2024/10/28)
+### 🐛 Fixes
+- [Fix of shared permissions usage](https://github.com/RogerSelwyn/MS365-ToDo/commit/194c33be1b7fab98141ddad5e80d6849fb872756) - @RogerSelwyn
+- [Fix issue with escalated permissions caused by previous change](https://github.com/RogerSelwyn/MS365-ToDo/commit/0918225efeca634b7f58e7cbb6bcca4a4a023acd) - @RogerSelwyn
+- [Handle ToDo reminders created by non HA means more correctly](https://github.com/RogerSelwyn/MS365-ToDo/commit/a3c9f14cfd0c8414516b64c5ecbfb4f877d5f625) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Changes from testing of ms365_calendar](https://github.com/RogerSelwyn/MS365-ToDo/commit/08417a38b35829f98198957cfc85d0cf12770cf7) - @RogerSelwyn
+- [Adjust to use update_reload_and_abort](https://github.com/RogerSelwyn/MS365-ToDo/commit/0aab6964ee3297814000437e5d900e5c74640680) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Bump python-o365 to 2.0.37](https://github.com/RogerSelwyn/MS365-ToDo/commit/ac31b79fc64abeca90ac31f1198d1504fbc39fe3) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/2b26ad489b396c4a9f4c1a10d71a67069b849809) - @actions-user
+
+### 📚 Documentation
+- [Docs update](https://github.com/RogerSelwyn/MS365-ToDo/commit/e84dd3175d3a9d56e1a44b1c3ad92c9204babafc) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v0.1.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/0065a7a2582b7eca9dfba6cbe66bb9994e600858) - @RogerSelwyn
+
+
 ## v0.1.3 (2024/10/07)
 ### 🐛 Fixes
 - [Ensure all calls to O365 library methods are async](https://github.com/RogerSelwyn/MS365-ToDo/commit/57439a7f2ee9058e0a438cfc2726e96a6314ae03) - @RogerSelwyn
