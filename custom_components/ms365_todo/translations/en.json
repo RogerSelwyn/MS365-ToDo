@@ -48,8 +48,8 @@
             },
             "todo_config": {
                 "data": {
-                    "due_end_offset": "Hours to offset the due time for retrieval",
-                    "due_start_offset": "Hours to offset the due time for retrieval",
+                    "due_end_offset": "Hours forward to offset the due time for retrieval",
+                    "due_start_offset": "Hours backward to offset the due time for retrieval",
                     "show_completed": "Show completed items"
                 },
                 "description": "Setup options for {entity_name} - To Do list {name}"
