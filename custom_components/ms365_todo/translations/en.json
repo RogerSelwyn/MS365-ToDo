@@ -68,7 +68,13 @@
     },
     "exceptions": {
         "not_authorised": {
-            "message": "Not authorisied requires permission: {required_permission}"
+            "message": "{required_permission}"
+        },
+        "todo_completed": {
+            "message": "To Do is already complete"
+        },
+        "todo_not_completed": {
+            "message": "To Do is already incomplete"
         }
     },
     "services": {
