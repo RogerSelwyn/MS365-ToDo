@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.0.0(2024/11/28)
+### 🐛 Fixes
+- [Fix error in configuring integration](https://github.com/RogerSelwyn/MS365-ToDo/commit/44b1d8b342d6edb30fcb69b65947f679106a8fc4) - @RogerSelwyn
+- [Fix translation for forward/backward](https://github.com/RogerSelwyn/MS365-ToDo/commit/2a5a7a8cfb524fa71d9aa60772607e21707af884) - @RogerSelwyn
+- [Added missing translations](https://github.com/RogerSelwyn/MS365-ToDo/commit/80650c2172997793f86e5ef0f58997de8c67b6d1) - @RogerSelwyn
+- [Fix issue with wrong due date showing](https://github.com/RogerSelwyn/MS365-ToDo/commit/2409ea83731297e0f97724fef7841178c59fa50c) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Changes in support of recent HA core changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/95abfece45c702de85c79d38517d7f93d4724f9c) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Bump python-o365 to 2.0.38](https://github.com/RogerSelwyn/MS365-ToDo/commit/33ce0921e3d5ccf17c5b2b562f4848bed2a1731b) - @RogerSelwyn
+
+### ✅ Test
+- [Add testing](https://github.com/RogerSelwyn/MS365-ToDo/commit/3fb3db341d22a04eedc4e698a0014a086d1e34cf) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.0.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/01f28346c49b8ccc5da5f6afb79dc1d2403967cc) - @RogerSelwyn
+
 ## v0.1.4 (2024/10/28)
 ### 🐛 Fixes
 - [Fix of shared permissions usage](https://github.com/RogerSelwyn/MS365-ToDo/commit/194c33be1b7fab98141ddad5e80d6849fb872756) - @RogerSelwyn
