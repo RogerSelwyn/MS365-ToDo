@@ -22,7 +22,9 @@ BASE_CONFIG_ENTRY = {
     "enable_update": False,
 }
 BASE_TOKEN_PERMS = "Tasks.Read"
+BASE_MISSING_PERMS = BASE_TOKEN_PERMS
 UPDATE_TOKEN_PERMS = "Tasks.ReadWrite"
+UPDATE_OPTIONS = {"enable_update": True}
 
 ALT_CONFIG_ENTRY = deepcopy(BASE_CONFIG_ENTRY)
 ALT_CONFIG_ENTRY["alt_auth_method"] = True
