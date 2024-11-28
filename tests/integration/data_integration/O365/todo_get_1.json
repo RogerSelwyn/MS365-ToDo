@@ -1,0 +1,35 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist1')/tasks/$entity",
+    "@odata.etag": "etag",
+    "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET me/todo/lists('<key>')/tasks('<key>')?$select=body,bodyLastModifiedDateTime",
+    "importance": "normal",
+    "isReminderOn": true,
+    "status": "notStarted",
+    "title": "Task 1",
+    "createdDateTime": "2021-01-01T00:00:00.0000000Z",
+    "lastModifiedDateTime": "2021-01-01T00:00:00.0000000Z",
+    "hasAttachments": false,
+    "categories": [],
+    "id": "list1task1",
+    "body": {
+        "content": "Task 1 body",
+        "contentType": "text"
+    },
+    "dueDateTime": {
+        "dateTime": "2099-01-01T00:00:00.0000000",
+        "timeZone": "UTC"
+    },
+    "reminderDateTime": {
+        "dateTime": "2099-01-01T16:00:00.0000000",
+        "timeZone": "UTC"
+    },
+    "linkedResources@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist1')/tasks('list1task1')/linkedResources",
+    "linkedResources": [
+        {
+            "webUrl": "http://microsoft.com",
+            "applicationName": "Microsoft",
+            "displayName": "Microsoft",
+            "id": "linkedresource"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist1')/tasks/$entity",
+    "@odata.etag": "etag",
+    "importance": "normal",
+    "isReminderOn": false,
+    "status": "notStarted",
+    "title": "A new task",
+    "createdDateTime": "2099-01-01T00:00:00.0000000Z",
+    "lastModifiedDateTime": "2099-01-01T00:00:00.0000000Z",
+    "hasAttachments": false,
+    "categories": [
+        "Important"
+    ],
+    "id": "newtaskid",
+    "body": {
+        "content": "",
+        "contentType": "text"
+    },
+    "linkedResources@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist1')/tasks('newtaskid')/linkedResources",
+    "linkedResources": [
+        {
+            "webUrl": "http://microsoft.com",
+            "applicationName": "Microsoft",
+            "displayName": "Microsoft",
+            "id": "linkedresourceid"
+        }
+    ]
+}

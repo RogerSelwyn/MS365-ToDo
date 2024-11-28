@@ -1,0 +1,46 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist2')/tasks",
+    "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET me/todo/lists('<key>')/tasks?$select=body,bodyLastModifiedDateTime",
+    "value": [
+        {
+            "@odata.etag": "etag1",
+            "importance": "normal",
+            "isReminderOn": false,
+            "status": "notStarted",
+            "title": "Task 1",
+            "createdDateTime": "2021-01-01T00:00:00.0000000Z",
+            "lastModifiedDateTime": "2021-01-01T00:00:00.0000000Z",
+            "hasAttachments": false,
+            "categories": [],
+            "id": "list2task1",
+            "body": {
+                "content": "Task 1 body",
+                "contentType": "text"
+            },
+            "dueDateTime": {
+                "dateTime": "2021-12-30T22:00:00.0000000",
+                "timeZone": "UTC"
+            }
+        },
+        {
+            "@odata.etag": "etag2",
+            "importance": "normal",
+            "isReminderOn": false,
+            "status": "notStarted",
+            "title": "Task 2",
+            "createdDateTime": "2020-01-01T00:00:00.0000000Z",
+            "lastModifiedDateTime": "2020-01-01T00:00:00.0000000Z",
+            "hasAttachments": false,
+            "categories": [],
+            "id": "list2task2",
+            "body": {
+                "content": "Task 2 body",
+                "contentType": "text"
+            },
+            "dueDateTime": {
+                "dateTime": "2021-12-31T12:00:00.0000000",
+                "timeZone": "UTC"
+            }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists/$entity",
+    "@odata.etag": "etag2",
+    "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET me/todo/lists('<key>')?$select=displayName,isOwner",
+    "displayName": "To Do List 2",
+    "isOwner": true,
+    "isShared": false,
+    "wellknownListName": "none",
+    "id": "todolist2"
+}
