@@ -191,7 +191,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     summary=todo.subject,
                     status=completed,
                     description=todo.body,
-                    due=todo.due.date() if todo.due else None,
+                    due=self._extract_due_date(todo.due) if todo.due else None,
                 )
             )
 
@@ -241,10 +241,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     else False
                 )
             if item.due:
-                if item.due.time() != time(0, 0, 0):
-                    due = item.due.astimezone(self._ha_timezone).date()
-                else:
-                    due = item.due.date()
+                due = self._extract_due_date(item.due)
                 todo[ATTR_DUE] = due
                 if due < dt_util.utcnow().date():
                     overdue_todo = {
@@ -274,8 +271,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_new_todo(self, subject, description=None, due=None, reminder=None):
         """Create a new task for this task list."""
-        if not self._validate_task_permissions():
-            return False
+        self._validate_task_permissions()
 
         new_ms365_todo = await self.hass.async_add_executor_job(self.todolist.new_task)
         await self._async_save_todo(new_ms365_todo, subject, description, due, reminder)
@@ -326,8 +322,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         hatodo=False,
     ):
         """Update a task for this task list."""
-        if not self._validate_task_permissions():
-            return False
+        self._validate_task_permissions()
 
         if not ms365_todo:
             ms365_todo = await self.hass.async_add_executor_job(
@@ -347,8 +342,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_delete_todo(self, todo_id):
         """Delete task for this task list."""
-        if not self._validate_task_permissions():
-            return False
+        self._validate_task_permissions()
 
         ms365_todo = await self.hass.async_add_executor_job(
             self.todolist.get_task, todo_id
@@ -360,8 +354,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_complete_todo(self, todo_id, completed, ms365_todo=None):
         """Complete task for this task list."""
-        if not self._validate_task_permissions():
-            return False
+        self._validate_task_permissions()
 
         if not ms365_todo:
             ms365_todo = await self.hass.async_add_executor_job(
@@ -406,22 +399,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo.body = description
 
         if due:
-            if isinstance(due, str):
-                try:
-                    if len(due) > 10:
-                        ms365_todo.due = dt_util.parse_datetime(due).date()
-                    else:
-                        ms365_todo.due = dt_util.parse_date(due)
-                except ValueError:
-                    raise ServiceValidationError(  # pylint: disable=raise-missing-from
-                        translation_domain=DOMAIN,
-                        translation_key="due_date_invalid",
-                        translation_placeholders={
-                            "due": due,
-                        },
-                    )
-            else:
-                ms365_todo.due = due
+            ms365_todo.due = due
 
             # Possibly required at a future date to store tasks with the HA timezone
             # duedate = ms365_todo.due.replace(tzinfo=self._ha_timezone)
@@ -442,8 +420,19 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
     def _validate_task_permissions(self):
         return self._validate_permissions(
             PERM_TASKS_READWRITE,
-            f"Not authorised to create new To Do - requires permission: {PERM_TASKS_READWRITE}",
+            f"Not authorised to edit To Dos - requires permission: {PERM_TASKS_READWRITE}",
         )
+
+    def _extract_due_date(self, item_due):
+        if item_due.time() != time(0, 0, 0):
+            due = item_due.astimezone(self._ha_timezone)
+            if due.time() != time(0, 0, 0) and due.time() > time(12, 0, 0):
+                due = due.date() + timedelta(days=1)
+            else:
+                due = due.date()
+        else:
+            due = item_due.date()
+        return due
 
 
 def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):
