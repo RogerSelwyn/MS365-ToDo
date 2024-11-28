@@ -77,9 +77,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             YAML_TODO_LIST_SCHEMA,
         )
         ms365_todo_lists = list(ms365_task_dict.values())
-        keys = await self._async_todo_entities(ms365_todo_lists)
-
-        return keys
+        return await self._async_todo_entities(ms365_todo_lists)
 
     async def _async_todo_entities(self, ms365_todo_lists):
         keys = []

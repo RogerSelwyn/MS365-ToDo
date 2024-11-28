@@ -45,7 +45,7 @@ async def test_todo_services_ha(
     requests_mock: Mocker,
 ) -> None:
     """Test HA Services."""
-    listener = 0
+
     list_name = "todo.test_todo_list_2"
     mock_call(requests_mock, URL.TODO_SAVE, "todo_save", method="post")
     mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
@@ -79,7 +79,7 @@ async def test_todo_services_ha(
         return_response=False,
     )
     await hass.async_block_till_done()
-    listener += 1
+    listener = 1
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
@@ -163,7 +163,6 @@ async def test_todo_services_ms365(
     requests_mock: Mocker,
 ) -> None:
     """Test HA Services."""
-    listener = 0
     list_name = "todo.test_todo_list_1"
     mock_call(requests_mock, URL.TODO_SAVE, "todo_save", method="post")
     mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
@@ -181,7 +180,7 @@ async def test_todo_services_ms365(
         return_response=False,
     )
     await hass.async_block_till_done()
-    listener += 1
+    listener = 1
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
