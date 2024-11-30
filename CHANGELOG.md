@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.0.1(2024/11/30)
+
+### 🧰 Maintenance
+- [Sourcery recommended changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/629c980f2074b1efc9f40bf6a11388230120ce4d) - @RogerSelwyn
+- [Add support for migration from o365 integration](https://github.com/RogerSelwyn/MS365-ToDo/commit/14ac6b3bee3d46e90ace11e62bfc46941f59750a) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update CHANGELOG.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/60b7e986de28db9bac374bfa4e06479ddd12d1b3) - @RogerSelwyn
+
+### ✅ Test
+- [Test improvements](https://github.com/RogerSelwyn/MS365-ToDo/commit/06ee95db88a43be30752d9dbfcb497ed51fcac74) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.0.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/3961c75d5495aeb1676cd636e45b2c46cc40e13d) - @RogerSelwyn
+
 ## v1.0.0(2024/11/28)
 ### 🐛 Fixes
 - [Fix error in configuring integration](https://github.com/RogerSelwyn/MS365-ToDo/commit/44b1d8b342d6edb30fcb69b65947f679106a8fc4) - @RogerSelwyn
