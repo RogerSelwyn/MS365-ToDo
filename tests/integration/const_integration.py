@@ -32,6 +32,19 @@ ALT_CONFIG_ENTRY["alt_auth_method"] = True
 RECONFIGURE_CONFIG_ENTRY = deepcopy(BASE_CONFIG_ENTRY)
 del RECONFIGURE_CONFIG_ENTRY["entity_name"]
 
+MIGRATION_CONFIG_ENTRY = {
+    "data": BASE_CONFIG_ENTRY,
+    "options": {},
+    "todos": {
+        "todolist1": {
+            "name": "ToDo List 1",
+            "show_completed": False,
+            "track": False,
+            "todo_list_id": "todolist1",
+        },
+    },
+}
+
 DIAGNOSTIC_GRANTED_PERMISSIONS = [
     "Tasks.Read",
     "User.Read",

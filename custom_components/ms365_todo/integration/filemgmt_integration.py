@@ -42,10 +42,11 @@ def load_yaml_file(path, item_id, item_schema):
     return items
 
 
-def _write_yaml_file(yaml_filepath, cal):
+def write_yaml_file(yaml_filepath, task):
+    """Write the tasks file entry"""
     with open(yaml_filepath, "a", encoding="UTF8") as out:
         out.write("\n")
-        yaml.dump([cal], out, default_flow_style=False, encoding="UTF8")
+        yaml.dump([task], out, default_flow_style=False, encoding="UTF8")
         out.close()
 
 
@@ -72,7 +73,7 @@ async def async_update_todo_list_file(
     yaml_todo_list = _get_task_list_info(yaml_todo_list, track_new_devices)
     if yaml_todo_list[CONF_TODO_LIST_ID] in existing_task_lists:
         return
-    await hass.async_add_executor_job(_write_yaml_file, yaml_filepath, yaml_todo_list)
+    await hass.async_add_executor_job(write_yaml_file, yaml_filepath, yaml_todo_list)
 
 
 def build_yaml_filename(conf: MS365ConfigEntry, filename):

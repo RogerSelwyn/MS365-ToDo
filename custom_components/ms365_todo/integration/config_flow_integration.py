@@ -32,6 +32,7 @@ from .filemgmt_integration import (
     build_yaml_filename,
     read_todo_yaml_file,
     write_todo_yaml_file,
+    write_yaml_file,
 )
 from .utils_integration import build_todo_entity_id
 
@@ -50,6 +51,19 @@ def integration_reconfigure_schema(entry_data):
 def integration_validate_schema(user_input):  # pylint: disable=unused-argument
     """Validate the user input."""
     return {}
+
+
+async def async_integration_imports(hass, import_data):
+    """Do the integration  level import tasks."""
+    todo_lists = import_data["todos"]
+    path = YAML_TODO_LISTS_FILENAME.format(
+        f"_{import_data["data"].get(CONF_ENTITY_NAME)}"
+    )
+    yaml_filepath = build_yaml_file_path(hass, path)
+
+    for todo_list in todo_lists.values():
+        await hass.async_add_executor_job(write_yaml_file, yaml_filepath, todo_list)
+    return
 
 
 class MS365OptionsFlowHandler(config_entries.OptionsFlow):
