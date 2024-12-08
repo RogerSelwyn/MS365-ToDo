@@ -73,15 +73,13 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         """Initialize MS365 options flow."""
 
         self._track_new = entry.options.get(CONF_TRACK_NEW, True)
-        self._entry = entry
         self._todos = []
         self._todo_list = []
         self._todo_list_selected = []
         self._todo_list_selected_original = []
-        self._yaml_filename = build_yaml_filename(self._entry, YAML_TODO_LISTS_FILENAME)
+        self._yaml_filename = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
         self._yaml_filepath = None
         self._todo_no = 0
-        self._user_input = None
 
     async def async_step_init(
         self,
@@ -108,7 +106,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         errors = {}
 
         if user_input:
-            self._user_input = user_input
+            self.config_entry.options = user_input
             self._track_new = user_input[CONF_TRACK_NEW]
             self._todo_list_selected = user_input[CONF_TODO_LIST]
 
@@ -120,7 +118,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="user",
             description_placeholders={
-                CONF_ENTITY_NAME: self._entry.data[CONF_ENTITY_NAME]
+                CONF_ENTITY_NAME: self.config_entry.data[CONF_ENTITY_NAME]
             },
             data_schema=vol.Schema(
                 {
@@ -153,14 +151,14 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
                     return await self.async_step_todo_config()
 
         if self._todo_no == len(self._todo_list_selected):
-            return await self._async_tidy_up(self._user_input)
+            return await self._async_tidy_up(self.config_entry.options)
 
         todo_item = self._get_todo_item()
         last_step = self._todo_no == len(self._todo_list_selected)
         return self.async_show_form(
             step_id="todo_config",
             description_placeholders={
-                CONF_ENTITY_NAME: self._entry.data[CONF_ENTITY_NAME],
+                CONF_ENTITY_NAME: self.config_entry.data[CONF_ENTITY_NAME],
                 CONF_NAME: todo_item[CONF_NAME],
             },
             data_schema=vol.Schema(
@@ -204,14 +202,14 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
             if todo not in self._todo_list_selected:
                 await self._async_delete_todo(todo)
         update = self.async_create_entry(title="", data=user_input)
-        await self.hass.config_entries.async_reload(self._entry.entry_id)
+        await self.hass.config_entries.async_reload(self._config_entry_id)
         return update
 
     async def _async_delete_todo(self, todo):
-        entity_id = build_todo_entity_id(todo, self._entry.data[CONF_ENTITY_NAME])
+        entity_id = build_todo_entity_id(todo, self.config_entry.data[CONF_ENTITY_NAME])
         ent_reg = entity_registry.async_get(self.hass)
         entities = entity_registry.async_entries_for_config_entry(
-            ent_reg, self._entry.entry_id
+            ent_reg, self._config_entry_id
         )
         for entity in entities:
             if entity.entity_id == entity_id:
