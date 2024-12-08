@@ -80,6 +80,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         self._yaml_filename = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
         self._yaml_filepath = None
         self._todo_no = 0
+        self._user_input = None
 
     async def async_step_init(
         self,
@@ -106,7 +107,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         errors = {}
 
         if user_input:
-            self.config_entry.options = user_input
+            self._user_input = user_input
             self._track_new = user_input[CONF_TRACK_NEW]
             self._todo_list_selected = user_input[CONF_TODO_LIST]
 
@@ -151,7 +152,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
                     return await self.async_step_todo_config()
 
         if self._todo_no == len(self._todo_list_selected):
-            return await self._async_tidy_up(self.config_entry.options)
+            return await self._async_tidy_up(self._user_input)
 
         todo_item = self._get_todo_item()
         last_step = self._todo_no == len(self._todo_list_selected)
