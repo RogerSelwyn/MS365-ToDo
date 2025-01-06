@@ -1,7 +1,32 @@
 # Changelog
 
-## v1.0.1(2024/11/30)
+## v1.1.0(2025/01/06)
+### ✨ Enhancements
+- [Sort ToDos by Due/Reminder](https://github.com/RogerSelwyn/MS365-ToDo/commit/833e7194e17c49daada3d20633915b4c7990a219) - @RogerSelwyn
 
+### 🐛 Fixes
+- [Fix issue in previous change](https://github.com/RogerSelwyn/MS365-ToDo/commit/6331010433c6371fb9ca8ac60a6cbfe9602597b9) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Use attributes from base class](https://github.com/RogerSelwyn/MS365-ToDo/commit/7c7a978f2936fb34f0a6e46812e381ccc98ad5d0) - @RogerSelwyn
+- [Add protections in line with base](https://github.com/RogerSelwyn/MS365-ToDo/commit/cbe76b15045851f0e5b10cec96df58ef16cdfc0b) - @RogerSelwyn
+- [Add protections in line with base](https://github.com/RogerSelwyn/MS365-ToDo/commit/e5d0b4a8116f532fe088e98f9a2887a0c216fa00) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update CHANGELOG.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/238c86b1e36236092b860f51d406641c7c0430e8) - @RogerSelwyn
+- [Update README.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/db5b81df13c808195f799a10e99056000435e35c) - @RogerSelwyn
+- [Update README.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/b262cc1b4cc81f2c45c493a3916adbe67c171fa8) - @RogerSelwyn
+- [Update authentication.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/d2fb95c47770686ab2d807cbdc1252421d8cc9d4) - @RogerSelwyn
+- [Update README.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/ba221462940083afd794eaab25fd42b28b41a127) - @RogerSelwyn
+
+### ✅ Test
+- [Bump pytest-cov to 6.0.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/c38c3231efc3f869b059200f969039e7fd978b18) - @RogerSelwyn
+- [Remove unrequired dependencies](https://github.com/RogerSelwyn/MS365-ToDo/commit/5655b5f73ed94ca290d432c752bc0620096f48d1) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.1.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/92f930796b25824ba9e81c39cb6aaa9d39c5ab89) - @RogerSelwyn
+
+## v1.0.1(2024/11/30)
 ### 🧰 Maintenance
 - [Sourcery recommended changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/629c980f2074b1efc9f40bf6a11388230120ce4d) - @RogerSelwyn
 - [Add support for migration from o365 integration](https://github.com/RogerSelwyn/MS365-ToDo/commit/14ac6b3bee3d46e90ace11e62bfc46941f59750a) - @RogerSelwyn
