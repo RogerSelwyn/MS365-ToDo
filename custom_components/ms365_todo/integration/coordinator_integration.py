@@ -2,7 +2,7 @@
 
 import functools as ft
 import logging
-from datetime import timedelta
+from datetime import MAXYEAR, datetime, timedelta, timezone
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
@@ -37,6 +37,7 @@ from .filemgmt_integration import (
 from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_build_todo_query, async_scan_for_todo_lists
 
+MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=timezone.utc)
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -141,9 +142,12 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             error = False
         data, error = await self._async_todos_update_query(key, error)
         if not error:
-            self._data[entity_key][ATTR_DATA] = await self.hass.async_add_executor_job(
-                list, data
+            todos = await self.hass.async_add_executor_job(list, data)
+            todossorted = sorted(
+                todos,
+                key=lambda x: ((x.due or MAXDATETIME), (x.reminder or MAXDATETIME)),
             )
+            self._data[entity_key][ATTR_DATA] = todossorted
 
         self._data[entity_key][ATTR_ERROR] = error
 
