@@ -1,8 +1,14 @@
 # Changelog
 
 ## v1.1.1(2025/01/14)
+### 🧰 Maintenance
+- [Correct integration name](https://github.com/RogerSelwyn/MS365-ToDo/commit/4135275b42f62a358853f91197277d9742dc504c) - @RogerSelwyn
+
 ### ⬆️ Dependencies
 - [Bump Home Assistant to 2024.12.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/2aa7d8b8f92f0ed4ebf9c10dcf491b3452ad6e52) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update CHANGELOG.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/8dace2d273f6ff53057ac63fb0997dcaac29bcfd) - @RogerSelwyn
 
 ### 🔖 Release
 - [Release v1.1.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/6f02b0554fc5222dffccb1c67d52ca608aa742b5) - @RogerSelwyn
