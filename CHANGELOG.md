@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.1(2025/01/14)
+### ⬆️ Dependencies
+- [Bump Home Assistant to 2024.12.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/2aa7d8b8f92f0ed4ebf9c10dcf491b3452ad6e52) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.1.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/6f02b0554fc5222dffccb1c67d52ca608aa742b5) - @RogerSelwyn
+
 ## v1.1.0(2025/01/06)
 ### ✨ Enhancements
 - [Sort ToDos by Due/Reminder](https://github.com/RogerSelwyn/MS365-ToDo/commit/833e7194e17c49daada3d20633915b4c7990a219) - @RogerSelwyn
