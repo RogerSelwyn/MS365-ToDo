@@ -9,6 +9,7 @@ class MS365Mocks:
 
     def standard_mocks(self, requests_mock):
         """Setup the standard mocks."""
+        mock_call(requests_mock, URL.OPENID, "openid")
         mock_call(requests_mock, URL.ME, "me")
         mock_call(requests_mock, URL.TODO_LISTS, "todo_lists")
         mock_call(requests_mock, URL.TODO_LIST_1, "todo_list_1")

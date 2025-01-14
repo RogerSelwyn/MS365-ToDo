@@ -1,10 +1,11 @@
 """Permissions processes for todo."""
 
+from copy import deepcopy
+
 from ..classes.permissions import BasePermissions
 from ..const import (
     CONF_ENABLE_UPDATE,
-    PERM_OFFLINE_ACCESS,
-    PERM_USER_READ,
+    PERM_BASE_PERMISSIONS,
 )
 from .const_integration import PERM_TASKS_READ, PERM_TASKS_READWRITE
 
@@ -22,7 +23,7 @@ class Permissions(BasePermissions):
     def requested_permissions(self):
         """Return the required scope."""
         if not self._requested_permissions:
-            self._requested_permissions = [PERM_OFFLINE_ACCESS, PERM_USER_READ]
+            self._requested_permissions = deepcopy(PERM_BASE_PERMISSIONS)
             self._build_todo_permissions()
 
         return self._requested_permissions
