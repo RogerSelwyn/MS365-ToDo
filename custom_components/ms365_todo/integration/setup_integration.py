@@ -6,7 +6,7 @@ import os
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-from ..helpers.config_entry import MS365ConfigEntry
+from ..classes.config_entry import MS365ConfigEntry
 from .const_integration import PLATFORMS, YAML_TODO_LISTS_FILENAME
 from .coordinator_integration import MS365SensorCordinator
 from .filemgmt_integration import (

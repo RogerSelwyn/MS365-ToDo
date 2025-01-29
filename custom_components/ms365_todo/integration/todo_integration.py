@@ -12,6 +12,7 @@ from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
 
+from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
 from ..const import (
     ATTR_DATA,
@@ -21,7 +22,6 @@ from ..const import (
     DATETIME_FORMAT,
     EVENT_HA_EVENT,
 )
-from ..helpers.config_entry import MS365ConfigEntry
 from .const_integration import (
     ATTR_ALL_TODOS,
     ATTR_COMPLETED,
