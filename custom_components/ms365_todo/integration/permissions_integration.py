@@ -13,9 +13,9 @@ from .const_integration import PERM_TASKS_READ, PERM_TASKS_READWRITE
 class Permissions(BasePermissions):
     """Class in support of building permission sets."""
 
-    def __init__(self, hass, config):
+    def __init__(self, hass, config, token_backend):
         """Initialise the class."""
-        super().__init__(hass, config)
+        super().__init__(hass, config, token_backend)
 
         self._enable_update = self._config.get(CONF_ENABLE_UPDATE, False)
 
