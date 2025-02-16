@@ -11,7 +11,7 @@ Since the middle of 2024, Microsoft has mandated that any new app registrations 
 ## Getting the client ID and client secret
 To allow authentication, you first need to register your application in Entra ID App Registrations:
 
-1. Login at [Azure Portal (App Registrations)](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade). Personal accounts may receive an authentication notification that can be ignored.
+1. Login at [Azure Portal (App Registrations)](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade). Personal accounts may receive an authentication notification that can be ignored. 
 
 2. Create a new App Registration. Give it a name. In Supported account types, choose one of the following as needed by your setup:
    * `Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)`.   

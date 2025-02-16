@@ -34,7 +34,7 @@ def _build_file_token(scope):
     """Build a token"""
     perms = f"{scope} User.Read email openid profile"
     expire = int(time.time() + TOKEN_TIME)
-    token = {
+    return {
         "AccessToken": {
             f"fake-user-id.fake-home-id-login.microsoftonline.com-accesstoken-{CLIENT_ID}-common-{perms.lower()}": {
                 "credential_type": "AccessToken",
@@ -89,8 +89,6 @@ def _build_file_token(scope):
             }
         },
     }
-    print(token)
-    return token
 
 
 def build_retrieved_token(scope):
@@ -168,8 +166,8 @@ def check_entity_state(
     # print(state)
     assert state.state == entity_state
     if entity_attributes:
-        print("*************************** State Attributes")
-        print(state.attributes)
+        # print("*************************** State Attributes")
+        # print(state.attributes)
         if "data" in state.attributes:
             assert state.attributes["data"] == entity_attributes
         else:
