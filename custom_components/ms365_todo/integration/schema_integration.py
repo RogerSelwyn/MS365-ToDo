@@ -26,7 +26,7 @@ CONFIG_SCHEMA_INTEGRATION = {
 TODO_SERVICE_NEW_SCHEMA = {
     vol.Required(ATTR_SUBJECT): cv.string,
     vol.Optional(ATTR_DESCRIPTION): cv.string,
-    vol.Optional(ATTR_DUE): cv.date,
+    vol.Optional(ATTR_DUE): vol.Any(cv.date, cv.datetime),
     vol.Optional(ATTR_REMINDER): vol.Any(cv.date, cv.datetime),
 }
 
@@ -34,7 +34,7 @@ TODO_SERVICE_UPDATE_SCHEMA = {
     vol.Required(ATTR_TODO_ID): cv.string,
     vol.Optional(ATTR_SUBJECT): cv.string,
     vol.Optional(ATTR_DESCRIPTION): cv.string,
-    vol.Optional(ATTR_DUE): cv.date,
+    vol.Optional(ATTR_DUE): vol.Any(cv.date, cv.datetime),
     vol.Optional(ATTR_REMINDER): vol.Any(cv.date, cv.datetime),
 }
 

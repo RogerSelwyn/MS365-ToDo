@@ -1,7 +1,7 @@
 """Todo processing."""
 
 import logging
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 from homeassistant.components.todo import TodoItem, TodoListEntity
 from homeassistant.components.todo.const import TodoItemStatus, TodoListEntityFeature
@@ -152,6 +152,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 TodoListEntityFeature.CREATE_TODO_ITEM
                 | TodoListEntityFeature.UPDATE_TODO_ITEM
                 | TodoListEntityFeature.DELETE_TODO_ITEM
+                | TodoListEntityFeature.SET_DUE_DATETIME_ON_ITEM
                 | TodoListEntityFeature.SET_DUE_DATE_ON_ITEM
                 | TodoListEntityFeature.SET_DESCRIPTION_ON_ITEM
             )
@@ -191,7 +192,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     summary=todo.subject,
                     status=completed,
                     description=todo.body,
-                    due=self._extract_due_date(todo.due) if todo.due else None,
+                    due=todo.reminder if todo.is_reminder_on else todo.due,
                 )
             )
 
@@ -241,13 +242,12 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     else False
                 )
             if item.due:
-                due = self._extract_due_date(item.due)
-                todo[ATTR_DUE] = due
-                if due < dt_util.utcnow().date():
+                todo[ATTR_DUE] = item.due
+                if item.due < dt_util.utcnow():
                     overdue_todo = {
                         ATTR_SUBJECT: item.subject,
                         ATTR_TODO_ID: item.task_id,
-                        ATTR_DUE: due,
+                        ATTR_DUE: item.due,
                     }
                     if item.is_reminder_on:
                         overdue_todo[ATTR_REMINDER] = item.reminder
@@ -265,8 +265,12 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_create_todo_item(self, item: TodoItem) -> None:
         """Add an item to the To Do list."""
+        reminder = item.due if isinstance(item.due, datetime) else None
         await self.async_new_todo(
-            subject=item.summary, description=item.description, due=item.due
+            subject=item.summary,
+            description=item.description,
+            due=item.due,
+            reminder=reminder,
         )
 
     async def async_new_todo(self, subject, description=None, due=None, reminder=None):
@@ -302,11 +306,13 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             or item.description != ms365_todo.body
             or (item.due and item.due != ms365_todo.due)
         ):
+            reminder = item.due if isinstance(item.due, datetime) else None
             await self.async_update_todo(
                 todo_id=item.uid,
                 subject=item.summary,
                 description=item.description,
                 due=item.due,
+                reminder=reminder,
                 ms365_todo=ms365_todo,
                 hatodo=True,
             )
@@ -399,16 +405,17 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo.body = description
 
         if due:
-            ms365_todo.due = due
-
-            # Possibly required at a future date to store tasks with the HA timezone
-            # duedate = ms365_todo.due.replace(tzinfo=self._ha_timezone)
-            # ms365_todo.due = duedate
+            ms365_todo.due = self._add_timezone(due)
 
         if reminder:
-            ms365_todo.reminder = reminder
+            ms365_todo.reminder = self._add_timezone(reminder)
 
         await self.hass.async_add_executor_job(ms365_todo.save)
+
+    def _add_timezone(self, value):
+        if isinstance(value, datetime) and not value.tzinfo:
+            return value.replace(tzinfo=self._ha_timezone)
+        return value
 
     def _raise_event(self, event_type, todo_id):
         self.hass.bus.fire(
@@ -422,17 +429,6 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             PERM_TASKS_READWRITE,
             f"Not authorised to edit To Dos - requires permission: {PERM_TASKS_READWRITE}",
         )
-
-    def _extract_due_date(self, item_due):
-        if item_due.time() != time(0, 0, 0):
-            due = item_due.astimezone(self._ha_timezone)
-            if due.time() != time(0, 0, 0) and due.time() > time(12, 0, 0):
-                due = due.date() + timedelta(days=1)
-            else:
-                due = due.date()
-        else:
-            due = item_due.date()
-        return due
 
 
 def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):

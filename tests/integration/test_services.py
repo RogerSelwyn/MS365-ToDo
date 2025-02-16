@@ -15,7 +15,7 @@ from custom_components.ms365_todo.const import CONF_ENABLE_UPDATE
 from ..conftest import MS365MockConfigEntry
 from ..helpers.utils import mock_call
 from .const_integration import DOMAIN, URL
-from .data_integration.state import TODO_GET_ITEMS
+from .data_integration.state import TODO_GET_ITEMS, TODO_UPDATE_ARGS
 from .fixtures import ListenerSetupData
 
 
@@ -82,6 +82,24 @@ async def test_todo_services_ha(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
+    list_name = "todo.test_todo_list_1"
+    await hass.services.async_call(
+        TODO_DOMAIN,
+        TodoServices.ADD_ITEM,
+        {
+            "entity_id": list_name,
+            "item": "Test item",
+            "due_datetime": "2023-11-17T13:30:00.000Z",
+            "description": "Test description",
+        },
+        blocking=True,
+        return_response=False,
+    )
+    await hass.async_block_till_done()
+    listener += 1
+    assert len(listener_setup.events) == listener
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
+
     with patch("O365.tasks_graph.Task.save") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
@@ -99,6 +117,27 @@ async def test_todo_services_ha(
     listener += 1
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
+
+    with patch(
+        "custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo"
+    ) as mock_save:
+        await hass.services.async_call(
+            TODO_DOMAIN,
+            TodoServices.UPDATE_ITEM,
+            {
+                "entity_id": list_name,
+                "item": "Task 1",
+                "due_datetime": "2023-11-17T13:30:00.000Z",
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+    listener += 1
+    assert len(listener_setup.events) == listener
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
+    assert str(mock_save.call_args) == TODO_UPDATE_ARGS
 
     with patch("O365.tasks_graph.Task.save") as mock_save:
         await hass.services.async_call(
@@ -388,18 +427,3 @@ async def test_failed_permission(
         )
     await hass.async_block_till_done()
     assert "To Do is already incomplete" in str(exc_info.value)
-
-    with pytest.raises(ServiceValidationError) as exc_info:
-        await hass.services.async_call(
-            TODO_DOMAIN,
-            TodoServices.UPDATE_ITEM,
-            {
-                "entity_id": list_name,
-                "item": "Task 1",
-                "due_datetime": "2023-11-17T13:30:00.000Z",
-            },
-            blocking=True,
-            return_response=False,
-        )
-    await hass.async_block_till_done()
-    assert "Entity does not support setting field: due_datetime" in str(exc_info.value)
