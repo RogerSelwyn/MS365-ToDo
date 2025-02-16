@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3.1(2025/02/16)
+### 🐛 Fixes
+- [Fix due date showing incorrect - return data as provided by MS](https://github.com/RogerSelwyn/MS365-ToDo/commit/e2da8600993a70017afa02a0d84e707c91f3bb19) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.3.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/3d51fca809cabe84c3197dae8aa4518ba950bcb4) - @RogerSelwyn
+
 ## v1.3.0(2025/02/16)
 ### 🐛 Fixes
 - [Handle expired token/invalid grant](https://github.com/RogerSelwyn/MS365-ToDo/commit/81a0a1c799de18470602b843e6ee619d3fa2ba26) - @RogerSelwyn
