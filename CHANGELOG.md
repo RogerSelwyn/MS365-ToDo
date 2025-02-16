@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.3.0(2025/02/16)
+### 🐛 Fixes
+- [Handle expired token/invalid grant](https://github.com/RogerSelwyn/MS365-ToDo/commit/81a0a1c799de18470602b843e6ee619d3fa2ba26) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Add bug reporting templates](https://github.com/RogerSelwyn/MS365-ToDo/commit/e139da7d2e1b61db6f3059f20e0ec3a2f012a0a1) - @RogerSelwyn
+- [Updated with latest msal changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/935a584f1f42812a9fa35ca010640e7352222a79) - @RogerSelwyn
+- [Update inline with fix in Mail](https://github.com/RogerSelwyn/MS365-ToDo/commit/60ae5d1dfb609aa24b234d0f21aea4855e344e34) - @RogerSelwyn
+- [Add link to re-configure in Issue text](https://github.com/RogerSelwyn/MS365-ToDo/commit/575cd30ef57844278da3a77b6356ae761a8830ae) - @RogerSelwyn
+- [Break account out from permissions](https://github.com/RogerSelwyn/MS365-ToDo/commit/c80f19e1e745ac8a68e349b1ba14aecf2f679b11) - @RogerSelwyn
+- [Tidy up runtime_data](https://github.com/RogerSelwyn/MS365-ToDo/commit/13088803c1d4fe5dc172809fc1694a90dd7b6939) - @RogerSelwyn
+- [Break out token_backend from permissions](https://github.com/RogerSelwyn/MS365-ToDo/commit/3843beb8f76479a6d64412fcb84122ae59c25c7a) - @RogerSelwyn
+- [build(deps): bump ruff from 0.9.1 to 0.9.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/327514758abcf2dd6b5b577e8e648a70da8c2048) - @dependabot[bot]
+
+### 🔖 Release
+- [Release v1..3.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/f9128edaa5897d34f8a604e200012d62e49d4ba1) - @RogerSelwyn
+
 ## v1.1.1(2025/01/14)
 ### 🧰 Maintenance
 - [Correct integration name](https://github.com/RogerSelwyn/MS365-ToDo/commit/4135275b42f62a358853f91197277d9742dc504c) - @RogerSelwyn
