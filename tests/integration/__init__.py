@@ -2,7 +2,7 @@
 
 """Tests for MS365 ToDo."""
 
-from custom_components.ms365_todo.classes import permissions  # noqa: F401
+from custom_components.ms365_todo.classes import api  # noqa: F401
 from custom_components.ms365_todo.diagnostics import (
     async_get_config_entry_diagnostics,  # noqa: F401
 )

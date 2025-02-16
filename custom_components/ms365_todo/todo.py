@@ -3,7 +3,7 @@
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .helpers.config_entry import MS365ConfigEntry
+from .classes.config_entry import MS365ConfigEntry
 from .integration.todo_integration import async_integration_setup_entry
 
 

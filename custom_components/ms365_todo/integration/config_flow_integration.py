@@ -12,11 +12,11 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import entity_registry
 from homeassistant.helpers.selector import BooleanSelector
 
+from ..classes.config_entry import MS365ConfigEntry
 from ..const import (
     CONF_ENABLE_UPDATE,
     CONF_ENTITY_NAME,
 )
-from ..helpers.config_entry import MS365ConfigEntry
 from ..helpers.utils import add_attribute_to_item
 from .const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
@@ -57,7 +57,7 @@ async def async_integration_imports(hass, import_data):
     """Do the integration  level import tasks."""
     todo_lists = import_data["todos"]
     path = YAML_TODO_LISTS_FILENAME.format(
-        f"_{import_data["data"].get(CONF_ENTITY_NAME)}"
+        f"_{import_data['data'].get(CONF_ENTITY_NAME)}"
     )
     yaml_filepath = build_yaml_file_path(hass, path)
 

@@ -4,6 +4,7 @@
 from copy import deepcopy
 from enum import Enum
 
+from custom_components.ms365_todo.config_flow import MS365ConfigFlow  # noqa: F401
 from custom_components.ms365_todo.const import (  # noqa: F401
     AUTH_CALLBACK_PATH_ALT,
     AUTH_CALLBACK_PATH_DEFAULT,
@@ -48,12 +49,11 @@ MIGRATION_CONFIG_ENTRY = {
 DIAGNOSTIC_GRANTED_PERMISSIONS = [
     "Tasks.Read",
     "User.Read",
-    "profile",
-    "openid",
     "email",
+    "openid",
+    "profile",
 ]
 DIAGNOSTIC_REQUESTED_PERMISSIONS = [
-    "offline_access",
     "User.Read",
     "Tasks.Read",
 ]
@@ -66,6 +66,9 @@ UPDATE_TODO_LIST = ["ToDo List 1"]
 class URL(Enum):
     """List of URLs"""
 
+    OPENID = (
+        "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
+    )
     ME = "https://graph.microsoft.com/v1.0/me"
     TODO_LISTS = "https://graph.microsoft.com/v1.0/me/todo/lists"
     TODO_LIST_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1"

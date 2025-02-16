@@ -11,11 +11,10 @@ from homeassistant.exceptions import ServiceValidationError
 from requests_mock import Mocker
 
 from custom_components.ms365_todo.const import CONF_ENABLE_UPDATE
-from custom_components.ms365_todo.integration.const_integration import DOMAIN
 
 from ..conftest import MS365MockConfigEntry
 from ..helpers.utils import mock_call
-from .const_integration import URL
+from .const_integration import DOMAIN, URL
 from .data_integration.state import TODO_GET_ITEMS
 from .fixtures import ListenerSetupData
 
@@ -270,7 +269,7 @@ async def test_failed_permission(
     mock_call(requests_mock, URL.TODO_GET_2, "todo_get_2")
     with (
         patch(
-            "custom_components.ms365_todo.integration.todo_integration.PERM_TASKS_READWRITE",
+            f"custom_components.{DOMAIN}.integration.todo_integration.PERM_TASKS_READWRITE",
             failed_perm,
         ),
         pytest.raises(ServiceValidationError) as exc_info,
@@ -294,7 +293,7 @@ async def test_failed_permission(
 
     with (
         patch(
-            "custom_components.ms365_todo.integration.todo_integration.PERM_TASKS_READWRITE",
+            f"custom_components.{DOMAIN}.integration.todo_integration.PERM_TASKS_READWRITE",
             failed_perm,
         ),
         pytest.raises(ServiceValidationError) as exc_info,
@@ -317,7 +316,7 @@ async def test_failed_permission(
 
     with (
         patch(
-            "custom_components.ms365_todo.integration.todo_integration.PERM_TASKS_READWRITE",
+            f"custom_components.{DOMAIN}.integration.todo_integration.PERM_TASKS_READWRITE",
             failed_perm,
         ),
         pytest.raises(ServiceValidationError) as exc_info,
@@ -340,7 +339,7 @@ async def test_failed_permission(
 
     with (
         patch(
-            "custom_components.ms365_todo.integration.todo_integration.PERM_TASKS_READWRITE",
+            f"custom_components.{DOMAIN}.integration.todo_integration.PERM_TASKS_READWRITE",
             failed_perm,
         ),
         pytest.raises(ServiceValidationError) as exc_info,
