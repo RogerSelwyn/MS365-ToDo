@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.3.2(2025/02/17)
+### 🐛 Fixes
+- [Fix permissions repair text](https://github.com/RogerSelwyn/MS365-ToDo/commit/4111ca320d8e8dbf5108948f272555129b73609c) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Reduce constraint on O365 dependency](https://github.com/RogerSelwyn/MS365-ToDo/commit/bbbd96212c4043e652fce6afab83174d9f805b4d) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/b18217b667f61e0e16ae3f0845f2ea0f06130df0) - @actions-user
+
+### 🔖 Release
+- [Release v1.3.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/3220ccd759f5a35ea000e151e2252ee841552540) - @RogerSelwyn
+
+
 ## v1.3.1(2025/02/16)
 ### 🐛 Fixes
 - [Fix due date showing incorrect - return data as provided by MS](https://github.com/RogerSelwyn/MS365-ToDo/commit/e2da8600993a70017afa02a0d84e707c91f3bb19) - @RogerSelwyn
