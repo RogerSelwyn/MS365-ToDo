@@ -230,7 +230,7 @@ async def test_todo_services_ms365(
                 "entity_id": list_name,
                 "todo_id": "list1task1",
                 "due": "2099-01-01",
-                "reminder": "2025-01-01T12:00:00+0000",
+                "reminder": "2025-01-01T12:00:00",
             },
             blocking=True,
             return_response=False,
