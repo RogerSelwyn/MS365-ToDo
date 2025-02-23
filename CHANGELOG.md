@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4.0(2025/02/23)
+### ✨ Enhancements
+- [Add support for 21Vianet (China)](https://github.com/RogerSelwyn/MS365-ToDo/commit/8a2667d61570221a22bc7a02f92a91f20909e619) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update installation_and_configuration.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/728381a9234a8c66d115e5c6fa3ef943e0d1fe29) - @RogerSelwyn
+- [Update bug_report.yml](https://github.com/RogerSelwyn/MS365-ToDo/commit/0ef3a9b861148481c86e7f500f89c49c553509dc) - @RogerSelwyn
+
+### ✅ Test
+- [Tweak test to validate addition of timezone](https://github.com/RogerSelwyn/MS365-ToDo/commit/4ab833b993e5bdca98f91fbb02f1c8e465b482d5) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.4.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/a9835c2b2fcda94de169d0f936c04a055799ccc9) - @RogerSelwyn
+
 ## v1.3.2(2025/02/17)
 ### 🐛 Fixes
 - [Fix permissions repair text](https://github.com/RogerSelwyn/MS365-ToDo/commit/4111ca320d8e8dbf5108948f272555129b73609c) - @RogerSelwyn
