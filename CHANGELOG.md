@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.4.1(2025/02/24)
+### 🐛 Fixes
+- [Ensure timezone is set on protocol](https://github.com/RogerSelwyn/MS365-ToDo/commit/e5179293872d125f374946b74e62ba0391b60833) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.4.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/9dac4dd09bf86dfd25cd60043eb0fa535041e058) - @RogerSelwyn
+  
 ## v1.4.0(2025/02/23)
 ### ✨ Enhancements
 - [Add support for 21Vianet (China)](https://github.com/RogerSelwyn/MS365-ToDo/commit/8a2667d61570221a22bc7a02f92a91f20909e619) - @RogerSelwyn
