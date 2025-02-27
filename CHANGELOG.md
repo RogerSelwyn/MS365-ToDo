@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.4.2 (2025/02/27)
+### 🐛 Fixes
+- [Tasks not being marked as complete/uncomplete via HA](https://github.com/RogerSelwyn/MS365-ToDo/commit/aa2540c9b265991aecb64a29a6ff58c18acdca10) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Sourcery recommendations](https://github.com/RogerSelwyn/MS365-ToDo/commit/4beebd4290e8eac19e03a7286f6efd6d7c46206d) - @RogerSelwyn
+- [Workflow ordering](https://github.com/RogerSelwyn/MS365-ToDo/commit/9a0f15c459a9803f170ec4b73033195a519954ee) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update enables list](https://github.com/RogerSelwyn/MS365-ToDo/commit/7bbb0b2a1b32645f10ef694d1f30ed99dfe35d13) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.4.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/671648118621864362e3c8c0bf9599c51c6ffd77) - @RogerSelwyn
+
+
+
+
 ## v1.4.1(2025/02/24)
 ### 🐛 Fixes
 - [Ensure timezone is set on protocol](https://github.com/RogerSelwyn/MS365-ToDo/commit/e5179293872d125f374946b74e62ba0391b60833) - @RogerSelwyn
