@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.4.3 (2025/03/14)
+### 🐛 Fixes
+- [Fix issue with token refresh - pin MSAL to 1.13.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/afd4de08337f7bfe7c2eafdcd702105dcf6cbacc) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Update bug report](https://github.com/RogerSelwyn/MS365-ToDo/commit/5edea466ad81b5bead0dde2b5b34758559bb8b88) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/3d642b6a281fe722d01f33c0a140f5d9c88cf70a) - @actions-user
+
+### 🔖 Release
+- [Release v1.4.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/9686664c52786d1bbaf343efd0ca327b23c70b06) - @RogerSelwyn
+
+
+
+
 ## v1.4.2 (2025/02/27)
 ### 🐛 Fixes
 - [Tasks not being marked as complete/uncomplete via HA](https://github.com/RogerSelwyn/MS365-ToDo/commit/aa2540c9b265991aecb64a29a6ff58c18acdca10) - @RogerSelwyn
