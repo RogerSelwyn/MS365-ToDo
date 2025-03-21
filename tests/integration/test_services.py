@@ -100,7 +100,7 @@ async def test_todo_services_ha(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.UPDATE_ITEM,
@@ -139,7 +139,7 @@ async def test_todo_services_ha(
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
     assert str(mock_save.call_args) == TODO_UPDATE_ARGS
 
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.UPDATE_ITEM,
@@ -160,7 +160,7 @@ async def test_todo_services_ha(
     ]
 
     mock_call(requests_mock, URL.TODO_LIST_1_TASKS, "todo_list_1_tasks_completed2")
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.UPDATE_ITEM,
@@ -176,7 +176,7 @@ async def test_todo_services_ha(
     assert mock_save.called
     assert len(listener_setup.events) == listener
 
-    with patch("O365.tasks_graph.Task.delete") as mock_delete:
+    with patch("O365.tasks.Task.delete") as mock_delete:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.REMOVE_ITEM,
@@ -222,7 +222,7 @@ async def test_todo_services_ms365(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             DOMAIN,
             "update_todo",
@@ -241,7 +241,7 @@ async def test_todo_services_ms365(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
 
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             DOMAIN,
             "complete_todo",
@@ -262,7 +262,7 @@ async def test_todo_services_ms365(
     ]
 
     mock_call(requests_mock, URL.TODO_LIST_1_TASKS, "todo_list_1_tasks_completed2")
-    with patch("O365.tasks_graph.Task.save") as mock_save:
+    with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
             DOMAIN,
             "complete_todo",
@@ -278,7 +278,7 @@ async def test_todo_services_ms365(
     assert mock_save.called
     assert len(listener_setup.events) == listener
 
-    with patch("O365.tasks_graph.Task.delete") as mock_delete:
+    with patch("O365.tasks.Task.delete") as mock_delete:
         await hass.services.async_call(
             DOMAIN,
             "delete_todo",

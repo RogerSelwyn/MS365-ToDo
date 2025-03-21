@@ -92,7 +92,7 @@ async def test_query(
         },
     )
 
-    with patch("O365.tasks_graph.Folder.get_tasks") as mock_get_tasks:
+    with patch("O365.tasks.Folder.get_tasks") as mock_get_tasks:
         result = await hass.config_entries.options.async_configure(
             result["flow_id"],
             user_input={
@@ -137,7 +137,7 @@ async def test_fetch_error(
     """Test error fetching data."""
     coordinator = base_config_entry.runtime_data.coordinator
     with patch(
-        "O365.tasks_graph.Folder.get_tasks",
+        "O365.tasks.Folder.get_tasks",
         side_effect=HTTPError(),
     ):
         await coordinator.async_refresh()

@@ -64,7 +64,7 @@ async def test_httperror(
 
     base_config_entry.add_to_hass(hass)
     with patch(
-        "O365.tasks_graph.ToDo.get_folder",
+        "O365.tasks.ToDo.get_folder",
         side_effect=HTTPError(),
     ):
         await hass.config_entries.async_setup(base_config_entry.entry_id)
