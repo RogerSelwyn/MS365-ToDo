@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.4.4 (2025/03/22)
+### ✨ Enhancements
+- [Add ability to clear Due and Reminder](https://github.com/RogerSelwyn/MS365-ToDo/commit/40b788b8572aafcf1244fbe90ea2cb9b818c341f) - @RogerSelwyn
+
+### 🐛 Fixes
+- [Fix in python-o365 to enable empty To Do description](https://github.com/RogerSelwyn/MS365-ToDo/commit/a2560ef36c64337db5716b2b915be2b511e37291) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Update ruff to 0.11.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/5500bf75580128371588f5704aa24b816e7d9961) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/bfbfb88a96ff45c4dbd67114fb5e7f4f7e6b2733) - @actions-user
+
+### 🔖 Release
+- [Release v1.4.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/c891b2977be72adcdc8a140087c5115c0938c3a7) - @RogerSelwyn
+
+### Other
+- [build(deps): bump ruff from 0.11.0 to 0.11.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/139965356b36123d8fa6dfafed4d5e48cc4b4524) - @dependabot[bot]
+- [tesr: Fix tests for python-o365 upgrade](https://github.com/RogerSelwyn/MS365-ToDo/commit/5c14494cdd18b41aeb910f599d36564f4d1302a1) - @RogerSelwyn
+
+
+
+
 ## v1.4.3 (2025/03/14)
 ### 🐛 Fixes
 - [Fix issue with token refresh - pin MSAL to 1.13.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/afd4de08337f7bfe7c2eafdcd702105dcf6cbacc) - @RogerSelwyn
