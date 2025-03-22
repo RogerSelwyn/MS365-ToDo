@@ -14,12 +14,6 @@
 ### 🔖 Release
 - [Release v1.4.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/c891b2977be72adcdc8a140087c5115c0938c3a7) - @RogerSelwyn
 
-### Other
-- [build(deps): bump ruff from 0.11.0 to 0.11.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/139965356b36123d8fa6dfafed4d5e48cc4b4524) - @dependabot[bot]
-- [tesr: Fix tests for python-o365 upgrade](https://github.com/RogerSelwyn/MS365-ToDo/commit/5c14494cdd18b41aeb910f599d36564f4d1302a1) - @RogerSelwyn
-
-
-
 
 ## v1.4.3 (2025/03/14)
 ### 🐛 Fixes
