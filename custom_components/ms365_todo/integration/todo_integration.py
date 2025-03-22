@@ -305,6 +305,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             item.summary != ms365_todo.subject
             or item.description != ms365_todo.body
             or (item.due and item.due != ms365_todo.due)
+            or (not item.due and (ms365_todo.due or ms365_todo.reminder))
         ):
             reminder = item.due if isinstance(item.due, datetime) else None
             await self.async_update_todo(
@@ -312,7 +313,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 subject=item.summary,
                 description=item.description,
                 due=item.due,
+                remove_due=not bool(item.due),
                 reminder=reminder,
+                remove_reminder=not bool(item.due),
                 ms365_todo=ms365_todo,
                 hatodo=True,
             )
@@ -323,7 +326,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         subject=None,
         description=None,
         due=None,
+        remove_due=None,
         reminder=None,
+        remove_reminder=None,
         ms365_todo=None,
         hatodo=False,
     ):
@@ -335,7 +340,14 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 self.todolist.get_task, todo_id
             )
         await self._async_save_todo(
-            ms365_todo, subject, description, due, reminder, hatodo
+            ms365_todo,
+            subject,
+            description,
+            due,
+            reminder,
+            hatodo,
+            remove_due,
+            remove_reminder,
         )
         self._raise_event(EVENT_UPDATE_TODO, todo_id)
         await self.coordinator.async_refresh()
@@ -396,7 +408,15 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self._raise_event(EVENT_UNCOMPLETED_TODO, todo_id)
 
     async def _async_save_todo(
-        self, ms365_todo, subject, description, due, reminder, hatodo=False
+        self,
+        ms365_todo,
+        subject,
+        description,
+        due,
+        reminder,
+        hatodo=False,
+        remove_due=None,
+        remove_reminder=None,
     ):
         # sourcery skip: raise-from-previous-error
         if subject or hatodo:
@@ -406,9 +426,13 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
         if due:
             ms365_todo.due = self._add_timezone(due)
+        if remove_due:
+            ms365_todo.due = None
 
         if reminder:
             ms365_todo.reminder = self._add_timezone(reminder)
+        if remove_reminder:
+            ms365_todo.reminder = None
 
         await self.hass.async_add_executor_job(ms365_todo.save)
 

@@ -10,6 +10,8 @@ from .const_integration import (
     ATTR_DESCRIPTION,
     ATTR_DUE,
     ATTR_REMINDER,
+    ATTR_REMOVE_DUE,
+    ATTR_REMOVE_REMINDER,
     ATTR_SUBJECT,
     ATTR_TODO_ID,
     CONF_DUE_HOURS_BACKWARD_TO_GET,
@@ -30,13 +32,21 @@ TODO_SERVICE_NEW_SCHEMA = {
     vol.Optional(ATTR_REMINDER): vol.Any(cv.date, cv.datetime),
 }
 
-TODO_SERVICE_UPDATE_SCHEMA = {
-    vol.Required(ATTR_TODO_ID): cv.string,
-    vol.Optional(ATTR_SUBJECT): cv.string,
-    vol.Optional(ATTR_DESCRIPTION): cv.string,
-    vol.Optional(ATTR_DUE): vol.Any(cv.date, cv.datetime),
-    vol.Optional(ATTR_REMINDER): vol.Any(cv.date, cv.datetime),
-}
+TODO_SERVICE_UPDATE_SCHEMA = vol.All(
+    cv.make_entity_service_schema(
+        {
+            vol.Required(ATTR_TODO_ID): cv.string,
+            vol.Optional(ATTR_SUBJECT): cv.string,
+            vol.Optional(ATTR_DESCRIPTION): cv.string,
+            vol.Optional(ATTR_DUE): vol.Any(cv.date, cv.datetime),
+            vol.Optional(ATTR_REMOVE_DUE): cv.boolean,
+            vol.Optional(ATTR_REMINDER): vol.Any(cv.date, cv.datetime),
+            vol.Optional(ATTR_REMOVE_REMINDER): cv.boolean,
+        }
+    ),
+    cv.has_at_most_one_key(ATTR_DUE, ATTR_REMOVE_DUE),
+    cv.has_at_most_one_key(ATTR_REMINDER, ATTR_REMOVE_REMINDER),
+)
 
 TODO_SERVICE_DELETE_SCHEMA = {
     vol.Required(ATTR_TODO_ID): cv.string,

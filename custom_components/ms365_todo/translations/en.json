@@ -144,9 +144,17 @@
                     "description": "When the To Do is due by",
                     "name": "Due"
                 },
+                "remove_due": {
+                    "description": "Remove Due",
+                    "name": "Remove Due"
+                },
                 "reminder": {
                     "description": "When a reminder is needed",
                     "name": "Reminder"
+                },
+                "remove_reminder": {
+                    "description": "Remove Reminder",
+                    "name": "Remove Reminder"
                 }
             }
         },
