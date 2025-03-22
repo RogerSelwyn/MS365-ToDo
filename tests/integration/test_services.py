@@ -15,7 +15,11 @@ from custom_components.ms365_todo.const import CONF_ENABLE_UPDATE
 from ..conftest import MS365MockConfigEntry
 from ..helpers.utils import mock_call
 from .const_integration import DOMAIN, URL
-from .data_integration.state import TODO_GET_ITEMS, TODO_UPDATE_ARGS
+from .data_integration.state import (
+    TODO_GET_ITEMS,
+    TODO_REMOVE_DUE_ARGS,
+    TODO_UPDATE_ARGS,
+)
 from .fixtures import ListenerSetupData
 
 
@@ -138,6 +142,45 @@ async def test_todo_services_ha(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
     assert str(mock_save.call_args) == TODO_UPDATE_ARGS
+
+    with patch(
+        "custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo"
+    ) as mock_save:
+        await hass.services.async_call(
+            TODO_DOMAIN,
+            TodoServices.UPDATE_ITEM,
+            {
+                "entity_id": list_name,
+                "item": "Task 1",
+                "due_datetime": None,
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+    listener += 1
+    assert len(listener_setup.events) == listener
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
+    assert str(mock_save.call_args) == TODO_REMOVE_DUE_ARGS
+
+    with patch("O365.tasks.Task.save") as mock_save:
+        await hass.services.async_call(
+            TODO_DOMAIN,
+            TodoServices.UPDATE_ITEM,
+            {
+                "entity_id": list_name,
+                "item": "Task 1",
+                "due_datetime": None,
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+    listener += 1
+    assert len(listener_setup.events) == listener
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
 
     with patch("O365.tasks.Task.save") as mock_save:
         await hass.services.async_call(
