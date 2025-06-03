@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.6.0 (2025/06/03)
+### 🐛 Fixes
+- [Handle race condition for token update](https://github.com/RogerSelwyn/MS365-ToDo/commit/384b5213c8ba56b33b5d3518fab5e92ce34dfbe7) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Update bug_report.yml](https://github.com/RogerSelwyn/MS365-ToDo/commit/b5dd55ae16fd4f6c2d883095837d61300e269af8) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update docs](https://github.com/RogerSelwyn/MS365-ToDo/commit/65c7ac90a26d794858c3853264d3c50844a323e5) - @RogerSelwyn
+- [Update readme](https://github.com/RogerSelwyn/MS365-ToDo/commit/69614af390e6924789f2d726015d2858b52621db) - @RogerSelwyn
+- [Correct Nabu Casa URL](https://github.com/RogerSelwyn/MS365-ToDo/commit/08c2b8085d5bc8b904d0546deee5ec990dfc2297) - @RogerSelwyn
+
+### ✅ Test
+- [Add .python-version for Rye](https://github.com/RogerSelwyn/MS365-ToDo/commit/21266deed299c6aa51a2ee2a10e3789ef8536102) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.6.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/71910e6ea6cb7c84622ee29c70937dd0129ac725) - @RogerSelwyn
+
+### Other
+- [build(deps): bump ruff from 0.11.1 to 0.11.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/122f92f69267e73e11645d3326d847a7f7bb1064) - @dependabot[bot]
+
+
+
+
 ## v1.4.4 (2025/03/22)
 ### ✨ Enhancements
 - [Add ability to clear Due and Reminder](https://github.com/RogerSelwyn/MS365-ToDo/commit/40b788b8572aafcf1244fbe90ea2cb9b818c341f) - @RogerSelwyn
