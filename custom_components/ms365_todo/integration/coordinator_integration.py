@@ -8,6 +8,9 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
+    QueryBuilder,
+)
 from requests.exceptions import HTTPError
 
 from ..const import (
@@ -35,7 +38,7 @@ from .filemgmt_integration import (
     load_yaml_file,
 )
 from .schema_integration import YAML_TODO_LIST_SCHEMA
-from .todo_integration import async_build_todo_query, async_scan_for_todo_lists
+from .todo_integration import async_scan_for_todo_lists, build_todo_query
 
 MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=timezone.utc)
 _LOGGER = logging.getLogger(__name__)
@@ -59,6 +62,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         self._entity_name = entry.data[CONF_ENTITY_NAME]
         self.keys = []
         self._data = {}
+        self._builder = QueryBuilder(protocol=account.protocol)
 
     async def _async_setup(self):
         """Do the initial setup of the entities."""
@@ -154,7 +158,10 @@ class MS365SensorCordinator(DataUpdateCoordinator):
     async def _async_todos_update_query(self, key, error):
         data = None
         ms365_todo = key[CONF_MS365_TODO_FOLDER]
-        full_query = await async_build_todo_query(self.hass, key, ms365_todo)
+        full_query = build_todo_query(
+            self._builder,
+            key,
+        )
         name = key[CONF_NAME]
 
         try:
