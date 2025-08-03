@@ -52,6 +52,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=entry,
             # Name of the data. For logging purposes.
             name="MS365 To Do",
             # Polling interval. Will only be polled if there are subscribers.
