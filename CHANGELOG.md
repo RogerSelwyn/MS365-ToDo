@@ -18,12 +18,6 @@
 ### 🔖 Release
 - [Release v1.6.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/8fcf6db47e8d9f2081af341912dd12a2e6ef634f) - @RogerSelwyn
 
-### Other
-- [build(deps): bump ruff from 0.11.4 to 0.12.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/b513ce3f7c7a3db97d4804e21eaf502fa798f890) - @dependabot[bot]
-- [build(deps): bump ruff from 0.12.2 to 0.12.7](https://github.com/RogerSelwyn/MS365-ToDo/commit/74cf0c8096196a2ab8763f44d164eb25f7f19679) - @dependabot[bot]
-
-
-
 
 ## v1.6.0 (2025/06/03)
 ### 🐛 Fixes
