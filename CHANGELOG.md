@@ -1,5 +1,30 @@
 # Changelog
 
+## v1.6.1 (2025/08/06)
+### 🐛 Fixes
+- [Fix deprecation warning](https://github.com/RogerSelwyn/MS365-ToDo/commit/246418b821a3d633493b2c2c35d57f8a4bb83aa9) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Migrate to new O365 query methods](https://github.com/RogerSelwyn/MS365-ToDo/commit/8ee8dea58b475adaeae3417453f9f4aae7a608ec) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Add oauthlib dependency](https://github.com/RogerSelwyn/MS365-ToDo/commit/d170aaa128c15495ccf4f8e4b76bc70bee112807) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/7a02f0582b8ff4acc30489e58d7712e2939ff418) - @actions-user
+
+### ✅ Test
+- [Remove aiohttp-zlib-ng dependency](https://github.com/RogerSelwyn/MS365-ToDo/commit/90cb2c522b486cbe075421a9f0c40a6e6d6f3b72) - @RogerSelwyn
+- [Update python to 3.13](https://github.com/RogerSelwyn/MS365-ToDo/commit/b3e413bb7908a4f4340b68cde0b72c9b96734753) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.6.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/8fcf6db47e8d9f2081af341912dd12a2e6ef634f) - @RogerSelwyn
+
+### Other
+- [build(deps): bump ruff from 0.11.4 to 0.12.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/b513ce3f7c7a3db97d4804e21eaf502fa798f890) - @dependabot[bot]
+- [build(deps): bump ruff from 0.12.2 to 0.12.7](https://github.com/RogerSelwyn/MS365-ToDo/commit/74cf0c8096196a2ab8763f44d164eb25f7f19679) - @dependabot[bot]
+
+
+
+
 ## v1.6.0 (2025/06/03)
 ### 🐛 Fixes
 - [Handle race condition for token update](https://github.com/RogerSelwyn/MS365-ToDo/commit/384b5213c8ba56b33b5d3518fab5e92ce34dfbe7) - @RogerSelwyn
