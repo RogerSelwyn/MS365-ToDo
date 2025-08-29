@@ -7,8 +7,8 @@ import voluptuous as vol
 from homeassistant import (
     config_entries,
 )
+from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.const import CONF_NAME
-from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import entity_registry
 from homeassistant.helpers.selector import BooleanSelector
 
@@ -85,7 +85,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
     async def async_step_init(
         self,
         user_input=None,  # pylint: disable=unused-argument
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         """Set up the option flow."""
 
         self._yaml_filepath = build_yaml_file_path(self.hass, self._yaml_filename)
@@ -102,7 +102,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         self._todo_list_selected_original = deepcopy(self._todo_list_selected)
         return await self.async_step_user()
 
-    async def async_step_user(self, user_input=None) -> FlowResult:
+    async def async_step_user(self, user_input=None) -> ConfigFlowResult:
         """Handle a flow initialized by the user."""
         errors = {}
 
@@ -136,7 +136,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
             last_step=False,
         )
 
-    async def async_step_todo_config(self, user_input=None) -> FlowResult:
+    async def async_step_todo_config(self, user_input=None) -> ConfigFlowResult:
         """Handle todo setup."""
         if user_input is not None:
             for todo in self._todos:

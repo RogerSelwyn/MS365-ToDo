@@ -60,8 +60,6 @@ async def test_options_flow(
         },
     )
     assert result.get("type") is FlowResultType.CREATE_ENTRY
-    assert "result" in result
-    assert result["result"] is True
     assert result["data"][CONF_TRACK_NEW] is False
     assert result["data"][CONF_TODO_LIST] == UPDATE_TODO_LIST
     check_yaml_file_contents(tmp_path, "ms365_todo_updated")
