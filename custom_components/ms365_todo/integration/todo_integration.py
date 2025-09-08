@@ -199,7 +199,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 )
             )
 
-            self._extra_attributes = self._update_extra_state_attributes(todos)
+        self._extra_attributes = self._update_extra_state_attributes(todos)
 
         todo_last_completed = self._zero_date
         todo_last_created = self._zero_date
