@@ -1,5 +1,26 @@
 # Changelog
 
+## v1.7.0 (2025/09/08)
+### ✨ Enhancements
+- [Add display of task steps](https://github.com/RogerSelwyn/MS365-ToDo/commit/398a8536f94ee17693856828a281f2fc1c2c46c7) - @RogerSelwyn
+
+### 🐛 Fixes
+- [Correct display of extra_state_attributes](https://github.com/RogerSelwyn/MS365-ToDo/commit/9b8ab4bbe0669b4cbff695e251ac486ccc3f3be3) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Use ConfigFlowResult instead of FlowResult](https://github.com/RogerSelwyn/MS365-ToDo/commit/1c4a9908c1253408d1718bf1de187df52e982ae3) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [bump actions/checkout from 4 to 5](https://github.com/RogerSelwyn/MS365-ToDo/commit/3ac27261618c70ea37d5b4fa88ec71b37710c2cf) - @dependabot[bot]
+- [bump actions/stale from 9 to 10](https://github.com/RogerSelwyn/MS365-ToDo/commit/95aee3c61b0865cd48d7bda25668d7dcdefcc597) - @dependabot[bot]
+- [bump actions/setup-python from 5 to 6](https://github.com/RogerSelwyn/MS365-ToDo/commit/b34f80b23e8bef42e1b66cfaf8c9570f9756f503) - @dependabot[bot]
+
+### 🔖 Release
+- [Release v1.7.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/597ce7389b200955a14d3990481a5e67a85202f1) - @RogerSelwyn
+
+
+
+
 ## v1.6.1 (2025/08/06)
 ### 🐛 Fixes
 - [Fix deprecation warning](https://github.com/RogerSelwyn/MS365-ToDo/commit/246418b821a3d633493b2c2c35d57f8a4bb83aa9) - @RogerSelwyn
