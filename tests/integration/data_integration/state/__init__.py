@@ -17,6 +17,23 @@ BASE_TODO_LIST_1 = [
         "reminder": datetime.datetime(
             2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "checklist_items": [
+            {
+                "name": "Step 1",
+                "is_checked": True,
+                "id": "636ba8b7-d436-41df-8ca1-85a13bdfacc4",
+            },
+            {
+                "name": "Step 2",
+                "is_checked": False,
+                "id": "1634fac8-2454-41bd-9a37-fc970c3f1718",
+            },
+            {
+                "name": "Step 3",
+                "is_checked": False,
+                "id": "866b3a7d-9bf8-4c7d-8064-cd2cb49686b0",
+            },
+        ],
     },
     {
         "subject": "Task 2",

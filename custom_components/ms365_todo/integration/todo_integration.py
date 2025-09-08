@@ -27,6 +27,10 @@ from ..const import (
 )
 from .const_integration import (
     ATTR_ALL_TODOS,
+    ATTR_ID,
+    ATTR_NAME,
+    ATTR_CHECKLIST_ITEMS,
+    ATTR_IS_CHECKED,
     ATTR_COMPLETED,
     ATTR_CREATED,
     ATTR_DESCRIPTION,
@@ -258,6 +262,17 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
             if item.is_reminder_on:
                 todo[ATTR_REMINDER] = item.reminder
+
+            cl_items = list(item.checklist_items)
+            if len(cl_items) > 0:
+                todo[ATTR_CHECKLIST_ITEMS] = [
+                    {
+                        ATTR_NAME: cl_item.displayname,
+                        ATTR_IS_CHECKED: cl_item.is_checked,
+                        ATTR_ID: cl_item.item_id,
+                    }
+                    for cl_item in cl_items
+                ]
 
             all_todos.append(todo)
 

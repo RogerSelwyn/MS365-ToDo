@@ -17,6 +17,28 @@
                 "content": "Task 1 body",
                 "contentType": "text"
             },
+            "checklistItems@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id)/todo/lists('todolist1')/tasks('list1task1')/checklistItems",
+            "checklistItems": [
+                {
+                    "displayName": "Step 1",
+                    "createdDateTime": "2025-04-21T08:15:54Z",
+                    "checkedDateTime": "2025-04-21T08:43:46Z",
+                    "isChecked": true,
+                    "id": "636ba8b7-d436-41df-8ca1-85a13bdfacc4"
+                },
+                {
+                    "displayName": "Step 2",
+                    "createdDateTime": "2025-04-21T08:15:58Z",
+                    "isChecked": false,
+                    "id": "1634fac8-2454-41bd-9a37-fc970c3f1718"
+                },
+                {
+                    "displayName": "Step 3",
+                    "createdDateTime": "2025-08-26T09:26:12.4688808Z",
+                    "isChecked": false,
+                    "id": "866b3a7d-9bf8-4c7d-8064-cd2cb49686b0"
+                }
+            ],
             "dueDateTime": {
                 "dateTime": "2021-12-31T00:00:00.0000000",
                 "timeZone": "UTC"

@@ -38,6 +38,7 @@ async def test_get_data(
         entity_registry, base_config_entry.entry_id
     )
     assert len(entities) == 2
+    print("entity_state----->", hass.states.get("todo.test_todo_list_1"))
     check_entity_state(
         hass,
         "todo.test_todo_list_1",
