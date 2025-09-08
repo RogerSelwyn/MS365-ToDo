@@ -263,8 +263,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             if item.is_reminder_on:
                 todo[ATTR_REMINDER] = item.reminder
 
-            cl_items = list(item.checklist_items)
-            if len(cl_items) > 0:
+            if cl_items := list(item.checklist_items):
                 todo[ATTR_CHECKLIST_ITEMS] = [
                     {
                         ATTR_NAME: cl_item.displayname,
