@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.7.1 (2025/09/10)
+### 🐛 Fixes
+- [Fix error in migration from O365](https://github.com/RogerSelwyn/MS365-ToDo/commit/10d3df3d4c9be2e565cf5f19ffec9167d327c74d) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Sourcery recommended change](https://github.com/RogerSelwyn/MS365-ToDo/commit/9de2050d7e91b4aa1d03f428ed8c184785d16d4d) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.7.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/ec06c6d07ad2b9a3d5dd7f98465d949a5e467741) - @RogerSelwyn
+
+
+
+
 ## v1.7.0 (2025/09/08)
 ### ✨ Enhancements
 - [Add display of task steps](https://github.com/RogerSelwyn/MS365-ToDo/commit/398a8536f94ee17693856828a281f2fc1c2c46c7) - @RogerSelwyn
