@@ -9,7 +9,6 @@ from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
-
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
@@ -117,16 +116,15 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
         todos = self.coordinator.data[self.entity_key][ATTR_DATA]
         self._state = sum(not task.completed_date for task in todos)
         self._todo_items = []
-        for todo in todos:
-            self._todo_items.append(
-                TodoItem(
-                    uid=todo.object_id,
-                    summary=todo.title,
-                    status=_get_status(todo),
-                    due=todo.due_date_time,
-                )
+        self._todo_items.extend(
+            TodoItem(
+                uid=todo.object_id,
+                summary=todo.title,
+                status=_get_status(todo),
+                due=todo.due_date_time,
             )
-
+            for todo in todos
+        )
         self._extra_attributes = self._update_extra_state_attributes(todos)
 
         todo_last_completed = self._zero_date
