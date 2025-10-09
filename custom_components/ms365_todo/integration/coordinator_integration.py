@@ -25,10 +25,14 @@ from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
     CONF_MS365_TODO_FOLDER,
+    # CONF_PLANNER,
     CONF_TODO_LIST,
     CONF_TODO_LIST_ID,
     CONF_TRACK,
     ENTITY_ID_FORMAT_TODO,
+    # PLANNER_NAME,
+    # PLANNER_UNIQUE_ID,
+    # TODO_PLANNER,
     TODO_TODO,
     YAML_TODO_LISTS_FILENAME,
 )
@@ -68,7 +72,8 @@ class MS365SensorCordinator(DataUpdateCoordinator):
     async def _async_setup(self):
         """Do the initial setup of the entities."""
         todo_keys = await self._async_todo_sensors()
-        self.keys = todo_keys
+        # planner_keys = []  # await self._async_planner_sensors()
+        self.keys = todo_keys  # + planner_keys
         return self.keys
 
     async def _async_todo_sensors(self):
@@ -125,6 +130,25 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 )
         return keys
 
+    # async def _async_planner_sensors(self):
+    #     return await self._async_planner_entities()
+
+    # async def _async_planner_entities(self):
+    #     keys = []
+    #     planner = await self.hass.async_add_executor_job(self._account.planner)
+    #     name = f"{self._entity_name} {PLANNER_NAME}"
+    #     unique_id = f"{self._entity_name}_{PLANNER_UNIQUE_ID}"
+    #     new_key = {
+    #         CONF_ENTITY_KEY: build_entity_id(self.hass, ENTITY_ID_FORMAT_TODO, name),
+    #         CONF_UNIQUE_ID: unique_id,
+    #         CONF_NAME: name,
+    #         CONF_PLANNER: planner,
+    #         CONF_ENTITY_TYPE: TODO_PLANNER,
+    #     }
+
+    #     keys.append(new_key)
+    #     return keys
+
     async def _async_update_data(self):
         _LOGGER.debug(
             "Doing %s sensor update(s) for: %s", len(self.keys), self._entity_name
@@ -134,6 +158,8 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             entity_type = key[CONF_ENTITY_TYPE]
             if entity_type == TODO_TODO:
                 await self._async_todos_update(key)
+            # if entity_type == TODO_PLANNER:
+            #     await self._async_planner_update(key)
 
         return self._data
 
@@ -181,3 +207,26 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 error = True
 
         return data, error
+
+    # async def _async_planner_update(self, key):
+    #     """Update state."""
+    #     entity_key = key[CONF_ENTITY_KEY]
+    #     self._data[entity_key] = {ATTR_TODOS: {}, ATTR_STATE: 0}
+    #     data = await self._async_planner_update_query(key)
+
+    #     todos = await self.hass.async_add_executor_job(list, data)
+    #     todossorted = sorted(
+    #         todos,
+    #         key=lambda x: (x.due_date_time or MAXDATETIME),
+    #     )
+    #     self._data[entity_key][ATTR_DATA] = todossorted
+
+    # async def _async_planner_update_query(self, key):
+    #     data = None
+    #     planner = key[CONF_PLANNER]
+
+    #     data = await self.hass.async_add_executor_job(  # pylint: disable=no-member
+    #         planner.get_my_tasks
+    #     )
+
+    #     return data

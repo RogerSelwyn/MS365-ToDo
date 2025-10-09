@@ -11,6 +11,7 @@ from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
+
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
@@ -27,14 +28,14 @@ from ..const import (
 )
 from .const_integration import (
     ATTR_ALL_TODOS,
-    ATTR_ID,
-    ATTR_NAME,
     ATTR_CHECKLIST_ITEMS,
-    ATTR_IS_CHECKED,
     ATTR_COMPLETED,
     ATTR_CREATED,
     ATTR_DESCRIPTION,
     ATTR_DUE,
+    ATTR_ID,
+    ATTR_IS_CHECKED,
+    ATTR_NAME,
     ATTR_OVERDUE_TODOS,
     ATTR_REMINDER,
     ATTR_STATUS,
@@ -66,7 +67,7 @@ from .schema_integration import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_integration_setup_entry(
+async def async_todo_integration_setup_entry(
     hass: HomeAssistant,
     entry: MS365ConfigEntry,
     async_add_entities: AddEntitiesCallback,
