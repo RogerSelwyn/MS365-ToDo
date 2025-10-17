@@ -1,7 +1,5 @@
 new_todo:
   target:
-    device:
-      integration: ms365_todo
     entity:
       integration: ms365_todo
       domain: todo
@@ -26,8 +24,6 @@ new_todo:
 
 update_todo:
   target:
-    device:
-      integration: ms365_todo
     entity:
       integration: ms365_todo
       domain: todo
@@ -66,8 +62,6 @@ update_todo:
 
 delete_todo:
   target:
-    device:
-      integration: ms365_todo
     entity:
       integration: ms365_todo
       domain: todo
@@ -80,8 +74,6 @@ delete_todo:
 
 complete_todo:
   target:
-    device:
-      integration: ms365_todo
     entity:
       integration: ms365_todo
       domain: todo
