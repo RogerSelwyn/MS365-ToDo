@@ -10,12 +10,13 @@ from custom_components.ms365_todo.integration.const_integration import (
     CONF_DUE_HOURS_FORWARD_TO_GET,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST,
+    CONF_MAX_TODOS,
     CONF_TRACK_NEW,
 )
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from ..helpers.utils import get_schema_default
-from .const_integration import UPDATE_TODO_LIST
+from .const_integration import UPDATE_TODO_LIST, UPDATE_MAX_TODOS
 from .helpers_integration.mocks import MS365MOCKS
 from .helpers_integration.utils_integration import check_yaml_file_contents, yaml_setup
 
@@ -40,6 +41,7 @@ async def test_options_flow(
         result["flow_id"],
         user_input={
             CONF_TRACK_NEW: False,
+            CONF_MAX_TODOS: UPDATE_MAX_TODOS,
             CONF_TODO_LIST: UPDATE_TODO_LIST,
         },
     )
@@ -61,6 +63,7 @@ async def test_options_flow(
     )
     assert result.get("type") is FlowResultType.CREATE_ENTRY
     assert result["data"][CONF_TRACK_NEW] is False
+    assert result["data"][CONF_MAX_TODOS] == UPDATE_MAX_TODOS
     assert result["data"][CONF_TODO_LIST] == UPDATE_TODO_LIST
     check_yaml_file_contents(tmp_path, "ms365_todo_updated")
 
