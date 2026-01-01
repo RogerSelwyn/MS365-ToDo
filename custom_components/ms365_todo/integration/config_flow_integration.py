@@ -21,6 +21,8 @@ from ..helpers.utils import add_attribute_to_item
 from .const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
+    CONF_MAX_TODOS,
+    CONF_MAX_TODOS_DEFAULT,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST,
     CONF_TRACK,
@@ -73,6 +75,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         """Initialize MS365 options flow."""
 
         self._track_new = entry.options.get(CONF_TRACK_NEW, True)
+        self._max_todos = entry.options.get(CONF_MAX_TODOS, CONF_MAX_TODOS_DEFAULT)
         self._todos = []
         self._todo_list = []
         self._todo_list_selected = []
@@ -109,6 +112,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         if user_input:
             self._user_input = user_input
             self._track_new = user_input[CONF_TRACK_NEW]
+            self._max_todos = user_input[CONF_MAX_TODOS]
             self._todo_list_selected = user_input[CONF_TODO_LIST]
 
             for todo in self._todos:
@@ -130,6 +134,10 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
                         CONF_TRACK_NEW,
                         default=self._track_new,
                     ): BOOLEAN_SELECTOR,
+                    vol.Optional(
+                        CONF_MAX_TODOS,
+                        default=self._max_todos,
+                    ): vol.All(vol.Coerce(int), vol.Range(min=10, max=250)),
                 }
             ),
             errors=errors,

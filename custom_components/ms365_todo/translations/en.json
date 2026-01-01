@@ -53,6 +53,7 @@
     "step": {
       "user": {
         "data": {
+          "max_todos": "Maximum To Dos to retrieve",
           "track_new": "Enable new To Do lists",
           "todo_list": "Enabled To Do lists"
         },

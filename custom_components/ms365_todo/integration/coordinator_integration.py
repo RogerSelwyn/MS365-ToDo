@@ -8,10 +8,11 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from requests.exceptions import HTTPError
+
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
-from requests.exceptions import HTTPError
 
 from ..const import (
     ATTR_DATA,
@@ -24,6 +25,8 @@ from ..const import (
 from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
+    CONF_MAX_TODOS,
+    CONF_MAX_TODOS_DEFAULT,
     CONF_MS365_TODO_FOLDER,
     # CONF_PLANNER,
     CONF_TODO_LIST,
@@ -65,6 +68,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         self._entry = entry
         self._account = account
         self._entity_name = entry.data[CONF_ENTITY_NAME]
+        self._max_todos = entry.options.get(CONF_MAX_TODOS, CONF_MAX_TODOS_DEFAULT)
         self.keys = []
         self._data = {}
         self._builder = QueryBuilder(protocol=account.protocol)
@@ -193,7 +197,9 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
         try:
             data = await self.hass.async_add_executor_job(  # pylint: disable=no-member
-                ft.partial(ms365_todo.get_tasks, batch=100, query=full_query)
+                ft.partial(
+                    ms365_todo.get_tasks, batch=self._max_todos, query=full_query
+                )
             )
             if error:
                 _LOGGER.info("MS365 To Do list reconnected for: %s", name)
