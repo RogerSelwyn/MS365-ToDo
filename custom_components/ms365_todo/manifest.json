@@ -1,25 +1,18 @@
 {
   "domain": "ms365_todo",
   "name": "Microsoft 365 - To Do",
-  "codeowners": [
-    "@RogerSelwyn"
-  ],
+  "codeowners": ["@RogerSelwyn"],
   "config_flow": true,
-  "dependencies": [
-    "http"
-  ],
+  "dependencies": ["http"],
   "documentation": "https://github.com/RogerSelwyn/MS365-ToDo",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/RogerSelwyn/MS365-ToDo/issues",
-  "loggers": [
-    "custom_components.ms365_todo",
-    "O365"
-  ],
+  "loggers": ["custom_components.ms365_todo", "O365"],
   "requirements": [
     "O365>=2.1.7",
     "BeautifulSoup4>=4.10.0",
     "portalocker>=3.1.1",
     "oauthlib"
   ],
-  "version": "v1.7.1"
+  "version": "v1.8.0"
 }
