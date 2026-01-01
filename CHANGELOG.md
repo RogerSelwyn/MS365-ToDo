@@ -1,5 +1,32 @@
 # Changelog
 
+## v1.8.0 (2026/01/01)
+### ✨ Enhancements
+- [Allow larger max todos retrieval size](https://github.com/RogerSelwyn/MS365-ToDo/commit/73e197e45cbcf3defc187105a80ded7ff6806a3e) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Remove planner setup](https://github.com/RogerSelwyn/MS365-ToDo/commit/cccd7244629eb96477607a7ff469a8316eb36e3b) - @RogerSelwyn
+- [Sourcery improvement](https://github.com/RogerSelwyn/MS365-ToDo/commit/c68b41cc9524426efb240a466f863fe4f4719574) - @RogerSelwyn
+- [Remove device filter from target selector](https://github.com/RogerSelwyn/MS365-ToDo/commit/b1f76ccf2e3d85ee0652c6a14f942143a306bafe) - @RogerSelwyn
+- [Tweaks for code improvement](https://github.com/RogerSelwyn/MS365-ToDo/commit/7b8057da1fbf055bb7f4a79b3a2a882aa23fa14c) - @RogerSelwyn
+- [Updated json formatting](https://github.com/RogerSelwyn/MS365-ToDo/commit/3b6a6b2a502fc066068b26012cd800b1e9fc0922) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [bump ruff from 0.12.7 to 0.13.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/05bc1b5c42a18b27b4ccadaf1dccfe59607a702e) - @dependabot[bot]
+- [bump ruff from 0.13.0 to 0.13.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/46d2d3c6f6dc8c3194c1641c4db37f21cf54d039) - @dependabot[bot]
+- [bump github/codeql-action from 3 to 4](https://github.com/RogerSelwyn/MS365-ToDo/commit/ee8c4a5fe140212d4db41e5b6d579cbe5a543782) - @dependabot[bot]
+- [bump ruff from 0.13.1 to 0.14.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/7d46feb258816f20263166b19f35fb1ddc4925e8) - @dependabot[bot]
+- [bump actions/checkout from 5 to 6](https://github.com/RogerSelwyn/MS365-ToDo/commit/c6d7ef96f3d9ef5b524db80b93395b621ea3da9b) - @dependabot[bot]
+
+### 📚 Documentation
+- [Update docs to point to generic docs](https://github.com/RogerSelwyn/MS365-ToDo/commit/75479680f657138414d281220c6f6f9e7227b1fd) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.8.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/045bb9c4a6758af629d303c6ef91bc60438fe05b) - @RogerSelwyn
+
+
+
+
 ## v1.7.1 (2025/09/10)
 ### 🐛 Fixes
 - [Fix error in migration from O365](https://github.com/RogerSelwyn/MS365-ToDo/commit/10d3df3d4c9be2e565cf5f19ffec9167d327c74d) - @RogerSelwyn
