@@ -1,198 +1,198 @@
 {
-    "config": {
-        "abort": {
-            "reconfigure_successful": "Re-configuration was successful"
+  "config": {
+    "abort": {
+      "reconfigure_successful": "Re-configuration was successful"
+    },
+    "error": {
+      "already_configured": "This account name has already been used. Use re-configure.",
+      "error_authenticating": "Error authenticating, token invalid, check log for errors",
+      "invalid_url": "Error, the originating url does not seem to be a valid microsoft redirect",
+      "permissions": "Minimum permissions not granted for account: {entity_name}",
+      "corrupted": "Token file is corrupted after successful authentication, check log for file system errors",
+      "missing": "Token file is missing after successful authentication, check log for file system errors",
+      "token_file_error": "Token file retrieval error, check log for errors from O365. Ensure token has not expired and you are using secret value not secret id."
+    },
+    "step": {
+      "user": {
+        "data": {
+          "entity_name": "Uniquely identifying name for the entities",
+          "client_id": "Client ID",
+          "client_secret": "Client Secret",
+          "alt_auth_method": "Use alternate (more complex) authentication",
+          "enable_update": "Enable update services"
         },
-        "error": {
-            "already_configured": "This account name has already been used. Use re-configure.",
-            "error_authenticating": "Error authenticating, token invalid, check log for errors",
-            "invalid_url": "Error, the originating url does not seem to be a valid microsoft redirect",
-            "permissions": "Minimum permissions not granted for account: {entity_name}",
-            "corrupted": "Token file is corrupted after successful authentication, check log for file system errors",
-            "missing": "Token file is missing after successful authentication, check log for file system errors",
-            "token_file_error": "Token file retrieval error, check log for errors from O365. Ensure token has not expired and you are using secret value not secret id."
-        },
-        "step": {
-            "user": {
-                "data": {
-                    "entity_name": "Uniquely identifying name for the entities",
-                    "client_id": "Client ID",
-                    "client_secret": "Client Secret",
-                    "alt_auth_method": "Use alternate (more complex) authentication",
-                    "enable_update": "Enable update services"
-                },
-                "description": "Enter previously created Entra ID App Registration credentials",
-                "sections": {
-                    "api_options": {
-                        "name": "Advanced API options",
-                        "description": "Advanced options for country specific needs",
-                        "data": {
-                            "country": "API Country"
-                        },
-                        "data_description": {
-                            "country": "Only use if you know you need it since your credentials will be sent to the selected api/country."
-                        }
-                    }
-                }
+        "description": "Enter previously created Entra ID App Registration credentials",
+        "sections": {
+          "api_options": {
+            "name": "Advanced API options",
+            "description": "Advanced options for country specific needs",
+            "data": {
+              "country": "API Country"
             },
-            "request_default": {
-                "title": "Authorization Required - {entity_name}",
-                "description": "Complete the configuration by clicking on the link and copying the returned url into this field afterwards and submit\n\n[Link MS365 account]({auth_url}){failed_permissions}",
-                "data": {
-                    "url": "Returned URL"
-                }
-            },
-            "request_alt": {
-                "title": "Authorization Required - {entity_name}",
-                "description": "To link your MS365 account, click the link, login, and authorize:\n\n[Link MS365 account]({auth_url}){failed_permissions}",
-                "submit": "I authorized successfully"
+            "data_description": {
+              "country": "Only use if you know you need it since your credentials will be sent to the selected api/country."
             }
+          }
         }
-    },
-    "options": {
-        "step": {
-            "user": {
-                "data": {
-                    "track_new": "Enable new To Do lists",
-                    "todo_list": "Enabled To Do lists"
-                },
-                "description": "Setup options for {entity_name}"
-            },
-            "todo_config": {
-                "data": {
-                    "due_end_offset": "Hours forward to offset the due time for retrieval",
-                    "due_start_offset": "Hours backward to offset the due time for retrieval",
-                    "show_completed": "Show completed items"
-                },
-                "description": "Setup options for {entity_name} - To Do list {name}",
-                "sections": {
-                    "api_options": {
-                        "name": "Advanced API options",
-                        "description": "Advanced options for country specific needs",
-                        "data": {
-                            "country": "API Country"
-                        },
-                        "data_description": {
-                            "country": "Only use if you know you need it since your credentials will be sent to the selected api/country."
-                        }
-                    }
-                }
-            }
+      },
+      "request_default": {
+        "title": "Authorization Required - {entity_name}",
+        "description": "Complete the configuration by clicking on the link and copying the returned url into this field afterwards and submit\n\n[Link MS365 account]({auth_url}){failed_permissions}",
+        "data": {
+          "url": "Returned URL"
         }
-    },
-    "issues": {
-        "corrupted": {
-            "title": "Re-authentication required - {domain} - {entity_name}",
-            "description": "The token file is corrupted. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
-        },
-        "expired": {
-            "title": "Re-authentication required - {domain} - {entity_name}",
-            "description": "The token has expired. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
-        },
-        "missing": {
-            "title": "Re-authentication required - {domain} - {entity_name}",
-            "description": "The token file is missing. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
-        },
-        "outdated": {
-            "title": "Re-authentication required - {domain} - {entity_name}",
-            "description": "The token is outdated. Please delete the token, then [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
-        },
-        "permissions": {
-            "title": "Re-authentication required - {domain} - {entity_name}",
-            "description": "Permissions missing. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
-        }
-    },
-    "exceptions": {
-        "not_authorised": {
-            "message": "{required_permission}"
-        },
-        "todo_completed": {
-            "message": "To Do is already complete"
-        },
-        "todo_not_completed": {
-            "message": "To Do is already incomplete"
-        }
-    },
-    "services": {
-        "new_todo": {
-            "name": "Create a To Do",
-            "description": "Create a To Do",
-            "fields": {
-                "subject": {
-                    "description": "The subject of the To Do",
-                    "name": "Subject"
-                },
-                "description": {
-                    "description": "Description of the To Do",
-                    "name": "Description"
-                },
-                "due": {
-                    "description": "When the To Do is due by",
-                    "name": "Due"
-                },
-                "reminder": {
-                    "description": "When a reminder is needed",
-                    "name": "Reminder"
-                }
-            }
-        },
-        "update_todo": {
-            "name": "Update a To Do",
-            "description": "Update a To Do",
-            "fields": {
-                "todo_id": {
-                    "description": "ID for the To Do, can be found as an attribute on your todo",
-                    "name": "To Do ID"
-                },
-                "subject": {
-                    "description": "The subject of the To Do",
-                    "name": "Subject"
-                },
-                "description": {
-                    "description": "Description of the To Do",
-                    "name": "Description"
-                },
-                "due": {
-                    "description": "When the To Do is due by",
-                    "name": "Due"
-                },
-                "remove_due": {
-                    "description": "Remove Due",
-                    "name": "Remove Due"
-                },
-                "reminder": {
-                    "description": "When a reminder is needed",
-                    "name": "Reminder"
-                },
-                "remove_reminder": {
-                    "description": "Remove Reminder",
-                    "name": "Remove Reminder"
-                }
-            }
-        },
-        "delete_todo": {
-            "name": "Delete a To Do",
-            "description": "Delete a To Do",
-            "fields": {
-                "todo_id": {
-                    "description": "ID for the To Do, can be found as an attribute on your todo",
-                    "name": "To Do ID"
-                }
-            }
-        },
-        "complete_todo": {
-            "name": "Complete a To Do",
-            "description": "Complete a To Do",
-            "fields": {
-                "todo_id": {
-                    "description": "ID for the To Do, can be found as an attribute on your todo",
-                    "name": "To Do ID"
-                },
-                "completed": {
-                    "description": "Set whether To Do is completed or not",
-                    "name": "Completed"
-                }
-            }
-        }
+      },
+      "request_alt": {
+        "title": "Authorization Required - {entity_name}",
+        "description": "To link your MS365 account, click the link, login, and authorize:\n\n[Link MS365 account]({auth_url}){failed_permissions}",
+        "submit": "I authorized successfully"
+      }
     }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "data": {
+          "track_new": "Enable new To Do lists",
+          "todo_list": "Enabled To Do lists"
+        },
+        "description": "Setup options for {entity_name}"
+      },
+      "todo_config": {
+        "data": {
+          "due_end_offset": "Hours forward to offset the due time for retrieval",
+          "due_start_offset": "Hours backward to offset the due time for retrieval",
+          "show_completed": "Show completed items"
+        },
+        "description": "Setup options for {entity_name} - To Do list {name}",
+        "sections": {
+          "api_options": {
+            "name": "Advanced API options",
+            "description": "Advanced options for country specific needs",
+            "data": {
+              "country": "API Country"
+            },
+            "data_description": {
+              "country": "Only use if you know you need it since your credentials will be sent to the selected api/country."
+            }
+          }
+        }
+      }
+    }
+  },
+  "issues": {
+    "corrupted": {
+      "title": "Re-authentication required - {domain} - {entity_name}",
+      "description": "The token file is corrupted. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
+    },
+    "expired": {
+      "title": "Re-authentication required - {domain} - {entity_name}",
+      "description": "The token has expired. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
+    },
+    "missing": {
+      "title": "Re-authentication required - {domain} - {entity_name}",
+      "description": "The token file is missing. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
+    },
+    "outdated": {
+      "title": "Re-authentication required - {domain} - {entity_name}",
+      "description": "The token is outdated. Please delete the token, then [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
+    },
+    "permissions": {
+      "title": "Re-authentication required - {domain} - {entity_name}",
+      "description": "Permissions missing. Please [Reconfigure]({url}) the integration and re-authenticate to re-create the token file."
+    }
+  },
+  "exceptions": {
+    "not_authorised": {
+      "message": "{required_permission}"
+    },
+    "todo_completed": {
+      "message": "To Do is already complete"
+    },
+    "todo_not_completed": {
+      "message": "To Do is already incomplete"
+    }
+  },
+  "services": {
+    "new_todo": {
+      "name": "Create a To Do",
+      "description": "Create a To Do",
+      "fields": {
+        "subject": {
+          "description": "The subject of the To Do",
+          "name": "Subject"
+        },
+        "description": {
+          "description": "Description of the To Do",
+          "name": "Description"
+        },
+        "due": {
+          "description": "When the To Do is due by",
+          "name": "Due"
+        },
+        "reminder": {
+          "description": "When a reminder is needed",
+          "name": "Reminder"
+        }
+      }
+    },
+    "update_todo": {
+      "name": "Update a To Do",
+      "description": "Update a To Do",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        },
+        "subject": {
+          "description": "The subject of the To Do",
+          "name": "Subject"
+        },
+        "description": {
+          "description": "Description of the To Do",
+          "name": "Description"
+        },
+        "due": {
+          "description": "When the To Do is due by",
+          "name": "Due"
+        },
+        "remove_due": {
+          "description": "Remove Due",
+          "name": "Remove Due"
+        },
+        "reminder": {
+          "description": "When a reminder is needed",
+          "name": "Reminder"
+        },
+        "remove_reminder": {
+          "description": "Remove Reminder",
+          "name": "Remove Reminder"
+        }
+      }
+    },
+    "delete_todo": {
+      "name": "Delete a To Do",
+      "description": "Delete a To Do",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        }
+      }
+    },
+    "complete_todo": {
+      "name": "Complete a To Do",
+      "description": "Complete a To Do",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        },
+        "completed": {
+          "description": "Set whether To Do is completed or not",
+          "name": "Completed"
+        }
+      }
+    }
+  }
 }
