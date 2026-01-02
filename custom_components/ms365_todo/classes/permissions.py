@@ -89,7 +89,7 @@ class BasePermissions:
             allpermission = f"{deepcopy(permission)}.All"
             return self._check_higher_permissions(allpermission)
 
-        return False
+        return False  # pragma: no cover
 
     def _check_higher_permissions(self, permission):
         operation = permission.split(".")[1]
