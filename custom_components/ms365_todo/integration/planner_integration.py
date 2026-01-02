@@ -49,7 +49,7 @@ async def async_planner_integration_setup_entry(
     hass: HomeAssistant,
     entry: MS365ConfigEntry,
     async_add_entities: AddEntitiesCallback,
-) -> None:
+) -> bool:
     """Set up the MS365 platform."""
 
     coordinator = entry.runtime_data.coordinator
