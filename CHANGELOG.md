@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.8.1 (2026/01/14)
+### 🧰 Maintenance
+- [Resolve linting error](https://github.com/RogerSelwyn/MS365-ToDo/commit/bf3a78ad486af65cb4a7ed996d0c07ea660609bc) - @RogerSelwyn
+- [Tidy up deleted todo lists at startup](https://github.com/RogerSelwyn/MS365-ToDo/commit/428ad18a58a6e29dfc499a7aa60cc7b350573bd9) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update README.md](https://github.com/RogerSelwyn/MS365-ToDo/commit/2c9845ba5321d05db42b05b4a2f6ec322dd381e4) - @RogerSelwyn
+
+### ✅ Test
+- [Update docs and tests](https://github.com/RogerSelwyn/MS365-ToDo/commit/31165206d1d9f01b00c91e2a4d907d243394e890) - @RogerSelwyn
+- [Update test coverage handling](https://github.com/RogerSelwyn/MS365-ToDo/commit/0704ce2d8ebcffc064fac1d1da3109a10115464e) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.8.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/7b98c7bb4a48b5c7c57f1d0696eb7524f8d0e587) - @RogerSelwyn
+
+
+
+
 ## v1.8.0 (2026/01/01)
 ### ✨ Enhancements
 - [Allow larger max todos retrieval size](https://github.com/RogerSelwyn/MS365-ToDo/commit/73e197e45cbcf3defc187105a80ded7ff6806a3e) - @RogerSelwyn
