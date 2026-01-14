@@ -6,3 +6,7 @@
   show_completed: false
   todo_list_id: todolist2
   track: true
+- name: ToDo List Delete
+  show_completed: false
+  todo_list_id: todolistdelete
+  track: true

@@ -49,7 +49,6 @@ def write_yaml_file(yaml_filepath, task):
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)  # pragma: no cover
     with open(yaml_filepath, "a", encoding="UTF8") as out:
-        out.write("\n")
         yaml.dump([task], out, default_flow_style=False, encoding="UTF8")
         out.close()
 
@@ -78,6 +77,28 @@ async def async_update_todo_list_file(
     if yaml_todo_list[CONF_TODO_LIST_ID] in existing_task_lists:
         return
     await hass.async_add_executor_job(write_yaml_file, yaml_filepath, yaml_todo_list)
+
+
+async def async_check_for_deleted_todos(entry: MS365ConfigEntry, task_lists, hass):
+    """Delete removed todo lists from yaml file."""
+    path = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
+    yaml_filepath = build_config_file_path(hass, path)
+    existing_task_lists = await hass.async_add_executor_job(
+        load_yaml_file, yaml_filepath, CONF_TODO_LIST_ID, YAML_TODO_LIST_SCHEMA
+    )
+    updated_task_lists = []
+    deleted_task_lists = []
+    for e_task_list_id in existing_task_lists.keys():
+        if e_task_list_id in [task_list.folder_id for task_list in task_lists]:
+            updated_task_lists.append(existing_task_lists[e_task_list_id])
+            continue
+        _LOGGER.info("ToDo List deleted from %s: %s", path, e_task_list_id)
+        deleted_task_lists.append(existing_task_lists[e_task_list_id])
+    if deleted_task_lists:
+        await hass.async_add_executor_job(
+            write_todo_yaml_file, yaml_filepath, updated_task_lists
+        )
+    return deleted_task_lists
 
 
 def build_yaml_filename(conf: MS365ConfigEntry, filename):

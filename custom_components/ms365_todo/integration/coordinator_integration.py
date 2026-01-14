@@ -46,6 +46,7 @@ from .filemgmt_integration import (
 )
 from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_scan_for_todo_lists, build_todo_query
+from .utils_integration import async_delete_todo
 
 MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=timezone.utc)
 _LOGGER = logging.getLogger(__name__)
@@ -81,7 +82,10 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         return self.keys
 
     async def _async_todo_sensors(self):
-        await async_scan_for_todo_lists(self.hass, self._account, self._entry)
+        deleted_todo_lists = await async_scan_for_todo_lists(
+            self.hass, self._account, self._entry
+        )
+        await self._async_delete_todo_list_entities(deleted_todo_lists)
 
         yaml_filename = build_yaml_filename(self._entry, YAML_TODO_LISTS_FILENAME)
         yaml_filepath = build_yaml_file_path(self.hass, yaml_filename)
@@ -133,6 +137,10 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                     self._entity_name,
                 )
         return keys
+
+    async def _async_delete_todo_list_entities(self, deleted_todo_lists):
+        for todo_list in deleted_todo_lists:
+            await async_delete_todo(self.hass, self._entry, todo_list[CONF_NAME])
 
     # async def _async_planner_sensors(self):
     #     return await self._async_planner_entities()

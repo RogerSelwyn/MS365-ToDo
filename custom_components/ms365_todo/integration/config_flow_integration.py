@@ -9,7 +9,6 @@ from homeassistant import (
 )
 from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.const import CONF_NAME
-from homeassistant.helpers import entity_registry
 from homeassistant.helpers.selector import BooleanSelector
 
 from ..classes.config_entry import MS365ConfigEntry
@@ -36,7 +35,7 @@ from .filemgmt_integration import (
     write_todo_yaml_file,
     write_yaml_file,
 )
-from .utils_integration import build_todo_entity_id
+from .utils_integration import async_delete_todo
 
 BOOLEAN_SELECTOR = BooleanSelector()
 
@@ -209,18 +208,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         )
         for todo in self._todo_list_selected_original:
             if todo not in self._todo_list_selected:
-                await self._async_delete_todo(todo)
+                await async_delete_todo(self.hass, self.config_entry, todo)
         update = self.async_create_entry(title="", data=user_input)
         await self.hass.config_entries.async_reload(self._config_entry_id)
         return update
-
-    async def _async_delete_todo(self, todo):
-        entity_id = build_todo_entity_id(todo, self.config_entry.data[CONF_ENTITY_NAME])
-        ent_reg = entity_registry.async_get(self.hass)
-        entities = entity_registry.async_entries_for_config_entry(
-            ent_reg, self._config_entry_id
-        )
-        for entity in entities:
-            if entity.entity_id == entity_id:
-                ent_reg.async_remove(entity_id)
-                return

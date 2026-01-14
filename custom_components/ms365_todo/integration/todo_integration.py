@@ -56,7 +56,10 @@ from .const_integration import (
     PERM_TASKS_READWRITE,
     TODO_TODO,
 )
-from .filemgmt_integration import async_update_todo_list_file
+from .filemgmt_integration import (
+    async_check_for_deleted_todos,
+    async_update_todo_list_file,
+)
 from .schema_integration import (
     TODO_SERVICE_COMPLETE_SCHEMA,
     TODO_SERVICE_DELETE_SCHEMA,
@@ -71,7 +74,7 @@ async def async_todo_integration_setup_entry(
     hass: HomeAssistant,
     entry: MS365ConfigEntry,
     async_add_entities: AddEntitiesCallback,
-) -> None:
+) -> bool:
     """Set up the MS365 platform."""
 
     coordinator = entry.runtime_data.coordinator
@@ -515,3 +518,4 @@ async def async_scan_for_todo_lists(hass, account, entry):
             hass,
             track,
         )
+    return await async_check_for_deleted_todos(entry, todolists, hass)
