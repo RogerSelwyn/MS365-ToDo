@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.9.0 (2026/01/22)
+### ✨ Enhancements
+- [Add ability to create/update/delete To Do Steps](https://github.com/RogerSelwyn/MS365-ToDo/commit/5a94c47f2b4c3f7e6ae14a0815cb51e48d53901f) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.9.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/7a94e02a4978253e1505f5f30f2161f77c791a20) - @RogerSelwyn
+
+
+
+
 ## v1.8.1 (2026/01/14)
 ### 🧰 Maintenance
 - [Resolve linting error](https://github.com/RogerSelwyn/MS365-ToDo/commit/bf3a78ad486af65cb4a7ed996d0c07ea660609bc) - @RogerSelwyn
