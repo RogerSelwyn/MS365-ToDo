@@ -11,7 +11,6 @@ from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
-
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
@@ -63,8 +62,11 @@ from .filemgmt_integration import (
 from .schema_integration import (
     TODO_SERVICE_COMPLETE_SCHEMA,
     TODO_SERVICE_DELETE_SCHEMA,
+    TODO_SERVICE_DELETE_STEP_SCHEMA,
     TODO_SERVICE_NEW_SCHEMA,
+    TODO_SERVICE_NEW_STEP_SCHEMA,
     TODO_SERVICE_UPDATE_SCHEMA,
+    TODO_SERVICE_UPDATE_STEP_SCHEMA,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -128,6 +130,21 @@ async def _async_setup_todo_services(entry: MS365ConfigEntry, perms):
             "complete_todo",
             TODO_SERVICE_COMPLETE_SCHEMA,
             "async_complete_todo",
+        )
+        platform.async_register_entity_service(
+            "new_todo_step",
+            TODO_SERVICE_NEW_STEP_SCHEMA,
+            "async_new_todo_step",
+        )
+        platform.async_register_entity_service(
+            "update_todo_step",
+            TODO_SERVICE_UPDATE_STEP_SCHEMA,
+            "async_update_todo_step",
+        )
+        platform.async_register_entity_service(
+            "delete_todo_step",
+            TODO_SERVICE_DELETE_STEP_SCHEMA,
+            "async_delete_todo_step",
         )
 
 
@@ -461,6 +478,54 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         if isinstance(value, datetime) and not value.tzinfo:
             return value.replace(tzinfo=self._ha_timezone)
         return value
+
+    async def async_new_todo_step(self, todo_id, name):
+        """Create a new task step for this task."""
+        self._validate_task_permissions()
+
+        ms365_todo = await self.hass.async_add_executor_job(
+            self.todolist.get_task, todo_id
+        )
+        new_ms365_todo_step = await self.hass.async_add_executor_job(
+            ms365_todo.new_checklist_item, name
+        )
+        if response := await self.hass.async_add_executor_job(new_ms365_todo_step.save):
+            await self.coordinator.async_refresh()
+        return response
+
+    async def async_update_todo_step(self, todo_id, todo_step_id, status):
+        """Update a task step for this task."""
+        self._validate_task_permissions()
+
+        ms365_todo = await self.hass.async_add_executor_job(
+            self.todolist.get_task, todo_id
+        )
+        ms365_todo_step = await self.hass.async_add_executor_job(
+            ms365_todo.get_checklist_item, todo_step_id
+        )
+        if status == TodoItemStatus.COMPLETED:
+            await self.hass.async_add_executor_job(ms365_todo_step.mark_checked)
+        else:
+            await self.hass.async_add_executor_job(ms365_todo_step.mark_unchecked)
+
+        if response := await self.hass.async_add_executor_job(ms365_todo_step.save):
+            await self.coordinator.async_refresh()
+        return response
+
+    async def async_delete_todo_step(self, todo_id, todo_step_id):
+        """Delete a task step for this task."""
+        self._validate_task_permissions()
+
+        ms365_todo = await self.hass.async_add_executor_job(
+            self.todolist.get_task, todo_id
+        )
+        ms365_todo_step = await self.hass.async_add_executor_job(
+            ms365_todo.get_checklist_item, todo_step_id
+        )
+
+        if response := await self.hass.async_add_executor_job(ms365_todo_step.delete):
+            await self.coordinator.async_refresh()
+        return response
 
     def _raise_event(self, event_type, todo_id):
         self.hass.bus.fire(

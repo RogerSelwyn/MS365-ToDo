@@ -194,6 +194,60 @@
           "name": "Completed"
         }
       }
+    },
+    "new_todo_step": {
+      "name": "Create a To Do Step",
+      "description": "Create a To Do Step",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        },
+        "name": {
+          "description": "The name of the Step",
+          "name": "Name"
+        }
+      }
+    },
+    "update_todo_step": {
+      "name": "Update a To Do Step",
+      "description": "Update a To Do Step",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        },
+        "todo_step_id": {
+          "description": "ID for the To Do Step, can be found as an attribute on your steps",
+          "name": "To Do Step ID"
+        },
+        "status": {
+          "name": "Set status",
+          "description": "A status or confirmation of the step."
+        }
+      }
+    },
+    "delete_todo_step": {
+      "name": "Delete a To Do Step",
+      "description": "Delete a To Do Step",
+      "fields": {
+        "todo_id": {
+          "description": "ID for the To Do, can be found as an attribute on your todo",
+          "name": "To Do ID"
+        },
+        "todo_step_id": {
+          "description": "ID for the To Do Step, can be found as an attribute on your steps",
+          "name": "To Do Step ID"
+        }
+      }
+    }
+  },
+  "selector": {
+    "status": {
+      "options": {
+        "needs_action": "Not completed",
+        "completed": "Completed"
+      }
     }
   }
 }

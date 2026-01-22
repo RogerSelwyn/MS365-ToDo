@@ -89,3 +89,60 @@ complete_todo:
       selector:
         boolean:
 
+new_todo_step:
+  target:
+    entity:
+      integration: ms365_todo
+      domain: todo
+  fields:
+    todo_id:
+      example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      required: true
+      selector:
+        text:
+    name:
+      example: Go to post office
+      required: true
+      selector:
+        text:
+
+update_todo_step:
+  target:
+    entity:
+      integration: ms365_todo
+      domain: todo
+  fields:
+    todo_id:
+      example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      required: true
+      selector:
+        text:
+    todo_step_id:
+      example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      required: true
+      selector:
+        text:
+    status:
+      required: true
+      selector:
+        select:
+          translation_key: status
+          options:
+            - needs_action
+            - completed
+delete_todo_step:
+  target:
+    entity:
+      integration: ms365_todo
+      domain: todo
+  fields:
+    todo_id:
+      example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      required: true
+      selector:
+        text:
+    todo_step_id:
+      example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      required: true
+      selector:
+        text:

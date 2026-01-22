@@ -24,6 +24,7 @@ ATTR_SUBJECT = "subject"
 ATTR_TITLE = "title"
 ATTR_TODOS = "todos"
 ATTR_TODO_ID = "todo_id"
+ATTR_TODO_STEP_ID = "todo_step_id"
 
 CONF_DUE_HOURS_BACKWARD_TO_GET = "due_start_offset"
 CONF_DUE_HOURS_FORWARD_TO_GET = "due_end_offset"

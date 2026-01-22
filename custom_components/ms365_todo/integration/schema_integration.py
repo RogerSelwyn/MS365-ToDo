@@ -2,6 +2,7 @@
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+from homeassistant.components.todo import TodoItemStatus
 from homeassistant.const import CONF_NAME
 
 from ..const import CONF_ENABLE_UPDATE
@@ -9,11 +10,14 @@ from .const_integration import (
     ATTR_COMPLETED,
     ATTR_DESCRIPTION,
     ATTR_DUE,
+    ATTR_NAME,
     ATTR_REMINDER,
     ATTR_REMOVE_DUE,
     ATTR_REMOVE_REMINDER,
+    ATTR_STATUS,
     ATTR_SUBJECT,
     ATTR_TODO_ID,
+    ATTR_TODO_STEP_ID,
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
     CONF_SHOW_COMPLETED,
@@ -55,6 +59,35 @@ TODO_SERVICE_COMPLETE_SCHEMA = {
     vol.Required(ATTR_TODO_ID): cv.string,
     vol.Required(ATTR_COMPLETED): bool,
 }
+
+TODO_SERVICE_NEW_STEP_SCHEMA = vol.All(
+    cv.make_entity_service_schema(
+        {
+            vol.Required(ATTR_TODO_ID): cv.string,
+            vol.Required(ATTR_NAME): cv.string,
+        }
+    ),
+)
+TODO_SERVICE_UPDATE_STEP_SCHEMA = vol.All(
+    cv.make_entity_service_schema(
+        {
+            vol.Required(ATTR_TODO_ID): cv.string,
+            vol.Required(ATTR_TODO_STEP_ID): cv.string,
+            vol.Required(ATTR_STATUS): vol.In(
+                {TodoItemStatus.NEEDS_ACTION, TodoItemStatus.COMPLETED},
+            ),
+        }
+    ),
+)
+TODO_SERVICE_DELETE_STEP_SCHEMA = vol.All(
+    cv.make_entity_service_schema(
+        {
+            vol.Required(ATTR_TODO_ID): cv.string,
+            vol.Required(ATTR_TODO_STEP_ID): cv.string,
+        }
+    ),
+)
+
 
 YAML_TODO_LIST_SCHEMA = vol.Schema(
     {

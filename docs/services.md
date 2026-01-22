@@ -16,6 +16,12 @@ Update a To Do task - All parameters are shown in the available parameter list o
 Delete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.complete_todo
 (Un)complete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+### ms365_todo.new_todo_step
+Create a new Step for an existing To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+### ms365_todo.update_todo_step
+Update a To Do Step to mark complete/incomplete - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+### ms365_tododelete_todo_step
+Delete a To Do Step - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.scan_for_todo_lists
 Scan for new for To Do lists and add to ms365_todos.yaml - No parameters.
 

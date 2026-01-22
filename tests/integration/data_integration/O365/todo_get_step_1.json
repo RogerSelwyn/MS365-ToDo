@@ -1,0 +1,8 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists('todolist1')/tasks('list1task1')/checklistItems/$entity",
+    "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET me/todo/lists('<key>')/tasks('<key>')/checklistItems('<guid>')?$select=checkedDateTime,createdDateTime",
+    "displayName": "3",
+    "createdDateTime": "2026-01-21T12:35:02Z",
+    "isChecked": false,
+    "id": "list1task1step1"
+}

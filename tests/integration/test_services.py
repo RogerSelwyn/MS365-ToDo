@@ -39,6 +39,9 @@ async def test_update_service_setup(
     assert hass.services.has_service(DOMAIN, "delete_todo")
     assert hass.services.has_service(DOMAIN, "new_todo")
     assert hass.services.has_service(DOMAIN, "update_todo")
+    assert hass.services.has_service(DOMAIN, "new_todo_step")
+    assert hass.services.has_service(DOMAIN, "update_todo_step")
+    assert hass.services.has_service(DOMAIN, "delete_todo_step")
 
 
 async def test_todo_services_ha(
@@ -338,6 +341,79 @@ async def test_todo_services_ms365(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]
 
+async def test_todo_step_services_ms365(
+    hass: HomeAssistant,
+    setup_update_integration,
+    listener_setup: ListenerSetupData,
+    requests_mock: Mocker,
+) -> None:
+    """Test HA Services."""
+    list_name = "todo.test_todo_list_1"
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    mock_call(requests_mock, URL.TODO_GET_STEP_1, "todo_get_step_1")
+
+    with patch("O365.tasks.ChecklistItem.save") as mock_save:
+        await hass.services.async_call(
+            DOMAIN,
+            "new_todo_step",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+                "name": "Test step",
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+
+    with patch("O365.tasks.ChecklistItem.save") as mock_save:
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_step",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+                "todo_step_id": "list1task1step1",
+                "status": "completed",
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+
+    with patch("O365.tasks.ChecklistItem.save") as mock_save:
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_step",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+                "todo_step_id": "list1task1step1",
+                "status": "needs_action",
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_save.called
+
+    with patch("O365.tasks.ChecklistItem.delete") as mock_delete:
+        await hass.services.async_call(
+            DOMAIN,
+            "delete_todo_step",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+                "todo_step_id": "list1task1step1",
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_delete.called
+
 
 async def test_failed_permission(
     hass: HomeAssistant,
@@ -441,6 +517,16 @@ async def test_failed_permission(
         exc_info.value
     )
 
+async def test_todo_services_ms365_errors(
+    hass: HomeAssistant,
+    setup_update_integration,
+    listener_setup: ListenerSetupData,
+    requests_mock: Mocker,
+) -> None:
+    """Test HA Services."""
+    list_name = "todo.test_todo_list_1"
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    mock_call(requests_mock, URL.TODO_GET_2, "todo_get_2")
     with pytest.raises(ServiceValidationError) as exc_info:
         await hass.services.async_call(
             DOMAIN,
