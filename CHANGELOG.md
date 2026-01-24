@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.9.1 (2026/01/24)
+### ✨ Enhancements
+- [Add return of ToDo/Checklist Item ID from creation actions](https://github.com/RogerSelwyn/MS365-ToDo/commit/9135cf441a4b167636908d4f6fe07dcd49d897b4) - @RogerSelwyn
+
+### 🐛 Fixes
+- [Fix hassfest/sourcery errors](https://github.com/RogerSelwyn/MS365-ToDo/commit/ed4c0b10a7457db0e54b24324aa3a8df1ecf459c) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.9.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/9f3b8eb16d56f7554d18b5216a3683d22a23bc26) - @RogerSelwyn
+
+
+
+
 ## v1.9.0 (2026/01/22)
 ### ✨ Enhancements
 - [Add ability to create/update/delete To Do Steps](https://github.com/RogerSelwyn/MS365-ToDo/commit/5a94c47f2b4c3f7e6ae14a0815cb51e48d53901f) - @RogerSelwyn
