@@ -89,7 +89,7 @@ class URL(Enum):
     TODO_GET_2 = (
         "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task2"
     )
-    TODO_GET_STEP_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1/checklistItems/list1task1step1"
+    TODO_GET_CHECKLIST_ITEM_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1/checklistItems/list1task1step1"
 
 
 class CN21VURL(Enum):

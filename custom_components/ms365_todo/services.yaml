@@ -89,7 +89,7 @@ complete_todo:
       selector:
         boolean:
 
-new_todo_step:
+new_todo_checklist_item:
   target:
     entity:
       integration: ms365_todo
@@ -106,7 +106,7 @@ new_todo_step:
       selector:
         text:
 
-update_todo_step:
+update_todo_checklist_item:
   target:
     entity:
       integration: ms365_todo
@@ -117,7 +117,7 @@ update_todo_step:
       required: true
       selector:
         text:
-    todo_step_id:
+    checklist_item_id:
       example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       required: true
       selector:
@@ -130,7 +130,7 @@ update_todo_step:
           options:
             - needs_action
             - completed
-delete_todo_step:
+delete_todo_checklist_item:
   target:
     entity:
       integration: ms365_todo
@@ -141,7 +141,7 @@ delete_todo_step:
       required: true
       selector:
         text:
-    todo_step_id:
+    checklist_item_id:
       example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       required: true
       selector:

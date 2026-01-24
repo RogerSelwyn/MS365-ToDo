@@ -12,7 +12,7 @@
       "missing": "Token file is missing after successful authentication, check log for file system errors",
       "token_file_error": "Token file retrieval error, check log for errors from O365. Ensure token has not expired and you are using secret value not secret id."
     },
-    "step": {
+    "checklist_item": {
       "user": {
         "data": {
           "entity_name": "Uniquely identifying name for the entities",
@@ -50,7 +50,7 @@
     }
   },
   "options": {
-    "step": {
+    "checklist_item": {
       "user": {
         "data": {
           "max_todos": "Maximum To Dos to retrieve",
@@ -112,6 +112,9 @@
     },
     "todo_not_completed": {
       "message": "To Do is already incomplete"
+    },
+    "todo_not_retrieved": {
+      "message": "To Do has not been retrieved successfully, Action unsuccessful"
     }
   },
   "services": {
@@ -195,49 +198,49 @@
         }
       }
     },
-    "new_todo_step": {
-      "name": "Create a To Do Step",
-      "description": "Create a To Do Step",
+    "new_todo_checklist_item": {
+      "name": "Create a To Do Checklist Item",
+      "description": "Create a To Do Checklist Item",
       "fields": {
         "todo_id": {
           "description": "ID for the To Do, can be found as an attribute on your todo",
           "name": "To Do ID"
         },
         "name": {
-          "description": "The name of the Step",
+          "description": "The name of the Checklist Item",
           "name": "Name"
         }
       }
     },
-    "update_todo_step": {
-      "name": "Update a To Do Step",
-      "description": "Update a To Do Step",
+    "update_todo_checklist_item": {
+      "name": "Update a To Do Checklist Item",
+      "description": "Update a To Do Checklist Item",
       "fields": {
         "todo_id": {
           "description": "ID for the To Do, can be found as an attribute on your todo",
           "name": "To Do ID"
         },
-        "todo_step_id": {
-          "description": "ID for the To Do Step, can be found as an attribute on your steps",
-          "name": "To Do Step ID"
+        "checklist_item_id": {
+          "description": "ID for the Checklist Item, can be found as an attribute on your checklist_items",
+          "name": "To Do Checklist Item ID"
         },
         "status": {
           "name": "Set status",
-          "description": "A status or confirmation of the step."
+          "description": "A status or confirmation of the checklist_item."
         }
       }
     },
-    "delete_todo_step": {
-      "name": "Delete a To Do Step",
-      "description": "Delete a To Do Step",
+    "delete_todo_checklist_item": {
+      "name": "Delete a To Do Checklist Item",
+      "description": "Delete a To Do Checklist Item",
       "fields": {
         "todo_id": {
           "description": "ID for the To Do, can be found as an attribute on your todo",
           "name": "To Do ID"
         },
-        "todo_step_id": {
-          "description": "ID for the To Do Step, can be found as an attribute on your steps",
-          "name": "To Do Step ID"
+        "checklist_item_id": {
+          "description": "ID for the Checklist Item, can be found as an attribute on your checklist_items",
+          "name": "To Do Checklist Item ID"
         }
       }
     }

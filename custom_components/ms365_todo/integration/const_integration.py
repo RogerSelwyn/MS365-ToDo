@@ -7,6 +7,7 @@ DOMAIN = "ms365_todo"
 
 ATTR_ALL_TODOS = "all_todos"
 ATTR_CHECKLIST_ITEMS = "checklist_items"
+ATTR_CHECKLIST_ITEM_ID = "checklist_item_id"
 ATTR_COMPLETED = "completed"
 ATTR_CREATED = "created"
 ATTR_DESCRIPTION = "description"
@@ -24,7 +25,7 @@ ATTR_SUBJECT = "subject"
 ATTR_TITLE = "title"
 ATTR_TODOS = "todos"
 ATTR_TODO_ID = "todo_id"
-ATTR_TODO_STEP_ID = "todo_step_id"
+
 
 CONF_DUE_HOURS_BACKWARD_TO_GET = "due_start_offset"
 CONF_DUE_HOURS_FORWARD_TO_GET = "due_end_offset"

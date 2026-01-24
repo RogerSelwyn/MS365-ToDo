@@ -6,7 +6,11 @@ from datetime import datetime, timedelta
 from homeassistant.components.todo import TodoItem, TodoListEntity
 from homeassistant.components.todo.const import TodoItemStatus, TodoListEntityFeature
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
-from homeassistant.core import HomeAssistant
+from homeassistant.core import (
+    HomeAssistant,
+    ServiceResponse,
+    SupportsResponse,
+)
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -14,6 +18,7 @@ from homeassistant.util import dt as dt_util
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
+from requests.exceptions import HTTPError
 
 from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
@@ -27,6 +32,7 @@ from ..const import (
 )
 from .const_integration import (
     ATTR_ALL_TODOS,
+    ATTR_CHECKLIST_ITEM_ID,
     ATTR_CHECKLIST_ITEMS,
     ATTR_COMPLETED,
     ATTR_CREATED,
@@ -115,6 +121,7 @@ async def _async_setup_todo_services(entry: MS365ConfigEntry, perms):
             "new_todo",
             TODO_SERVICE_NEW_SCHEMA,
             "async_new_todo",
+            supports_response=SupportsResponse.OPTIONAL,
         )
         platform.async_register_entity_service(
             "update_todo",
@@ -132,19 +139,20 @@ async def _async_setup_todo_services(entry: MS365ConfigEntry, perms):
             "async_complete_todo",
         )
         platform.async_register_entity_service(
-            "new_todo_step",
+            "new_todo_checklist_item",
             TODO_SERVICE_NEW_STEP_SCHEMA,
-            "async_new_todo_step",
+            "async_new_todo_checklist_item",
+            supports_response=SupportsResponse.OPTIONAL,
         )
         platform.async_register_entity_service(
-            "update_todo_step",
+            "update_todo_checklist_item",
             TODO_SERVICE_UPDATE_STEP_SCHEMA,
-            "async_update_todo_step",
+            "async_update_todo_checklist_item",
         )
         platform.async_register_entity_service(
-            "delete_todo_step",
+            "delete_todo_checklist_item",
             TODO_SERVICE_DELETE_STEP_SCHEMA,
-            "async_delete_todo_step",
+            "async_delete_todo_checklist_item",
         )
 
 
@@ -311,7 +319,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             reminder=reminder,
         )
 
-    async def async_new_todo(self, subject, description=None, due=None, reminder=None):
+    async def async_new_todo(
+        self, subject, description=None, due=None, reminder=None
+    ) -> ServiceResponse:
         """Create a new task for this task list."""
         self._validate_task_permissions()
 
@@ -320,7 +330,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self._raise_event(EVENT_NEW_TODO, new_ms365_todo.task_id)
         self.todo_last_created = new_ms365_todo.created
         await self.coordinator.async_refresh()
-        return True
+        return {ATTR_TODO_ID: new_ms365_todo.task_id}
 
     async def async_update_todo_item(self, item: TodoItem) -> None:
         """Add an item to the To Do list."""
@@ -377,7 +387,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo = await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
-        await self._async_save_todo(
+        if response := await self._async_save_todo(
             ms365_todo,
             subject,
             description,
@@ -386,10 +396,10 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             hatodo,
             remove_due,
             remove_reminder,
-        )
-        self._raise_event(EVENT_UPDATE_TODO, todo_id)
-        await self.coordinator.async_refresh()
-        return True
+        ):
+            self._raise_event(EVENT_UPDATE_TODO, todo_id)
+            await self.coordinator.async_refresh()
+        return response
 
     async def async_delete_todo_items(self, uids: list[str]) -> None:
         """Delete items from the To Do list."""
@@ -472,60 +482,75 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         if remove_reminder:
             ms365_todo.reminder = None
 
-        await self.hass.async_add_executor_job(ms365_todo.save)
+        return await self.hass.async_add_executor_job(ms365_todo.save)
 
     def _add_timezone(self, value):
         if isinstance(value, datetime) and not value.tzinfo:
             return value.replace(tzinfo=self._ha_timezone)
         return value
 
-    async def async_new_todo_step(self, todo_id, name):
-        """Create a new task step for this task."""
-        self._validate_task_permissions()
+    async def async_new_todo_checklist_item(self, todo_id, name) -> ServiceResponse:
+        """Create a new task checklist_item for this task."""
+        ms365_todo = await self._async_get_todo_for_checklist_item(todo_id)
 
-        ms365_todo = await self.hass.async_add_executor_job(
-            self.todolist.get_task, todo_id
-        )
-        new_ms365_todo_step = await self.hass.async_add_executor_job(
+        new_ms365_todo_checklist_item = await self.hass.async_add_executor_job(
             ms365_todo.new_checklist_item, name
         )
-        if response := await self.hass.async_add_executor_job(new_ms365_todo_step.save):
-            await self.coordinator.async_refresh()
-        return response
+        await self.hass.async_add_executor_job(new_ms365_todo_checklist_item.save)
+        await self.coordinator.async_refresh()
+        return {ATTR_CHECKLIST_ITEM_ID: new_ms365_todo_checklist_item.item_id}
 
-    async def async_update_todo_step(self, todo_id, todo_step_id, status):
-        """Update a task step for this task."""
-        self._validate_task_permissions()
+    async def async_update_todo_checklist_item(
+        self, todo_id, checklist_item_id, status
+    ):
+        """Update a task checklist_item for this task."""
 
-        ms365_todo = await self.hass.async_add_executor_job(
-            self.todolist.get_task, todo_id
-        )
-        ms365_todo_step = await self.hass.async_add_executor_job(
-            ms365_todo.get_checklist_item, todo_step_id
+        ms365_todo = await self._async_get_todo_for_checklist_item(todo_id)
+
+        ms365_todo_checklist_item = await self.hass.async_add_executor_job(
+            ms365_todo.get_checklist_item, checklist_item_id
         )
         if status == TodoItemStatus.COMPLETED:
-            await self.hass.async_add_executor_job(ms365_todo_step.mark_checked)
+            await self.hass.async_add_executor_job(
+                ms365_todo_checklist_item.mark_checked
+            )
         else:
-            await self.hass.async_add_executor_job(ms365_todo_step.mark_unchecked)
+            await self.hass.async_add_executor_job(
+                ms365_todo_checklist_item.mark_unchecked
+            )
 
-        if response := await self.hass.async_add_executor_job(ms365_todo_step.save):
+        if response := await self.hass.async_add_executor_job(
+            ms365_todo_checklist_item.save
+        ):
             await self.coordinator.async_refresh()
         return response
 
-    async def async_delete_todo_step(self, todo_id, todo_step_id):
-        """Delete a task step for this task."""
+    async def async_delete_todo_checklist_item(self, todo_id, checklist_item_id):
+        """Delete a task checklist_item for this task."""
+        ms365_todo = await self._async_get_todo_for_checklist_item(todo_id)
+
+        ms365_todo_checklist_item = await self.hass.async_add_executor_job(
+            ms365_todo.get_checklist_item, checklist_item_id
+        )
+
+        if response := await self.hass.async_add_executor_job(
+            ms365_todo_checklist_item.delete
+        ):
+            await self.coordinator.async_refresh()
+        return response
+
+    async def _async_get_todo_for_checklist_item(self, todo_id):
         self._validate_task_permissions()
 
-        ms365_todo = await self.hass.async_add_executor_job(
-            self.todolist.get_task, todo_id
-        )
-        ms365_todo_step = await self.hass.async_add_executor_job(
-            ms365_todo.get_checklist_item, todo_step_id
-        )
-
-        if response := await self.hass.async_add_executor_job(ms365_todo_step.delete):
-            await self.coordinator.async_refresh()
-        return response
+        try:
+            return await self.hass.async_add_executor_job(
+                self.todolist.get_task, todo_id
+            )
+        except HTTPError:
+            raise ServiceValidationError(  # pylint: disable=raise-missing-from
+                translation_domain=DOMAIN,
+                translation_key="todo_not_retrieved",
+            )
 
     def _raise_event(self, event_type, todo_id):
         self.hass.bus.fire(

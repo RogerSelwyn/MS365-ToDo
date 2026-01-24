@@ -18,6 +18,6 @@ The general guidance for all the integrations can be found on the MS365 Home Ass
 # Microsoft 365 To Do Integration for Home Assistant
 
 This integration enables:
-1. Getting, creating and updating Microsoft 365 To Do Lists and associated To Do item Steps
+1. Getting, creating and updating Microsoft 365 To Do Lists and associated To Do Checklist Items
 
 This project would not be possible without the wonderful [python-o365 project](https://github.com/O365/python-o365).
