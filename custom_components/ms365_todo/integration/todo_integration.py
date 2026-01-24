@@ -546,11 +546,11 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             return await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
-        except HTTPError:
-            raise ServiceValidationError(  # pylint: disable=raise-missing-from
+        except HTTPError as err:
+            raise ServiceValidationError(
                 translation_domain=DOMAIN,
                 translation_key="todo_not_retrieved",
-            )
+            ) from err
 
     def _raise_event(self, event_type, todo_id):
         self.hass.bus.fire(

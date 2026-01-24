@@ -12,7 +12,7 @@
       "missing": "Token file is missing after successful authentication, check log for file system errors",
       "token_file_error": "Token file retrieval error, check log for errors from O365. Ensure token has not expired and you are using secret value not secret id."
     },
-    "checklist_item": {
+    "step": {
       "user": {
         "data": {
           "entity_name": "Uniquely identifying name for the entities",
@@ -50,7 +50,7 @@
     }
   },
   "options": {
-    "checklist_item": {
+    "step": {
       "user": {
         "data": {
           "max_todos": "Maximum To Dos to retrieve",
