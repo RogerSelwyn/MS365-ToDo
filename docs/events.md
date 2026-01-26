@@ -28,6 +28,7 @@ data:
     AAMkAGQwYzQ5ZjZjLTQyYmItNDJmNy04NDNjLTJjYWY3NzMyMDBGAAAAAAC9VxHxYFTdSrdCHSJkXtJ-BwCoiRErLbiNRJDCFyMjq4khAAbWN3xqAACoiRErLbiNRJDCFyMjq4khAAcZSXKvAAA=
   created: "2023-02-19T15:36:05.436266+00:00"
   ha_event: false
+  subject: Go to post office
 origin: LOCAL
 time_fired: "2023-02-19T15:36:14.679300+00:00"
 context:
