@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.9.2 (2026/01/26)
+### ✨ Enhancements
+- [Include subject in new To Do event message](https://github.com/RogerSelwyn/MS365-ToDo/commit/a28ea7ebc7bfefe7d9c3b3bab7edf97685c2696c) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.9.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/b8f991b7f8e4ec03357fab5d89ed4d7e4e430532) - @RogerSelwyn
+
+
+
+
 ## v1.9.1 (2026/01/24)
 ### ✨ Enhancements
 - [Add return of ToDo/Checklist Item ID from creation actions](https://github.com/RogerSelwyn/MS365-ToDo/commit/9135cf441a4b167636908d4f6fe07dcd49d897b4) - @RogerSelwyn
