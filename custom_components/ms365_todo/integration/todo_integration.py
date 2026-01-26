@@ -249,7 +249,12 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     todo_last_completed = todo.completed
             if todo.created and todo.created > self.todo_last_created:
                 _raise_event_external(
-                    hass, EVENT_NEW_TODO, todo.task_id, ATTR_CREATED, todo.created
+                    hass,
+                    EVENT_NEW_TODO,
+                    todo.task_id,
+                    ATTR_CREATED,
+                    todo.created,
+                    todo.subject,
                 )
                 if todo.created > todo_last_created:
                     todo_last_created = todo.created
@@ -327,7 +332,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
         new_ms365_todo = await self.hass.async_add_executor_job(self.todolist.new_task)
         await self._async_save_todo(new_ms365_todo, subject, description, due, reminder)
-        self._raise_event(EVENT_NEW_TODO, new_ms365_todo.task_id)
+        self._raise_event(
+            EVENT_NEW_TODO, new_ms365_todo.task_id, new_ms365_todo.subject
+        )
         self.todo_last_created = new_ms365_todo.created
         await self.coordinator.async_refresh()
         return {ATTR_TODO_ID: new_ms365_todo.task_id}
@@ -552,10 +559,14 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 translation_key="todo_not_retrieved",
             ) from err
 
-    def _raise_event(self, event_type, todo_id):
+    def _raise_event(self, event_type, todo_id, subject=None):
+        event_message = {ATTR_TODO_ID: todo_id, EVENT_HA_EVENT: True}
+        if subject:
+            event_message[ATTR_SUBJECT] = subject
+
         self.hass.bus.fire(
             f"{DOMAIN}_{event_type}",
-            {ATTR_TODO_ID: todo_id, EVENT_HA_EVENT: True},
+            event_message,
         )
         _LOGGER.debug("%s - %s", event_type, todo_id)
 
@@ -566,10 +577,20 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         )
 
 
-def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):
+def _raise_event_external(
+    hass, event_type, todo_id, time_type, task_datetime, subject=None
+):
+    event_message = {
+        ATTR_TODO_ID: todo_id,
+        time_type: task_datetime,
+        EVENT_HA_EVENT: False,
+    }
+    if subject:
+        event_message[ATTR_SUBJECT] = subject
+
     hass.bus.fire(
         f"{DOMAIN}_{event_type}",
-        {ATTR_TODO_ID: todo_id, time_type: task_datetime, EVENT_HA_EVENT: False},
+        event_message,
     )
     _LOGGER.debug("%s - %s - %s", event_type, todo_id, task_datetime)
 
