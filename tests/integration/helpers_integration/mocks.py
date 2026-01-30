@@ -12,7 +12,7 @@ class MS365Mocks:
         mock_call(requests_mock, CN21VURL.DISCOVERY, "discovery")
         mock_call(requests_mock, CN21VURL.OPENID, "openid")
         mock_call(requests_mock, CN21VURL.ME, "me")
-        mock_call(requests_mock, CN21VURL.TODO_LISTS, "todo_lists")
+        mock_call(requests_mock, CN21VURL.TODO_LISTS_DELTA, "todo_lists")
         mock_call(requests_mock, CN21VURL.TODO_LIST_1, "todo_list_1")
         mock_call(requests_mock, CN21VURL.TODO_LIST_2, "todo_list_2")
         mock_call(requests_mock, CN21VURL.TODO_LIST_1_TASKS, "todo_list_1_tasks")
@@ -22,7 +22,7 @@ class MS365Mocks:
         """Setup the standard mocks."""
         mock_call(requests_mock, URL.OPENID, "openid")
         mock_call(requests_mock, URL.ME, "me")
-        mock_call(requests_mock, URL.TODO_LISTS, "todo_lists")
+        mock_call(requests_mock, URL.TODO_LISTS_DELTA, "todo_lists")
         mock_call(requests_mock, URL.TODO_LIST_1, "todo_list_1")
         mock_call(requests_mock, URL.TODO_LIST_2, "todo_list_2")
         mock_call(requests_mock, URL.TODO_LIST_1_TASKS, "todo_list_1_tasks")

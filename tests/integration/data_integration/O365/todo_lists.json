@@ -1,6 +1,6 @@
 {
-    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('fake_user_id')/todo/lists",
-    "@microsoft.graph.tips": "Use $select to choose only the properties your app needs, as this can lead to performance improvements. For example: GET me/todo/lists?$select=displayName,isOwner",
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(microsoft.graph.todoTaskList)",
+    "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/todo/lists/delta?$skiptoken=longskiptoken",
     "value": [
         {
             "@odata.etag": "etag1",

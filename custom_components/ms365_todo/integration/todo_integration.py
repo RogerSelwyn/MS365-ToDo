@@ -620,7 +620,7 @@ async def async_scan_for_todo_lists(hass, account, entry):
 
     todos = await hass.async_add_executor_job(account.tasks)
 
-    todolists = await hass.async_add_executor_job(todos.list_folders)
+    todolists = await hass.async_add_executor_job(todos.list_folders_delta)
     track = entry.options.get(CONF_TRACK_NEW, True)
     for todo in todolists:
         await async_update_todo_list_file(

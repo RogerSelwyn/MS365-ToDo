@@ -77,7 +77,7 @@ class URL(Enum):
         "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
     )
     ME = "https://graph.microsoft.com/v1.0/me"
-    TODO_LISTS = "https://graph.microsoft.com/v1.0/me/todo/lists"
+    TODO_LISTS_DELTA = "https://graph.microsoft.com/v1.0/me/todo/lists/delta"
     TODO_LIST_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1"
     TODO_LIST_2 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist2"
     TODO_LIST_1_TASKS = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"
@@ -98,7 +98,9 @@ class CN21VURL(Enum):
     DISCOVERY = "https://login.microsoftonline.com/common/discovery/instance"
     OPENID = "https://login.partner.microsoftonline.cn/common/v2.0/.well-known/openid-configuration"
     ME = "https://microsoftgraph.chinacloudapi.cn/v1.0/me"
-    TODO_LISTS = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists"
+    TODO_LISTS_DELTA = (
+        "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/delta"
+    )
     TODO_LIST_1 = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist1"
     TODO_LIST_2 = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist2"
     TODO_LIST_1_TASKS = (
