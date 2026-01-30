@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.9.3 (2026/01/30)
+### 🐛 Fixes
+- [Use delta endpoint to retrieve all task lists](https://github.com/RogerSelwyn/MS365-ToDo/commit/6c42b07a1e2137aa0ed10a19fe8f741e4cbb958c) - @RogerSelwyn
+
+### 📚 Documentation
+- [Update event example](https://github.com/RogerSelwyn/MS365-ToDo/commit/198357ef72844af8d5b19062a14a43ac4f8660fb) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.9.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/8356aafb726377f9f432f263713552617e9d3a57) - @RogerSelwyn
+
+
+
+
 ## v1.9.2 (2026/01/26)
 ### ✨ Enhancements
 - [Include subject in new To Do event message](https://github.com/RogerSelwyn/MS365-ToDo/commit/a28ea7ebc7bfefe7d9c3b3bab7edf97685c2696c) - @RogerSelwyn
