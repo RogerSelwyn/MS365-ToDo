@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.10.0 (2026/02/03)
+### ✨ Enhancements
+- [add tenant_id support for single-tenant app registrations](https://github.com/RogerSelwyn/MS365-ToDo/commit/a3d6dea7b537fc6556556c19a6ae8feaccb71ac9) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.10.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/f58b674bb1492d352dcf42620306cec8b28771bf) - @RogerSelwyn
+
+
+
+
 ## v1.9.3 (2026/01/30)
 ### 🐛 Fixes
 - [Use delta endpoint to retrieve all task lists](https://github.com/RogerSelwyn/MS365-ToDo/commit/6c42b07a1e2137aa0ed10a19fe8f741e4cbb958c) - @RogerSelwyn
