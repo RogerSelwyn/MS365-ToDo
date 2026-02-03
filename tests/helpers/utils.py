@@ -1,3 +1,4 @@
+# pylint: disable=line-too-long
 """Utilities for MS365 testing."""
 
 import json
@@ -28,6 +29,15 @@ def mock_token(requests_mock, scope):
         text=token,
     )
     mock_call(requests_mock, URL.OPENID, "openid")
+
+def mock_cn21v_token(requests_mock, scope):
+    """Mock up the token response based on scope."""
+    # Mock the token endpoint that MSAL will use (from the openid config)
+    token = json.dumps(build_retrieved_token(scope))
+    requests_mock.post(
+        "https://login.partner.microsoftonline.cn/common/oauth2/v2.0/token",
+        text=token,
+    )
 
 
 def _build_file_token(scope):
@@ -131,7 +141,6 @@ def mock_call(
     data = load_json(f"O365/{datafile}.json")
     if start:
         data = data.replace("2020-01-01", start).replace("2020-01-02", end)
-
     url = urlname.value
     if unique:
         url = f"{url}/{unique}"
@@ -163,11 +172,13 @@ def check_entity_state(
 ):
     """Check entity state."""
     state = hass.states.get(entity_name)
-    # print(state)
+    print("*************************** State")
+    print(state)
+    print("--- State Attributes")
+    print(state.attributes)
     assert state.state == entity_state
     if entity_attributes:
-        # print("*************************** State Attributes")
-        # print(state.attributes)
+
         if "data" in state.attributes:
             assert state.attributes["data"] == entity_attributes
         else:
