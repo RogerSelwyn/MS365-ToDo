@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.10.1 (2026/03/09)
+### 🧰 Maintenance
+- [Add local brand logos](https://github.com/RogerSelwyn/MS365-ToDo/commit/8891fb805418e6616b7e90073d35ee5e37e418e8) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [bump ruff from 0.14.4 to 0.15.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/1b3f68cb70841b3a205c229c14fc27749942a06c) - @dependabot[bot]
+- [bump ruff from 0.15.0 to 0.15.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/ee4c6da8d4f72c66aee3e5efb983296e17852019) - @dependabot[bot]
+- [bump ruff from 0.15.1 to 0.15.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/7be8661e7bf2dce5459f91151a5b41b199b658a0) - @dependabot[bot]
+
+### ✅ Test
+- [Fix tests for CN21V](https://github.com/RogerSelwyn/MS365-ToDo/commit/2a2268b47feeeefbea431a1edc5e1fdcdd173f6d) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.10.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/3620d05607af994a0524fa3f1210c49281ccc0f2) - @RogerSelwyn
+
+
+
+
 ## v1.10.0 (2026/02/03)
 ### ✨ Enhancements
 - [add tenant_id support for single-tenant app registrations](https://github.com/RogerSelwyn/MS365-ToDo/commit/a3d6dea7b537fc6556556c19a6ae8feaccb71ac9) - @RogerSelwyn
