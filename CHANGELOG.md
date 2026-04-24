@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.11.0 (2026/04/24)
+### ✨ Enhancements
+- [Add support for MS365 GCC](https://github.com/RogerSelwyn/MS365-ToDo/commit/1b999aea5e64aedcc74deba54616a550ef3cdd46) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [update pygithub requirement from >=1.51 to >=2.9.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/75613359f33abf80a1abdc52d194dcf4620aa895) - @dependabot[bot]
+- [update pytest-homeassistant-custom-component requirement](https://github.com/RogerSelwyn/MS365-ToDo/commit/c4386a5f4a39efc4559d1de31886e1c5f8dca97c) - @dependabot[bot]
+- [update portalocker requirement from >=3.1.1 to >=3.2.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/7dede45441b47f3e3475514852430e16e78bd179) - @dependabot[bot]
+- [update beautifulsoup4 requirement from >=4.10.0 to >=4.14.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/8751aeb039c7d9ee25cdc822a2880becfff987e8) - @dependabot[bot]
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/d29bd710813cfdc649c040e794c616475a6af9e0) - @actions-user
+
+### 🔖 Release
+- [Release v1.11.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/481df1301d563e6f5debc7c8ed17d8b4cd8a74cb) - @RogerSelwyn
+
+
+
+
 ## v1.10.1 (2026/03/09)
 ### 🧰 Maintenance
 - [Add local brand logos](https://github.com/RogerSelwyn/MS365-ToDo/commit/8891fb805418e6616b7e90073d35ee5e37e418e8) - @RogerSelwyn
