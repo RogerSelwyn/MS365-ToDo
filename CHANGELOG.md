@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.11.1 (2026/07/01)
+### 🐛 Fixes
+- [Add redacted yaml file contents to diagnostics](https://github.com/RogerSelwyn/MS365-ToDo/commit/86eeda521321ab36b589f89c788233d15027b4ff) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Updated to remove deprecation warning](https://github.com/RogerSelwyn/MS365-ToDo/commit/86096120d9ba09c936002bcdb0d302b85fec81bd) - @RogerSelwyn
+- [Sourcery recommendations](https://github.com/RogerSelwyn/MS365-ToDo/commit/13b3184cb0256907def519e9eabe893a53a1c26d) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [update beautifulsoup4 requirement from >=4.10.0 to >=4.14.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/e1ed5de02c5022ff03d8469b0dc613be9a797968) - @dependabot[bot]
+- [update portalocker requirement from >=3.1.1 to >=3.2.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/f01c3cab6222ed1fe600f8b57ff6d6b9fd8f402c) - @dependabot[bot]
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/aad80b5ff84aea156bb72275967e92657f8c082f) - @actions-user
+
+### 📚 Documentation
+- [Update countries available](https://github.com/RogerSelwyn/MS365-ToDo/commit/4c4e9b9a897d678900bdc1da7c5d4d34b48c026a) - @RogerSelwyn
+
+
+
+
 ## v1.11.0 (2026/04/24)
 ### ✨ Enhancements
 - [Add support for MS365 GCC](https://github.com/RogerSelwyn/MS365-ToDo/commit/1b999aea5e64aedcc74deba54616a550ef3cdd46) - @RogerSelwyn
