@@ -25,10 +25,9 @@ async def async_integration_diagnostics(hass: HomeAssistant, entry: MS365ConfigE
         CONF_TODO_LIST_ID,
         YAML_TODO_LIST_SCHEMA,
     )
-    i = 0
-    redacted_tasks = {}
-    for key in ms365_task_dict.keys():
-        i += 1
-        redacted_tasks[f"**REDACTED{i}**"] = ms365_task_dict[key]
+    redacted_tasks = {
+        f"**REDACTED{i}**": ms365_task_dict[key]
+        for i, key in enumerate(ms365_task_dict.keys(), start=1)
+    }
 
     return async_redact_data(redacted_tasks, TO_REDACT)
