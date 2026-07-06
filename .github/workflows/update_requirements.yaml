@@ -15,4 +15,4 @@ jobs:
         uses: "rogerselwyn/actions/update-requirements@main"
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          component: ms365_todo
+          component: ms365_mail
