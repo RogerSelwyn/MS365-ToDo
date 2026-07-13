@@ -184,7 +184,9 @@
 ### 🔖 Release
 - [Release v1.8.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/045bb9c4a6758af629d303c6ef91bc60438fe05b) - @RogerSelwyn
 
-
+## Past Changes
+<details>
+  <summary>Changes 2025</summary>
 
 
 ## v1.7.1 (2025/09/10)
@@ -408,6 +410,10 @@
 ### 🔖 Release
 - [Release v1.1.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/92f930796b25824ba9e81c39cb6aaa9d39c5ab89) - @RogerSelwyn
 
+</details>
+<details>
+  <summary>Changes 2025</summary>
+
 ## v1.0.1(2024/11/30)
 ### 🧰 Maintenance
 - [Sourcery recommended changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/629c980f2074b1efc9f40bf6a11388230120ce4d) - @RogerSelwyn
@@ -558,3 +564,4 @@
 ## v0.0.1 (2024/06/02)
 Initial release
 
+</details>
