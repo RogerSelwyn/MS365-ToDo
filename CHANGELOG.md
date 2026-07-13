@@ -1,5 +1,37 @@
 # Changelog
 
+## v1.11.2 (2026/07/13)
+### 🐛 Fixes
+- [Reinstate async_update_reload_and_abort to reload on reconfigure](https://github.com/RogerSelwyn/MS365-ToDo/commit/71dc49cbc125e14a64cd215444e0304d88b9d8ae) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Break out update_requirements workflow](https://github.com/RogerSelwyn/MS365-ToDo/commit/2e37454fdc46937514f09addc1bebfc6fae9f428) - @RogerSelwyn
+- [Tidy up beautifulsoup](https://github.com/RogerSelwyn/MS365-ToDo/commit/8b5adb95550680a5ad20183c9eee1bb18063ea1d) - @RogerSelwyn
+- [Remove wokflow run on PR](https://github.com/RogerSelwyn/MS365-ToDo/commit/c7a6450e08bbddadf2ec9b666dcc8fb64720aa6c) - @RogerSelwyn
+- [Update base to support extra platforms](https://github.com/RogerSelwyn/MS365-ToDo/commit/9cb2dac93a53829dbdf6642d8c814fae13622a90) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Bump portalocker to 3.2.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/4449d1f71fda3eca624b30de5856d8a76a157603) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/1ca10dfc1123b9cba59d1fa3ca1fd08a4b94d143) - @actions-user
+- [bump actions/checkout from 6 to 7](https://github.com/RogerSelwyn/MS365-ToDo/commit/7d5a117bcd98e82a55923262fce5bd455d6614bb) - @dependabot[bot]
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/ab19863e32af5fc0910eca1ef51df2473aaee2c4) - @actions-user
+- [Add versioning strategy to Dependabot config](https://github.com/RogerSelwyn/MS365-ToDo/commit/683e070003a494e5a4e12b62153d7c6ad30ea9b2) - @RogerSelwyn
+
+### ✅ Test
+- [Increase python version to HA default](https://github.com/RogerSelwyn/MS365-ToDo/commit/226c580d99a10bbadabc8bf24eda8f02755a70cf) - @RogerSelwyn
+- [Bump pytest-homeassistant-custom-component](https://github.com/RogerSelwyn/MS365-ToDo/commit/ff2927ecc32c2c57d573cf1d36427613c145222d) - @RogerSelwyn
+- [Update workflows to UV](https://github.com/RogerSelwyn/MS365-ToDo/commit/a0e8be670ad396c412952c369e4de1d2af8f8740) - @RogerSelwyn
+- [Update workflows to UV](https://github.com/RogerSelwyn/MS365-ToDo/commit/2447b8a04497d7fb7124c96866db481cf3c56401) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.11.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/f294fe5ab2f643c05e6b8af2d07d5f19fe4b5949) - @RogerSelwyn
+
+### Other
+- [Revert "test: Update workflows to UV"](https://github.com/RogerSelwyn/MS365-ToDo/commit/2132b60acc927eac7878c6a186af76d87c98a906) - @RogerSelwyn
+
+
+
+
 ## v1.11.1 (2026/07/01)
 ### 🐛 Fixes
 - [Add redacted yaml file contents to diagnostics](https://github.com/RogerSelwyn/MS365-ToDo/commit/86eeda521321ab36b589f89c788233d15027b4ff) - @RogerSelwyn
