@@ -26,7 +26,7 @@ async def test_reload(
     setup_base_integration,
     base_config_entry: MS365MockConfigEntry,
 ) -> None:
-    """Test the options flow"""
+    """Test the options flow."""
 
     result = await hass.config_entries.options.async_init(base_config_entry.entry_id)
     result = await hass.config_entries.options.async_configure(

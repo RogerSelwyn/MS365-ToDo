@@ -1,9 +1,10 @@
 """Schema for MS365 Integration."""
 
-import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+
 from homeassistant.components.todo import TodoItemStatus
 from homeassistant.const import CONF_NAME
+import homeassistant.helpers.config_validation as cv
 
 from ..const import CONF_ENABLE_UPDATE
 from .const_integration import (

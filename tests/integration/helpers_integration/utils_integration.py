@@ -8,7 +8,7 @@ from ...const import STORAGE_LOCATION, TEST_DATA_INTEGRATION_LOCATION
 
 
 def yaml_setup(tmp_path, infile):
-    """Setup a yaml file"""
+    """Create a yaml file."""
     fromfile = TEST_DATA_INTEGRATION_LOCATION / f"yaml/{infile}.yaml"
     tofile = tmp_path / STORAGE_LOCATION / f"{DOMAIN}s_test.yaml"
     shutil.copy(fromfile, tofile)

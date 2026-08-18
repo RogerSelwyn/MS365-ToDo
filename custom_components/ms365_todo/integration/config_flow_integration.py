@@ -2,20 +2,17 @@
 
 from copy import deepcopy
 
-import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-from homeassistant import (
-    config_entries,
-)
+
+from homeassistant import config_entries
 from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.const import CONF_NAME
+from homeassistant.core import HomeAssistant
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.selector import BooleanSelector
 
 from ..classes.config_entry import MS365ConfigEntry
-from ..const import (
-    CONF_ENABLE_UPDATE,
-    CONF_ENTITY_NAME,
-)
+from ..const import CONF_ENABLE_UPDATE, CONF_ENTITY_NAME
 from ..helpers.utils import add_attribute_to_item
 from .const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
@@ -54,7 +51,7 @@ def integration_validate_schema(user_input):  # pylint: disable=unused-argument
     return {}
 
 
-async def async_integration_imports(hass, import_data):
+async def async_integration_imports(hass: HomeAssistant, import_data):
     """Do the integration  level import tasks."""
     todo_lists = import_data["todos"]
     path = YAML_TODO_LISTS_FILENAME.format(
@@ -64,13 +61,12 @@ async def async_integration_imports(hass, import_data):
 
     for todo_list in todo_lists.values():
         await hass.async_add_executor_job(write_yaml_file, yaml_filepath, todo_list)
-    return
 
 
 class MS365OptionsFlowHandler(config_entries.OptionsFlow):
     """Config flow options for MS365."""
 
-    def __init__(self, entry: MS365ConfigEntry):
+    def __init__(self, entry: MS365ConfigEntry) -> None:
         """Initialize MS365 options flow."""
 
         self._track_new = entry.options.get(CONF_TRACK_NEW, True)
@@ -201,6 +197,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
         for todo in self._todos:
             if todo[CONF_NAME] == self._todo_list_selected[self._todo_no - 1]:
                 return todo
+        return None
 
     async def _async_tidy_up(self, user_input):
         await self.hass.async_add_executor_job(

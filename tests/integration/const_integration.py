@@ -71,7 +71,7 @@ UPDATE_MAX_TODOS = 200
 
 
 class URL(Enum):
-    """List of URLs"""
+    """List of URLs."""
 
     OPENID = (
         "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
@@ -82,7 +82,7 @@ class URL(Enum):
     TODO_LIST_2 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist2"
     TODO_LIST_1_TASKS = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"
     TODO_LIST_2_TASKS = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist2/tasks"
-    TODO_SAVE = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"
+    TODO_SAVE = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"  # noqa: PIE796
     TODO_GET_1 = (
         "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1"
     )
@@ -93,7 +93,7 @@ class URL(Enum):
 
 
 class CN21VURL(Enum):
-    """List of URLs"""
+    """List of URLs."""
 
     DISCOVERY = "https://login.microsoftonline.com/common/discovery/instance"
     OPENID = "https://login.partner.microsoftonline.cn/common/v2.0/.well-known/openid-configuration"

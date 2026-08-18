@@ -1,15 +1,15 @@
 """Sensor processing."""
 
+from datetime import MAXYEAR, datetime, timedelta
 import functools as ft
 import logging
-from datetime import MAXYEAR, datetime, timedelta, timezone
+
+from requests.exceptions import HTTPError
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from requests.exceptions import HTTPError
-
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
@@ -48,14 +48,14 @@ from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_scan_for_todo_lists, build_todo_query
 from .utils_integration import async_delete_todo
 
-MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=timezone.utc)
+MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=datetime.utc)
 _LOGGER = logging.getLogger(__name__)
 
 
 class MS365SensorCordinator(DataUpdateCoordinator):
     """MS365 sensor data update coordinator."""
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, account):
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, account) -> None:
         """Initialize my coordinator."""
         super().__init__(
             hass,

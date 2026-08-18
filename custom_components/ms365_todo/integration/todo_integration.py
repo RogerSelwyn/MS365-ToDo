@@ -1,16 +1,18 @@
 """Todo processing."""
 
-import logging
 from datetime import datetime, timedelta
+import logging
 
-from homeassistant.components.todo import TodoItem, TodoListEntity
-from homeassistant.components.todo.const import TodoItemStatus, TodoListEntityFeature
-from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
-from homeassistant.core import (
-    HomeAssistant,
-    ServiceResponse,
-    SupportsResponse,
+from requests.exceptions import HTTPError
+
+from homeassistant.components.todo import (
+    TodoItem,
+    TodoItemStatus,
+    TodoListEntity,
+    TodoListEntityFeature,
 )
+from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
+from homeassistant.core import HomeAssistant, ServiceResponse, SupportsResponse
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -18,7 +20,6 @@ from homeassistant.util import dt as dt_util
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
-from requests.exceptions import HTTPError
 
 from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
@@ -161,7 +162,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     def __init__(
         self,
-        hass,
+        hass: HomeAssistant,
         coordinator,
         ms365_todo_folder,
         name,
@@ -169,7 +170,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         entry: MS365ConfigEntry,
         entity_id,
         unique_id,
-    ):
+    ) -> None:
         """Initialise the To Do List."""
         super().__init__(coordinator, entry, name, entity_id, unique_id)
         self.todolist = ms365_todo_folder
@@ -212,7 +213,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self._update_status(self.hass)
         self.async_write_ha_state()
 
-    def _update_status(self, hass):
+    def _update_status(self, hass: HomeAssistant):
         todos = self.coordinator.data[self.entity_key][ATTR_DATA]
         self._state = sum(not task.completed for task in todos)
         self._todo_items = []
@@ -245,8 +246,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     ATTR_COMPLETED,
                     todo.completed,
                 )
-                if todo.completed > todo_last_completed:
-                    todo_last_completed = todo.completed
+                todo_last_completed = max(todo_last_completed, todo.completed)
             if todo.created and todo.created > self.todo_last_created:
                 _raise_event_external(
                     hass,
@@ -256,8 +256,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                     todo.created,
                     todo.subject,
                 )
-                if todo.created > todo_last_created:
-                    todo_last_created = todo.created
+                todo_last_created = max(todo_last_created, todo.created)
 
         if todo_last_completed > self._zero_date:
             self.todo_last_completed = todo_last_completed
@@ -578,7 +577,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
 
 def _raise_event_external(
-    hass, event_type, todo_id, time_type, task_datetime, subject=None
+    hass: HomeAssistant, event_type, todo_id, time_type, task_datetime, subject=None
 ):
     event_message = {
         ATTR_TODO_ID: todo_id,
@@ -615,7 +614,7 @@ def build_todo_query(builder: QueryBuilder, key):
     return query
 
 
-async def async_scan_for_todo_lists(hass, account, entry):
+async def async_scan_for_todo_lists(hass: HomeAssistant, account, entry):
     """Scan for new task lists."""
 
     todos = await hass.async_add_executor_job(account.tasks)

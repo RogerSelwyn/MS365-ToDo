@@ -2,18 +2,17 @@
 
 from copy import deepcopy
 
+from homeassistant.core import HomeAssistant
+
 from ..classes.permissions import BasePermissions
-from ..const import (
-    CONF_ENABLE_UPDATE,
-    PERM_BASE_PERMISSIONS,
-)
+from ..const import CONF_ENABLE_UPDATE, PERM_BASE_PERMISSIONS
 from .const_integration import PERM_TASKS_READ, PERM_TASKS_READWRITE
 
 
 class Permissions(BasePermissions):
     """Class in support of building permission sets."""
 
-    def __init__(self, hass, config, token_backend):
+    def __init__(self, hass: HomeAssistant, config, token_backend) -> None:
         """Initialise the class."""
         super().__init__(hass, config, token_backend)
 

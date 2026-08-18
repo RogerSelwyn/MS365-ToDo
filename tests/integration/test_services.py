@@ -523,7 +523,7 @@ async def test_todo_services_ms365_errors(
     listener_setup: ListenerSetupData,
     requests_mock: Mocker,
 ) -> None:
-    # """Test HA Services."""
+    """Test HA Services."""
     list_name = "todo.test_todo_list_1"
     mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
     mock_call(requests_mock, URL.TODO_GET_2, "todo_get_2")
@@ -557,23 +557,25 @@ async def test_todo_services_ms365_errors(
     await hass.async_block_till_done()
     assert "To Do is already incomplete" in str(exc_info.value)
 
-    with pytest.raises(ServiceValidationError) as exc_info:
-        with patch(
+    with (
+        pytest.raises(ServiceValidationError) as exc_info,
+        patch(
             "O365.tasks.Folder.get_task",
             side_effect=HTTPError(),
-        ):
-            await hass.services.async_call(
-                DOMAIN,
-                "update_todo_checklist_item",
-                {
-                    "entity_id": list_name,
-                    "todo_id": "list1task1",
-                    "checklist_item_id": "list1task1step1",
-                    "status": "needs_action",
-                },
-                blocking=True,
-                return_response=False,
-            )
+        ),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                "status": "needs_action",
+            },
+            blocking=True,
+            return_response=False,
+        )
     await hass.async_block_till_done()
     assert "To Do has not been retrieved successfully, Action unsuccessful" in str(
         exc_info.value

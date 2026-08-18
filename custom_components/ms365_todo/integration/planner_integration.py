@@ -1,27 +1,20 @@
 """Todo processing."""
 
-import logging
 from datetime import datetime, timedelta
+import logging
 
-from homeassistant.components.todo import TodoItem, TodoListEntity
-from homeassistant.components.todo.const import TodoItemStatus
+from homeassistant.components.todo import TodoItem, TodoItemStatus, TodoListEntity
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
-
 from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
     QueryBuilder,
 )
 
 from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
-from ..const import (
-    ATTR_DATA,
-    CONF_ENTITY_KEY,
-    CONF_ENTITY_TYPE,
-    EVENT_HA_EVENT,
-)
+from ..const import ATTR_DATA, CONF_ENTITY_KEY, CONF_ENTITY_TYPE, EVENT_HA_EVENT
 from .const_integration import (
     ATTR_ALL_TODOS,
     ATTR_COMPLETED,
@@ -75,13 +68,13 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
 
     def __init__(
         self,
-        hass,
+        hass: HomeAssistant,
         coordinator,
         name,
         entry: MS365ConfigEntry,
         entity_id,
         unique_id,
-    ):
+    ) -> None:
         """Initialise the Planner List."""
         super().__init__(coordinator, entry, name, entity_id, unique_id)
 
@@ -113,7 +106,7 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
         self._update_status(self.hass)
         self.async_write_ha_state()
 
-    def _update_status(self, hass):
+    def _update_status(self, hass: HomeAssistant):
         todos = self.coordinator.data[self.entity_key][ATTR_DATA]
         self._state = sum(not task.completed_date for task in todos)
         self._todo_items = []
@@ -139,8 +132,7 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
                     ATTR_COMPLETED,
                     todo.completed_date,
                 )
-                if todo.completed_date > todo_last_completed:
-                    todo_last_completed = todo.completed_date
+                todo_last_completed = max(todo_last_completed, todo.completed_date)
             if todo.created_date and todo.created_date > self.todo_last_created:
                 _raise_event_external(
                     hass,
@@ -149,8 +141,7 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
                     ATTR_CREATED,
                     todo.created_date,
                 )
-                if todo.created_date > todo_last_created:
-                    todo_last_created = todo.created_date
+                todo_last_created = max(todo_last_created, todo.created_date)
 
         if todo_last_completed > self._zero_date:
             self.todo_last_completed = todo_last_completed
@@ -191,7 +182,9 @@ def _get_status(todo):
     )
 
 
-def _raise_event_external(hass, event_type, todo_id, time_type, task_datetime):
+def _raise_event_external(
+    hass: HomeAssistant, event_type, todo_id, time_type, task_datetime
+):
     hass.bus.fire(
         f"{DOMAIN}_{event_type}",
         {ATTR_TODO_ID: todo_id, time_type: task_datetime, EVENT_HA_EVENT: False},

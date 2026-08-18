@@ -3,20 +3,16 @@
 import logging
 import os
 
-import yaml
-from homeassistant.const import CONF_NAME
 from voluptuous.error import Error as VoluptuousError
+import yaml
+
+from homeassistant.const import CONF_NAME
+from homeassistant.core import HomeAssistant
 
 from ..classes.config_entry import MS365ConfigEntry
-from ..const import (
-    CONF_ENTITY_NAME,
-)
+from ..const import CONF_ENTITY_NAME
 from ..helpers.filemgmt import build_config_file_path
-from .const_integration import (
-    CONF_TODO_LIST_ID,
-    CONF_TRACK,
-    YAML_TODO_LISTS_FILENAME,
-)
+from .const_integration import CONF_TODO_LIST_ID, CONF_TRACK, YAML_TODO_LISTS_FILENAME
 from .schema_integration import YAML_TODO_LIST_SCHEMA
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,7 +40,7 @@ def load_yaml_file(path, item_id, item_schema):
 
 
 def write_yaml_file(yaml_filepath, task):
-    """Write the tasks file entry"""
+    """Write the tasks file entry."""
     dirpath = os.path.dirname(yaml_filepath)
     if not os.path.isdir(dirpath):
         os.makedirs(dirpath)  # pragma: no cover
@@ -65,7 +61,7 @@ def _get_task_list_info(yaml_todo_list, track_new_devices):
 
 
 async def async_update_todo_list_file(
-    entry: MS365ConfigEntry, yaml_todo_list, hass, track_new_devices
+    entry: MS365ConfigEntry, yaml_todo_list, hass: HomeAssistant, track_new_devices
 ):
     """Update the todo file."""
     path = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
@@ -79,7 +75,9 @@ async def async_update_todo_list_file(
     await hass.async_add_executor_job(write_yaml_file, yaml_filepath, yaml_todo_list)
 
 
-async def async_check_for_deleted_todos(entry: MS365ConfigEntry, task_lists, hass):
+async def async_check_for_deleted_todos(
+    entry: MS365ConfigEntry, task_lists, hass: HomeAssistant
+):
     """Delete removed todo lists from yaml file."""
     path = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
     yaml_filepath = build_config_file_path(hass, path)
@@ -88,7 +86,7 @@ async def async_check_for_deleted_todos(entry: MS365ConfigEntry, task_lists, has
     )
     updated_task_lists = []
     deleted_task_lists = []
-    for e_task_list_id in existing_task_lists.keys():
+    for e_task_list_id in existing_task_lists:
         if e_task_list_id in [task_list.folder_id for task_list in task_lists]:
             updated_task_lists.append(existing_task_lists[e_task_list_id])
             continue
@@ -107,7 +105,7 @@ def build_yaml_filename(conf: MS365ConfigEntry, filename):
     return filename.format(f"_{conf.data.get(CONF_ENTITY_NAME)}")
 
 
-def build_yaml_file_path(hass, yaml_filename):
+def build_yaml_file_path(hass: HomeAssistant, yaml_filename):
     """Create yaml path."""
     return build_config_file_path(hass, yaml_filename)
 

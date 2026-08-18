@@ -9,10 +9,7 @@ from homeassistant.core import HomeAssistant
 from ..classes.config_entry import MS365ConfigEntry
 from .const_integration import PLATFORMS, YAML_TODO_LISTS_FILENAME
 from .coordinator_integration import MS365SensorCordinator
-from .filemgmt_integration import (
-    build_yaml_file_path,
-    build_yaml_filename,
-)
+from .filemgmt_integration import build_yaml_file_path, build_yaml_filename
 
 _LOGGER = logging.getLogger(__name__)
 
