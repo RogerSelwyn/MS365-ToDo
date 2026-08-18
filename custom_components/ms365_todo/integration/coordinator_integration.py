@@ -1,6 +1,6 @@
 """Sensor processing."""
 
-from datetime import MAXYEAR, datetime, timedelta
+from datetime import MAXYEAR, UTC, datetime, timedelta
 import functools as ft
 import logging
 
@@ -48,7 +48,7 @@ from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_scan_for_todo_lists, build_todo_query
 from .utils_integration import async_delete_todo
 
-MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=datetime.utc)
+MAXDATETIME = datetime(MAXYEAR, 1, 1, tzinfo=UTC)
 _LOGGER = logging.getLogger(__name__)
 
 
