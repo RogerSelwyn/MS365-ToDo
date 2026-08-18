@@ -194,10 +194,14 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
 
     def _get_todo_item(self):
         self._todo_no += 1
-        for todo in self._todos:
-            if todo[CONF_NAME] == self._todo_list_selected[self._todo_no - 1]:
-                return todo
-        return None
+        return next(
+            (
+                todo
+                for todo in self._todos
+                if todo[CONF_NAME] == self._todo_list_selected[self._todo_no - 1]
+            ),
+            None,
+        )
 
     async def _async_tidy_up(self, user_input):
         await self.hass.async_add_executor_job(
