@@ -57,7 +57,10 @@ async def test_corrupt_file(
     await hass.config_entries.async_setup(base_config_entry.entry_id)
     await hass.async_block_till_done()
 
-    assert "Invalid Data: extra keys not allowed @ data['todo_list_ids']" in caplog.text
+    assert (
+        "Invalid Data: not a valid option, did you mean 'todo_list_id'? at 'todo_list_ids'"
+        in caplog.text
+    )
 
 async def test_deleted_file(
     tmp_path,
