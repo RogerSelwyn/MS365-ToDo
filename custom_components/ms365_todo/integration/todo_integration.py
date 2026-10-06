@@ -285,7 +285,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 )
             if item.due:
                 todo[ATTR_DUE] = item.due
-                if item.due < dt_util.utcnow():
+                if item.due < dt_util.utcnow() and not item.is_completed:
                     overdue_todo = {
                         ATTR_SUBJECT: item.subject,
                         ATTR_TODO_ID: item.task_id,
