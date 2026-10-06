@@ -34,12 +34,14 @@ BASE_TODO_LIST_1 = [
                 "id": "866b3a7d-9bf8-4c7d-8064-cd2cb49686b0",
             },
         ],
+        "is_recurring": False,
     },
     {
         "subject": "Task 2",
         "todo_id": "list1task2",
         "status": "notStarted",
         "description": "Task 2 body",
+        "is_recurring": False,
     },
 ]
 OVERDUE_TODO_LIST_1 = [
@@ -52,6 +54,7 @@ OVERDUE_TODO_LIST_1 = [
         "reminder": datetime.datetime(
             2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     }
 ]
 BASE_TODO_LIST_2 = [
@@ -63,6 +66,7 @@ BASE_TODO_LIST_2 = [
         "due": datetime.datetime(
             2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     },
     {
         "subject": "Task 2",
@@ -72,6 +76,7 @@ BASE_TODO_LIST_2 = [
         "due": datetime.datetime(
             2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     },
 ]
 OVERDUE_TODO_LIST_2 = [
@@ -81,6 +86,7 @@ OVERDUE_TODO_LIST_2 = [
         "due": datetime.datetime(
             2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     },
     {
         "subject": "Task 2",
@@ -88,6 +94,7 @@ OVERDUE_TODO_LIST_2 = [
         "due": datetime.datetime(
             2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     },
 ]
 
@@ -104,6 +111,7 @@ TODO_LIST_1_COMPLETED = [
         "reminder": datetime.datetime(
             2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
         ),
+        "is_recurring": False,
     },
     {
         "subject": "Task 2",
@@ -111,6 +119,7 @@ TODO_LIST_1_COMPLETED = [
         "status": "completed",
         "description": "Task 2 body",
         "completed": "2050-12-01T00:00:00+0000",
+        "is_recurring": False,
     },
 ]
 

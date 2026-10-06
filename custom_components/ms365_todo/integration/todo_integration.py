@@ -41,6 +41,7 @@ from .const_integration import (
     ATTR_DUE,
     ATTR_ID,
     ATTR_IS_CHECKED,
+    ATTR_IS_RECURRING,
     ATTR_NAME,
     ATTR_OVERDUE_TODOS,
     ATTR_REMINDER,
@@ -272,6 +273,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 ATTR_SUBJECT: item.subject,
                 ATTR_TODO_ID: item.task_id,
                 ATTR_STATUS: item.status,
+                ATTR_IS_RECURRING: bool(item.recurrence),
             }
             if item.body:
                 todo[ATTR_DESCRIPTION] = item.body
@@ -288,6 +290,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                         ATTR_SUBJECT: item.subject,
                         ATTR_TODO_ID: item.task_id,
                         ATTR_DUE: item.due,
+                        ATTR_IS_RECURRING: bool(item.recurrence),
                     }
                     if item.is_reminder_on:
                         overdue_todo[ATTR_REMINDER] = item.reminder
