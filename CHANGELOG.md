@@ -1,5 +1,46 @@
 # Changelog
 
+## v1.12.0 (2026/10/06)
+### ✨ Enhancements
+- [Add `is_recurring` to todo state attributes](https://github.com/RogerSelwyn/MS365-ToDo/commit/c2a1aafef270d95d0aede9a4b4c1b2ae124fa07e) - @RogerSelwyn
+
+### 🐛 Fixes
+- [Fix for UTC timezone](https://github.com/RogerSelwyn/MS365-ToDo/commit/13d019b81c581398ab3d49b15877fcf001ec53ca) - @RogerSelwyn
+- [Show reconfigure succesful transalation](https://github.com/RogerSelwyn/MS365-ToDo/commit/bb23ebf1ad982c663dbe8c67d3e5c187eb23a659) - @RogerSelwyn
+- [Exclude completed todos from overdue list](https://github.com/RogerSelwyn/MS365-ToDo/commit/bcee67f871ab999286f1d59731c84c903bf5fb7e) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Remove double reload after config change](https://github.com/RogerSelwyn/MS365-ToDo/commit/3e0b8f4d0ae4e090b2f51e136dae72daab117328) - @RogerSelwyn
+- [Update to HA Ruff standards](https://github.com/RogerSelwyn/MS365-ToDo/commit/0bb2698bb535b10e98d408041081506ffe5ec011) - @RogerSelwyn
+- [Sourcery recommendation](https://github.com/RogerSelwyn/MS365-ToDo/commit/5873f0ff306f08d8399d9c5680f40404f56564a1) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [bump actions/setup-python from 6 to 7](https://github.com/RogerSelwyn/MS365-ToDo/commit/cfb67f05054dc68bd3d283a040a11213b09ba767) - @dependabot[bot]
+- [bump actions/stale from 10 to 11](https://github.com/RogerSelwyn/MS365-ToDo/commit/f5023d8d3785d0450fda39fc958e5d259aa4b6fd) - @dependabot[bot]
+- [bump ruff from 0.15.4 to 0.16.3](https://github.com/RogerSelwyn/MS365-ToDo/commit/f03434674779639e914c782085dcbaa22420af62) - @dependabot[bot]
+- [bump astral-sh/setup-uv from 8.1.0 to 10.0.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/84a4a0f8d3a22fdc9ec2278579a8bb8b6cf577ce) - @dependabot[bot]
+- [update pytest-homeassistant-custom-component requirement](https://github.com/RogerSelwyn/MS365-ToDo/commit/5cd2b2abcfa07d08009ebe33fbdd8b45d6ea5745) - @dependabot[bot]
+- [bump ruff from 0.16.3 to 0.16.9](https://github.com/RogerSelwyn/MS365-ToDo/commit/e940126ff23044dcde9f3894d2cc545b351f3cf1) - @dependabot[bot]
+- [bump astral-sh/setup-uv from 10.0.1 to 10.2.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/b7d8e82c998f13a86df71bfcbb0d72416e07c132) - @dependabot[bot]
+- [update pygithub requirement from >=2.9.1 to >=2.10.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/66253a884e83df5bca5e14aef7814729b2d7b4d3) - @dependabot[bot]
+- [bump ruff from 0.16.9 to 0.16.10](https://github.com/RogerSelwyn/MS365-ToDo/commit/c312d802a8d685bb91950aeae105a5df812bdad4) - @dependabot[bot]
+- [update pytest-homeassistant-custom-component requirement](https://github.com/RogerSelwyn/MS365-ToDo/commit/2f454dc5d76e0f52224fb348e752371ed7903e6b) - @dependabot[bot]
+- [Bump python-o365 to v2.1.10](https://github.com/RogerSelwyn/MS365-ToDo/commit/ad45c98707e1224095cb7f8221b1aae3fe26f15b) - @RogerSelwyn
+- [Auto update requirements.txt](https://github.com/RogerSelwyn/MS365-ToDo/commit/c15e2f5889545cca34798ce78148943a426a96be) - @actions-user
+
+### 📚 Documentation
+- [Tidy up changelog](https://github.com/RogerSelwyn/MS365-ToDo/commit/acca7e7e57d220abdea117bac7e0ddc611b907dc) - @RogerSelwyn
+
+### ✅ Test
+- [Modify test for changes in HA core](https://github.com/RogerSelwyn/MS365-ToDo/commit/aa018c06df3f984244ec003a68e9672ce43f131b) - @RogerSelwyn
+- [Correct test exclusions](https://github.com/RogerSelwyn/MS365-ToDo/commit/b239564003f9c3dd61cd665db7d8c9d8a8c27f4a) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.12.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/600e341428ec3ec41cde8b657505d95d1b55fb24) - @RogerSelwyn
+
+
+
+
 ## v1.11.2 (2026/07/13)
 ### 🐛 Fixes
 - [Reinstate async_update_reload_and_abort to reload on reconfigure](https://github.com/RogerSelwyn/MS365-ToDo/commit/71dc49cbc125e14a64cd215444e0304d88b9d8ae) - @RogerSelwyn
