@@ -4,22 +4,18 @@
 from unittest.mock import patch
 
 import pytest
-from homeassistant.components.todo import DOMAIN as TODO_DOMAIN
-from homeassistant.components.todo import TodoServices
+from requests.exceptions import HTTPError
+from requests_mock import Mocker
+
+from custom_components.ms365_todo.const import CONF_ENABLE_UPDATE
+from homeassistant.components.todo import DOMAIN as TODO_DOMAIN, TodoServices
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ServiceValidationError
-from requests_mock import Mocker
-from requests.exceptions import HTTPError
-from custom_components.ms365_todo.const import CONF_ENABLE_UPDATE
 
 from ..conftest import MS365MockConfigEntry
 from ..helpers.utils import mock_call
 from .const_integration import DOMAIN, URL
-from .data_integration.state import (
-    TODO_GET_ITEMS,
-    TODO_REMOVE_DUE_ARGS,
-    TODO_UPDATE_ARGS,
-)
+from .data_integration.state import TODO_GET_ITEMS, TODO_REMOVE_DUE_ARGS, TODO_UPDATE_ARGS
 from .fixtures import ListenerSetupData
 
 
@@ -125,9 +121,7 @@ async def test_todo_services_ha(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
 
-    with patch(
-        "custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo"
-    ) as mock_save:
+    with patch("custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.UPDATE_ITEM,
@@ -146,9 +140,7 @@ async def test_todo_services_ha(
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_update_todo"]
     assert str(mock_save.call_args) == TODO_UPDATE_ARGS
 
-    with patch(
-        "custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo"
-    ) as mock_save:
+    with patch("custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo") as mock_save:
         await hass.services.async_call(
             TODO_DOMAIN,
             TodoServices.UPDATE_ITEM,
@@ -201,9 +193,7 @@ async def test_todo_services_ha(
     assert mock_save.called
     listener += 1
     assert len(listener_setup.events) == listener
-    assert [
-        x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"
-    ]
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"]
 
     mock_call(requests_mock, URL.TODO_LIST_1_TASKS, "todo_list_1_tasks_completed2")
     with patch("O365.tasks.Task.save") as mock_save:
@@ -303,9 +293,7 @@ async def test_todo_services_ms365(
     assert mock_save.called
     listener += 1
     assert len(listener_setup.events) == listener
-    assert [
-        x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"
-    ]
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"]
 
     mock_call(requests_mock, URL.TODO_LIST_1_TASKS, "todo_list_1_tasks_completed2")
     with patch("O365.tasks.Task.save") as mock_save:
@@ -340,6 +328,7 @@ async def test_todo_services_ms365(
     listener += 1
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]
+
 
 async def test_todo_checklist_item_services_ms365(
     hass: HomeAssistant,
@@ -445,9 +434,7 @@ async def test_failed_permission(
             return_response=False,
         )
     await hass.async_block_till_done()
-    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(
-        exc_info.value
-    )
+    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(exc_info.value)
 
     with (
         patch(
@@ -468,9 +455,7 @@ async def test_failed_permission(
             return_response=False,
         )
     await hass.async_block_till_done()
-    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(
-        exc_info.value
-    )
+    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(exc_info.value)
 
     with (
         patch(
@@ -491,9 +476,7 @@ async def test_failed_permission(
             return_response=False,
         )
     await hass.async_block_till_done()
-    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(
-        exc_info.value
-    )
+    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(exc_info.value)
 
     with (
         patch(
@@ -513,9 +496,8 @@ async def test_failed_permission(
             return_response=False,
         )
     await hass.async_block_till_done()
-    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(
-        exc_info.value
-    )
+    assert f"Not authorised to edit To Dos - requires permission: {failed_perm}" in str(exc_info.value)
+
 
 async def test_todo_services_ms365_errors(
     hass: HomeAssistant,
@@ -577,6 +559,4 @@ async def test_todo_services_ms365_errors(
             return_response=False,
         )
     await hass.async_block_till_done()
-    assert "To Do has not been retrieved successfully, Action unsuccessful" in str(
-        exc_info.value
-    )
+    assert "To Do has not been retrieved successfully, Action unsuccessful" in str(exc_info.value)

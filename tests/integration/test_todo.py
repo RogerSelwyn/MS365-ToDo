@@ -4,8 +4,6 @@
 from unittest.mock import patch
 
 import pytest
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import entity_registry as er
 from requests.exceptions import HTTPError
 from requests_mock import Mocker
 
@@ -17,6 +15,8 @@ from custom_components.ms365_todo.integration.const_integration import (
     CONF_TRACK_NEW,
     DOMAIN,
 )
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from ..helpers.utils import check_entity_state, mock_call
@@ -34,9 +34,7 @@ async def test_get_data(
     entity_registry: er.EntityRegistry,
 ) -> None:
     """Test get data."""
-    entities = er.async_entries_for_config_entry(
-        entity_registry, base_config_entry.entry_id
-    )
+    entities = er.async_entries_for_config_entry(entity_registry, base_config_entry.entry_id)
     assert len(entities) == 2
     # print("entity_state----->", hass.states.get("todo.test_todo_list_1"))
     check_entity_state(
@@ -123,9 +121,7 @@ async def test_base_events(
     await hass.async_block_till_done()
 
     assert len(listener_setup.events) == 2
-    assert [
-        x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"
-    ]
+    assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_completed_todo"]
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_new_todo"]
 
 
@@ -143,10 +139,7 @@ async def test_fetch_error(
     ):
         await coordinator.async_refresh()
         await hass.async_block_till_done()
-    assert (
-        "MS365 To Do list not found for: test ToDo List 1 - Has it been deleted?"
-        in caplog.text
-    )
+    assert "MS365 To Do list not found for: test ToDo List 1 - Has it been deleted?" in caplog.text
 
     await coordinator.async_refresh()
     await hass.async_block_till_done()

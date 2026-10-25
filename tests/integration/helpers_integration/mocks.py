@@ -1,6 +1,6 @@
 """Mock setup."""
 
-from ...helpers.utils import mock_call, load_json
+from ...helpers.utils import load_json, mock_call
 from ..const_integration import CN21VURL, URL
 
 

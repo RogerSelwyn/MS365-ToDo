@@ -1,22 +1,22 @@
 # pylint: disable=line-too-long, unused-argument
 """Test the config flow."""
 
-from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResultType
 from requests_mock import Mocker
 
 from custom_components.ms365_todo.integration.const_integration import (
     CONF_DUE_HOURS_BACKWARD_TO_GET,
     CONF_DUE_HOURS_FORWARD_TO_GET,
+    CONF_MAX_TODOS,
     CONF_SHOW_COMPLETED,
     CONF_TODO_LIST,
-    CONF_MAX_TODOS,
     CONF_TRACK_NEW,
 )
+from homeassistant.core import HomeAssistant
+from homeassistant.data_entry_flow import FlowResultType
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from ..helpers.utils import get_schema_default
-from .const_integration import UPDATE_TODO_LIST, UPDATE_MAX_TODOS
+from .const_integration import UPDATE_MAX_TODOS, UPDATE_TODO_LIST
 from .helpers_integration.mocks import MS365MOCKS
 from .helpers_integration.utils_integration import check_yaml_file_contents, yaml_setup
 

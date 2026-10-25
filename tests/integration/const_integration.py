@@ -5,15 +5,8 @@ from copy import deepcopy
 from enum import Enum
 
 from custom_components.ms365_todo.config_flow import MS365ConfigFlow  # noqa: F401
-from custom_components.ms365_todo.const import (  # noqa: F401
-    AUTH_CALLBACK_PATH_ALT,
-    COUNTRY_URLS,
-    OAUTH_REDIRECT_URL,
-    CountryOptions,
-)
-from custom_components.ms365_todo.integration.const_integration import (
-    DOMAIN,  # noqa: F401
-)
+from custom_components.ms365_todo.const import AUTH_CALLBACK_PATH_ALT, COUNTRY_URLS, OAUTH_REDIRECT_URL, CountryOptions  # noqa: F401
+from custom_components.ms365_todo.integration.const_integration import DOMAIN  # noqa: F401
 
 from ..const import CLIENT_ID, CLIENT_SECRET, ENTITY_NAME
 
@@ -73,9 +66,7 @@ UPDATE_MAX_TODOS = 200
 class URL(Enum):
     """List of URLs."""
 
-    OPENID = (
-        "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
-    )
+    OPENID = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
     ME = "https://graph.microsoft.com/v1.0/me"
     TODO_LISTS_DELTA = "https://graph.microsoft.com/v1.0/me/todo/lists/delta"
     TODO_LIST_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1"
@@ -83,13 +74,11 @@ class URL(Enum):
     TODO_LIST_1_TASKS = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"
     TODO_LIST_2_TASKS = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist2/tasks"
     TODO_SAVE = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks"  # noqa: PIE796
-    TODO_GET_1 = (
-        "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1"
+    TODO_GET_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1"
+    TODO_GET_2 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task2"
+    TODO_GET_CHECKLIST_ITEM_1 = (
+        "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1/checklistItems/list1task1step1"
     )
-    TODO_GET_2 = (
-        "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task2"
-    )
-    TODO_GET_CHECKLIST_ITEM_1 = "https://graph.microsoft.com/v1.0/me/todo/lists/todolist1/tasks/list1task1/checklistItems/list1task1step1"
 
 
 class CN21VURL(Enum):
@@ -98,14 +87,8 @@ class CN21VURL(Enum):
     DISCOVERY = "https://login.microsoftonline.com/common/discovery/instance"
     OPENID = "https://login.partner.microsoftonline.cn/common/v2.0/.well-known/openid-configuration"
     ME = "https://microsoftgraph.chinacloudapi.cn/v1.0/me"
-    TODO_LISTS_DELTA = (
-        "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/delta"
-    )
+    TODO_LISTS_DELTA = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/delta"
     TODO_LIST_1 = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist1"
     TODO_LIST_2 = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist2"
-    TODO_LIST_1_TASKS = (
-        "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist1/tasks"
-    )
-    TODO_LIST_2_TASKS = (
-        "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist2/tasks"
-    )
+    TODO_LIST_1_TASKS = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist1/tasks"
+    TODO_LIST_2_TASKS = "https://microsoftgraph.chinacloudapi.cn/v1.0/me/todo/lists/todolist2/tasks"

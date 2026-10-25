@@ -1,8 +1,7 @@
 # pylint: disable=line-too-long
 """Tests for MS365 ToDo."""
 
-import datetime
-
+import datetime as dt
 import zoneinfo
 
 BASE_TODO_LIST_1 = [
@@ -11,12 +10,8 @@ BASE_TODO_LIST_1 = [
         "todo_id": "list1task1",
         "status": "notStarted",
         "description": "Task 1 body",
-        "due": datetime.datetime(
-            2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
-        "reminder": datetime.datetime(
-            2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
+        "reminder": dt.datetime(2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "checklist_items": [
             {
                 "name": "Step 1",
@@ -48,12 +43,8 @@ OVERDUE_TODO_LIST_1 = [
     {
         "subject": "Task 1",
         "todo_id": "list1task1",
-        "due": datetime.datetime(
-            2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
-        "reminder": datetime.datetime(
-            2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
+        "reminder": dt.datetime(2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     }
 ]
@@ -63,9 +54,7 @@ BASE_TODO_LIST_2 = [
         "todo_id": "list2task1",
         "status": "notStarted",
         "description": "Task 1 body",
-        "due": datetime.datetime(
-            2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     },
     {
@@ -73,9 +62,7 @@ BASE_TODO_LIST_2 = [
         "todo_id": "list2task2",
         "status": "notStarted",
         "description": "Task 2 body",
-        "due": datetime.datetime(
-            2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     },
 ]
@@ -83,17 +70,13 @@ OVERDUE_TODO_LIST_2 = [
     {
         "subject": "Task 1",
         "todo_id": "list2task1",
-        "due": datetime.datetime(
-            2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 30, 22, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     },
     {
         "subject": "Task 2",
         "todo_id": "list2task2",
-        "due": datetime.datetime(
-            2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 31, 12, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     },
 ]
@@ -105,12 +88,8 @@ TODO_LIST_1_COMPLETED = [
         "status": "notStarted",
         "description": "Task 1 body",
         "completed": False,
-        "due": datetime.datetime(
-            2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
-        "reminder": datetime.datetime(
-            2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")
-        ),
+        "due": dt.datetime(2021, 12, 31, 0, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
+        "reminder": dt.datetime(2021, 12, 31, 16, 0, tzinfo=zoneinfo.ZoneInfo(key="UTC")),
         "is_recurring": False,
     },
     {
@@ -144,5 +123,7 @@ TODO_GET_ITEMS = [
     },
 ]
 
-TODO_UPDATE_ARGS = "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', datetime.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), datetime.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), True, False, False)"
-TODO_REMOVE_DUE_ARGS = "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', None, None, True, True, True)"
+TODO_UPDATE_ARGS = "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', dt.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), dt.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), True, False, False)"
+TODO_REMOVE_DUE_ARGS = (
+    "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', None, None, True, True, True)"
+)

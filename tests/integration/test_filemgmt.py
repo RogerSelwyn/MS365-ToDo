@@ -2,8 +2,9 @@
 """Test file management."""
 
 import pytest
-from homeassistant.core import HomeAssistant
 from requests_mock import Mocker
+
+from homeassistant.core import HomeAssistant
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from .helpers_integration.mocks import MS365MOCKS
@@ -57,10 +58,8 @@ async def test_corrupt_file(
     await hass.config_entries.async_setup(base_config_entry.entry_id)
     await hass.async_block_till_done()
 
-    assert (
-        "Invalid Data: not a valid option, did you mean 'todo_list_id'? at 'todo_list_ids'"
-        in caplog.text
-    )
+    assert "Invalid Data: not a valid option, did you mean 'todo_list_id'? at 'todo_list_ids'" in caplog.text
+
 
 async def test_deleted_file(
     tmp_path,

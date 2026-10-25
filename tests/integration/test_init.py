@@ -4,7 +4,6 @@
 from unittest.mock import patch
 
 import pytest
-from homeassistant.core import HomeAssistant
 from requests.exceptions import HTTPError
 from requests_mock import Mocker
 
@@ -15,6 +14,7 @@ from custom_components.ms365_todo.integration.const_integration import (
     CONF_TODO_LIST,
     CONF_TRACK_NEW,
 )
+from homeassistant.core import HomeAssistant
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from .const_integration import UPDATE_TODO_LIST
@@ -37,9 +37,7 @@ async def test_reload(
         },
     )
 
-    with patch(
-        "homeassistant.config_entries.ConfigEntries.async_reload"
-    ) as mock_async_reload:
+    with patch("homeassistant.config_entries.ConfigEntries.async_reload") as mock_async_reload:
         result = await hass.config_entries.options.async_configure(
             result["flow_id"],
             user_input={
@@ -69,7 +67,4 @@ async def test_httperror(
     ):
         await hass.config_entries.async_setup(base_config_entry.entry_id)
     await hass.async_block_till_done()
-    assert (
-        "MS365 To Do list not found for: test ToDo List 1 - Please remove from MS365_todo_test.yaml"
-        in caplog.text
-    )
+    assert "MS365 To Do list not found for: test ToDo List 1 - Please remove from MS365_todo_test.yaml" in caplog.text
