@@ -1,6 +1,6 @@
 """Todo processing."""
 
-from datetime import datetime, timedelta
+import datetime as dt
 import logging
 
 from homeassistant.components.todo import TodoItem, TodoItemStatus, TodoListEntity
@@ -78,10 +78,10 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
         """Initialise the Planner List."""
         super().__init__(coordinator, entry, name, entity_id, unique_id)
 
-        self.todo_last_created = dt_util.utcnow() - timedelta(minutes=5)
-        self.todo_last_completed = dt_util.utcnow() - timedelta(minutes=5)
+        self.todo_last_created = dt_util.utcnow() - dt.timedelta(minutes=5)
+        self.todo_last_completed = dt_util.utcnow() - dt.timedelta(minutes=5)
         self._ha_timezone = dt_util.DEFAULT_TIME_ZONE
-        self._zero_date = datetime(1, 1, 1, 0, 0, 0, tzinfo=self._ha_timezone)
+        self._zero_date = dt.datetime(1, 1, 1, 0, 0, 0, tzinfo=self._ha_timezone)
         self._state = None
         self._todo_items = None
         self._extra_attributes = None
@@ -202,11 +202,11 @@ def build_todo_query(builder: QueryBuilder, key):
     start_offset = ms365_task.get(CONF_DUE_HOURS_BACKWARD_TO_GET)
     end_offset = ms365_task.get(CONF_DUE_HOURS_FORWARD_TO_GET)
     if start_offset:
-        start = dt_util.utcnow() + timedelta(hours=start_offset)
+        start = dt_util.utcnow() + dt.timedelta(hours=start_offset)
         query = query & builder.greater_equal(
             "due", start.strftime("%Y-%m-%dT%H:%M:%S")
         )
     if end_offset:
-        end = dt_util.utcnow() + timedelta(hours=end_offset)
+        end = dt_util.utcnow() + dt.timedelta(hours=end_offset)
         query = query & builder.less_equal("due", end.strftime("%Y-%m-%dT%H:%M:%S"))
     return query

@@ -123,7 +123,7 @@ TODO_GET_ITEMS = [
     },
 ]
 
-TODO_UPDATE_ARGS = "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', dt.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), dt.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), True, False, False)"
+TODO_UPDATE_ARGS = "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', datetime.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), datetime.datetime(2023, 11, 17, 5, 30, tzinfo=zoneinfo.ZoneInfo(key='US/Pacific')), True, False, False)"
 TODO_REMOVE_DUE_ARGS = (
     "call(Task: (o) Task 1 (due: 2099-01-01 at 00:00:00)  , 'Task 1', 'Task 1 body', None, None, True, True, True)"
 )

@@ -1,6 +1,6 @@
 """Todo processing."""
 
-from datetime import datetime, timedelta
+import datetime as dt
 import logging
 
 from requests.exceptions import HTTPError
@@ -177,10 +177,10 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         self.todolist = ms365_todo_folder
         self._show_completed = yaml_todo_list.get(CONF_SHOW_COMPLETED)
 
-        self.todo_last_created = dt_util.utcnow() - timedelta(minutes=5)
-        self.todo_last_completed = dt_util.utcnow() - timedelta(minutes=5)
+        self.todo_last_created = dt_util.utcnow() - dt.timedelta(minutes=5)
+        self.todo_last_completed = dt_util.utcnow() - dt.timedelta(minutes=5)
         self._ha_timezone = dt_util.DEFAULT_TIME_ZONE
-        self._zero_date = datetime(1, 1, 1, 0, 0, 0, tzinfo=self._ha_timezone)
+        self._zero_date = dt.datetime(1, 1, 1, 0, 0, 0, tzinfo=self._ha_timezone)
         self._state = None
         self._todo_items = None
         self._extra_attributes = None
@@ -318,7 +318,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_create_todo_item(self, item: TodoItem) -> None:
         """Add an item to the To Do list."""
-        reminder = item.due if isinstance(item.due, datetime) else None
+        reminder = item.due if isinstance(item.due, dt.datetime) else None
         await self.async_new_todo(
             subject=item.summary,
             description=item.description,
@@ -364,7 +364,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             or (item.due and item.due != ms365_todo.due)
             or (not item.due and (ms365_todo.due or ms365_todo.reminder))
         ):
-            reminder = item.due if isinstance(item.due, datetime) else None
+            reminder = item.due if isinstance(item.due, dt.datetime) else None
             await self.async_update_todo(
                 todo_id=item.uid,
                 subject=item.summary,
@@ -494,7 +494,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         return await self.hass.async_add_executor_job(ms365_todo.save)
 
     def _add_timezone(self, value):
-        if isinstance(value, datetime) and not value.tzinfo:
+        if isinstance(value, dt.datetime) and not value.tzinfo:
             return value.replace(tzinfo=self._ha_timezone)
         return value
 
@@ -607,12 +607,12 @@ def build_todo_query(builder: QueryBuilder, key):
     start_offset = ms365_task.get(CONF_DUE_HOURS_BACKWARD_TO_GET)
     end_offset = ms365_task.get(CONF_DUE_HOURS_FORWARD_TO_GET)
     if start_offset:
-        start = dt_util.utcnow() + timedelta(hours=start_offset)
+        start = dt_util.utcnow() + dt.timedelta(hours=start_offset)
         query = query & builder.greater_equal(
             "due", start.strftime("%Y-%m-%dT%H:%M:%S")
         )
     if end_offset:
-        end = dt_util.utcnow() + timedelta(hours=end_offset)
+        end = dt_util.utcnow() + dt.timedelta(hours=end_offset)
         query = query & builder.less_equal("due", end.strftime("%Y-%m-%dT%H:%M:%S"))
     return query
 
