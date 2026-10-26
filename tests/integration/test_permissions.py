@@ -11,6 +11,7 @@ from homeassistant.helpers import entity_registry as er
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from ..helpers.utils import build_token_file
+from .const_integration import FULL_INIT_ENTITY_NO
 from .helpers_integration.mocks import MS365MOCKS
 
 ### Note that permissions code also supports Presence/Calendar which are not present in the todo integration
@@ -66,4 +67,4 @@ async def test_higher_permissions(
     await hass.async_block_till_done()
 
     entities = er.async_entries_for_config_entry(entity_registry, base_config_entry.entry_id)
-    assert len(entities) == 2
+    assert len(entities) == FULL_INIT_ENTITY_NO

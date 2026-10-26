@@ -18,25 +18,41 @@ from .schema_integration import YAML_TODO_LIST_SCHEMA
 _LOGGER = logging.getLogger(__name__)
 
 
-def load_yaml_file(path, item_id, item_schema):
+def load_yaml_file(path, validate=False):
     """Load the ms365 yaml file."""
-    items = {}
+
     try:
         with open(path, encoding="utf8") as file:
             data = yaml.safe_load(file)
-            if data is None:
-                return {}
-            for item in data:
-                try:
-                    items[item[item_id]] = item_schema(item)
-                except VoluptuousError as exception:
-                    # keep going
-                    _LOGGER.warning("Invalid Data: %s", exception)
+
+            if validate:
+                items = {}
+                for item in data:
+                    try:
+                        items[item[CONF_TODO_LIST_ID]] = YAML_TODO_LIST_SCHEMA(item)
+                    except VoluptuousError as exception:
+                        # keep going
+                        _LOGGER.warning(
+                            "Invalid Data - duplicate entries may be created in file %s - for item %s: %s",
+                            path,
+                            item,
+                            exception,
+                        )
+                return items
+
+        return (
+            {
+                item[CONF_TODO_LIST_ID]: item
+                for item in data
+                if item and item.get(CONF_TODO_LIST_ID)
+            }
+            if data
+            else {}
+        )
+
     except FileNotFoundError:
         # When YAML file could not be loaded/did not contain a dict
         return {}
-
-    return items
 
 
 def write_yaml_file(yaml_filepath, task):
@@ -67,7 +83,7 @@ async def async_update_todo_list_file(
     path = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
     yaml_filepath = build_config_file_path(hass, path)
     existing_task_lists = await hass.async_add_executor_job(
-        load_yaml_file, yaml_filepath, CONF_TODO_LIST_ID, YAML_TODO_LIST_SCHEMA
+        load_yaml_file, yaml_filepath
     )
     yaml_todo_list = _get_task_list_info(yaml_todo_list, track_new_devices)
     if yaml_todo_list[CONF_TODO_LIST_ID] in existing_task_lists:
@@ -82,7 +98,7 @@ async def async_check_for_deleted_todos(
     path = build_yaml_filename(entry, YAML_TODO_LISTS_FILENAME)
     yaml_filepath = build_config_file_path(hass, path)
     existing_task_lists = await hass.async_add_executor_job(
-        load_yaml_file, yaml_filepath, CONF_TODO_LIST_ID, YAML_TODO_LIST_SCHEMA
+        load_yaml_file, yaml_filepath
     )
     updated_task_lists = []
     deleted_task_lists = []

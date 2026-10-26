@@ -10,9 +10,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
-    QueryBuilder,
-)
+from O365.utils.query import QueryBuilder  # pylint: disable=no-name-in-module, import-error
 
 from ..const import (
     ATTR_DATA,
@@ -44,7 +42,6 @@ from .filemgmt_integration import (
     build_yaml_filename,
     load_yaml_file,
 )
-from .schema_integration import YAML_TODO_LIST_SCHEMA
 from .todo_integration import async_scan_for_todo_lists, build_todo_query
 from .utils_integration import async_delete_todo
 
@@ -90,10 +87,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
         yaml_filename = build_yaml_filename(self._entry, YAML_TODO_LISTS_FILENAME)
         yaml_filepath = build_yaml_file_path(self.hass, yaml_filename)
         ms365_task_dict = await self.hass.async_add_executor_job(
-            load_yaml_file,
-            yaml_filepath,
-            CONF_TODO_LIST_ID,
-            YAML_TODO_LIST_SCHEMA,
+            load_yaml_file, yaml_filepath, True
         )
         ms365_todo_lists = list(ms365_task_dict.values())
         return await self._async_todo_entities(ms365_todo_lists)

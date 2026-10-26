@@ -20,7 +20,7 @@ from homeassistant.helpers import entity_registry as er
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
 from ..helpers.utils import check_entity_state, mock_call
-from .const_integration import UPDATE_TODO_LIST, URL
+from .const_integration import FULL_INIT_ENTITY_NO, UPDATE_TODO_LIST, URL
 from .data_integration.state import BASE_TODO_1, BASE_TODO_2, TODO_COMPLETED
 from .fixtures import ListenerSetupData
 from .helpers_integration.mocks import MS365MOCKS
@@ -35,7 +35,7 @@ async def test_get_data(
 ) -> None:
     """Test get data."""
     entities = er.async_entries_for_config_entry(entity_registry, base_config_entry.entry_id)
-    assert len(entities) == 2
+    assert len(entities) == FULL_INIT_ENTITY_NO
     # print("entity_state----->", hass.states.get("todo.test_todo_list_1"))
     check_entity_state(
         hass,

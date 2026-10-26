@@ -5,8 +5,10 @@ import pytest
 from requests_mock import Mocker
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
+from .const_integration import FULL_INIT_ENTITY_NO
 from .helpers_integration.mocks import MS365MOCKS
 from .helpers_integration.utils_integration import check_yaml_file_contents, yaml_setup
 
@@ -49,7 +51,7 @@ async def test_corrupt_file(
     base_config_entry: MS365MockConfigEntry,
     caplog: pytest.LogCaptureFixture,
 ) -> None:
-    """Test for corrupt yaml content."""
+    """Test for corrupt yaml content (invalid 'todolistids')."""
     MS365MOCKS.standard_mocks(requests_mock)
     yaml_setup(tmp_path, "ms365_todo_corrupt")
 
@@ -58,7 +60,55 @@ async def test_corrupt_file(
     await hass.config_entries.async_setup(base_config_entry.entry_id)
     await hass.async_block_till_done()
 
-    assert "Invalid Data: not a valid option, did you mean 'todo_list_id'? at 'todo_list_ids'" in caplog.text
+    assert "Invalid Data - duplicate entries may be created in file" in caplog.text
+
+
+async def test_corrupt_file2(
+    tmp_path,
+    hass: HomeAssistant,
+    requests_mock: Mocker,
+    base_token,
+    base_config_entry: MS365MockConfigEntry,
+    caplog: pytest.LogCaptureFixture,
+    entity_registry: er.EntityRegistry,
+) -> None:
+    """Test for corrupt yaml content (hanging hyphen)."""
+    MS365MOCKS.standard_mocks(requests_mock)
+    yaml_setup(tmp_path, "ms365_todo_corrupt2")
+
+    base_config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(base_config_entry.entry_id)
+    await hass.async_block_till_done()
+
+    assert "Invalid Data - duplicate entries may be created in file" in caplog.text
+
+    entities = er.async_entries_for_config_entry(entity_registry, base_config_entry.entry_id)
+    assert len(entities) == FULL_INIT_ENTITY_NO
+
+
+async def test_corrupt_file3(
+    tmp_path,
+    hass: HomeAssistant,
+    requests_mock: Mocker,
+    base_token,
+    base_config_entry: MS365MockConfigEntry,
+    caplog: pytest.LogCaptureFixture,
+    entity_registry: er.EntityRegistry,
+) -> None:
+    """Test for corrupt yaml content (empty name)."""
+    MS365MOCKS.standard_mocks(requests_mock)
+    yaml_setup(tmp_path, "ms365_todo_corrupt3")
+
+    base_config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(base_config_entry.entry_id)
+    await hass.async_block_till_done()
+
+    assert "Invalid Data - duplicate entries may be created in file" in caplog.text
+
+    entities = er.async_entries_for_config_entry(entity_registry, base_config_entry.entry_id)
+    assert len(entities) == FULL_INIT_ENTITY_NO
 
 
 async def test_deleted_file(

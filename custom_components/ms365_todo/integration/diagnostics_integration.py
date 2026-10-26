@@ -10,7 +10,6 @@ from .filemgmt_integration import (
     build_yaml_filename,
     load_yaml_file,
 )
-from .schema_integration import YAML_TODO_LIST_SCHEMA
 
 TO_REDACT = {CONF_TODO_LIST_ID}
 
@@ -22,8 +21,6 @@ async def async_integration_diagnostics(hass: HomeAssistant, entry: MS365ConfigE
     ms365_task_dict = await hass.async_add_executor_job(
         load_yaml_file,
         yaml_filepath,
-        CONF_TODO_LIST_ID,
-        YAML_TODO_LIST_SCHEMA,
     )
     redacted_tasks = {
         f"**REDACTED{i}**": ms365_task_dict[key]
