@@ -1,5 +1,30 @@
 # Changelog
 
+## v1.13.0 (2026/10/29)
+### 🐛 Fixes
+- [Apply fixes from calendar base changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/0e94f2f259ecb635dc7e4708cd67b23e7981c442) - @RogerSelwyn
+- [Apply fixes from calendar base changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/778ccf92ea833e19ee6ba6fa293c5f04c5989630) - @RogerSelwyn
+- [Apply learnings from calendar yaml fixes](https://github.com/RogerSelwyn/MS365-ToDo/commit/f8d592b88bf7e2cd48e552531e6daa02468fdaff) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Remove deprecated attribute](https://github.com/RogerSelwyn/MS365-ToDo/commit/ca1060907736331a806a98dad22aaeee2a393db9) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [Bump HA core to 2025.6.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/f3132e787ccf9e872c82d593e478f64767fca3d1) - @RogerSelwyn
+- [bump astral-sh/setup-uv from 10.2.0 to 10.3.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/cfcad1912e327d90577ef83fb73bdf045de53fda) - @dependabot[bot]
+- [bump ruff from 0.16.10 to 0.17.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/88978226cd852e4673048ce9f55b2e5d2d506818) - @dependabot[bot]
+- [update pytest-homeassistant-custom-component requirement](https://github.com/RogerSelwyn/MS365-ToDo/commit/f3cd1b8664e28b901075609868ed4619941a574e) - @dependabot[bot]
+
+### ✅ Test
+- [Format tests with Ruff](https://github.com/RogerSelwyn/MS365-ToDo/commit/27f7dfc7172cc0cd18973123c2c27b9c3427d0c2) - @RogerSelwyn
+- [Correct datetime import](https://github.com/RogerSelwyn/MS365-ToDo/commit/5f2423f4af3685045ee2da748080aa4fc80d3d94) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.12.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/7578c9bd39d535d3be9eebe03a3d4928ac1fe188) - @RogerSelwyn
+
+
+
+
 ## v1.12.0 (2026/10/06)
 ### ✨ Enhancements
 - [Add `is_recurring` to todo state attributes](https://github.com/RogerSelwyn/MS365-ToDo/commit/c2a1aafef270d95d0aede9a4b4c1b2ae124fa07e) - @RogerSelwyn
