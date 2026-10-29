@@ -61,7 +61,7 @@
 - [Correct test exclusions](https://github.com/RogerSelwyn/MS365-ToDo/commit/b239564003f9c3dd61cd665db7d8c9d8a8c27f4a) - @RogerSelwyn
 
 ### 🔖 Release
-- [Release v1.12.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/600e341428ec3ec41cde8b657505d95d1b55fb24) - @RogerSelwyn
+- [Release v1.13.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/600e341428ec3ec41cde8b657505d95d1b55fb24) - @RogerSelwyn
 
 
 
