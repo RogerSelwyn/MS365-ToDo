@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 from aiohttp.test_utils import TestClient
 import pytest
-from pytest_homeassistant_custom_component.typing import ClientSessionGenerator
+from pytest_homeassistant.typing import ClientSessionGenerator
 
 from custom_components.ms365_todo.integration import filemgmt_integration
 from homeassistant.core import Event, HomeAssistant
