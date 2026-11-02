@@ -12,7 +12,9 @@ Key | Type | Required | Description
 -- | -- | -- | --
 `account_name` | `string` | `True` | Uniquely identifying name for the account. To Do entity names will be suffixed with this. `todo.todo_account1`. Do not use email address or spaces.
 `client_id` | `string` | `True` | Client ID from your Entra ID App Registration.
-`client_secret` | `string` | `True` | Client Secret from your Entra ID App Registration.
+`environment_secret` | `boolean` | `True` | If True (**default is False**) uses client secret from environment variable defined by `client_sec_variable`. If False uses client secret entered by config dialogue.
+`client_secret` | `string` | `True` | Client Secret from your Entra ID App Registration. Used if `environment_secret` is False.
+`client_sec_variable` | `string` | `True` | Defines the environment variable the client secret is stored in. Used if `environment_secret` is True.
 `alt_auth_method` | `boolean` | `False` | If False (default), authentication is not dependent on internet access to your HA instance. [See Authentication](./authentication.md)
 `enable_update` | `boolean` | `False` | If True (**default is False**), this will enable the various services that allow the creation and update of To Do list items
 
