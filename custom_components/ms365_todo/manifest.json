@@ -1,6 +1,7 @@
 {
   "domain": "ms365_todo",
   "name": "Microsoft 365 - To Do",
+  "categories": ["productivity_information.calendars_todos"],
   "codeowners": ["@RogerSelwyn"],
   "config_flow": true,
   "dependencies": ["http"],
