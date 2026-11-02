@@ -3,7 +3,6 @@
 import os
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.entity import async_generate_entity_id
 
 from ..const import (
@@ -17,10 +16,8 @@ from ..const import (
     CONF_ENVIRONMENT_SECRET,
     CONF_TENANT_ID,
     DEFAULT_TENANT_ID,
-    STARTUP_ISSUES,
     CountryOptions,
 )
-from ..integration.const_integration import DOMAIN
 
 
 def add_attribute_to_item(item, user_input, attribute):
@@ -61,12 +58,6 @@ def get_tenant_id(entry_data):
 def create_issue_id(error, entry_id):
     """Create standard format issue id."""
     return f"{error}_{entry_id}"
-
-
-def delete_issues(hass: HomeAssistant, entry_id):
-    """Delete the token repair issues of a config entry."""
-    for error in STARTUP_ISSUES:
-        ir.async_delete_issue(hass, DOMAIN, create_issue_id(error, entry_id))
 
 
 def get_credentials(config):
