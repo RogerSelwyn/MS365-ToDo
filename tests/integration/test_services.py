@@ -560,3 +560,47 @@ async def test_todo_services_ms365_errors(
         )
     await hass.async_block_till_done()
     assert "To Do has not been retrieved successfully, Action unsuccessful" in str(exc_info.value)
+
+
+async def test_remove_items_already_deleted(
+    hass: HomeAssistant,
+    setup_update_integration,
+    listener_setup: ListenerSetupData,
+    requests_mock: Mocker,
+) -> None:
+    """Test removing multiple items where one has already been deleted."""
+    list_name = "todo.test_todo_list_1"
+    requests_mock.get(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "ErrorItemNotFound"}})
+    mock_call(requests_mock, URL.TODO_GET_2, "todo_get_2")
+
+    with (
+        patch("O365.tasks.Task.delete") as mock_delete,
+        patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh,
+    ):
+        await hass.services.async_call(
+            TODO_DOMAIN,
+            TodoServices.REMOVE_ITEM,
+            {
+                "entity_id": list_name,
+                "item": ["list1task1", "list1task2"],
+            },
+            blocking=True,
+            return_response=False,
+        )
+    await hass.async_block_till_done()
+    assert mock_delete.call_count == 1
+    assert mock_refresh.call_count == 1
+    assert len([x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]) == 1
+
+    requests_mock.get(URL.TODO_GET_1.value, status_code=403, json={"error": {"code": "AccessDenied"}})
+    with pytest.raises(HTTPError):
+        await hass.services.async_call(
+            TODO_DOMAIN,
+            TodoServices.REMOVE_ITEM,
+            {
+                "entity_id": list_name,
+                "item": ["list1task1"],
+            },
+            blocking=True,
+            return_response=False,
+        )

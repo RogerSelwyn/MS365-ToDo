@@ -412,19 +412,29 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
     async def async_delete_todo_items(self, uids: list[str]) -> None:
         """Delete items from the To Do list."""
-        for todo_id in uids:
-            await self.async_delete_todo(todo_id)
+        try:
+            for todo_id in uids:
+                await self.async_delete_todo(todo_id, refresh=False)
+        finally:
+            await self.coordinator.async_refresh()
 
-    async def async_delete_todo(self, todo_id):
+    async def async_delete_todo(self, todo_id, refresh=True):
         """Delete task for this task list."""
         self._validate_task_permissions()
 
-        ms365_todo = await self.hass.async_add_executor_job(
-            self.todolist.get_task, todo_id
-        )
-        await self.hass.async_add_executor_job(ms365_todo.delete)
-        self._raise_event(EVENT_DELETE_TODO, todo_id)
-        await self.coordinator.async_refresh()
+        try:
+            ms365_todo = await self.hass.async_add_executor_job(
+                self.todolist.get_task, todo_id
+            )
+            if ms365_todo:
+                await self.hass.async_add_executor_job(ms365_todo.delete)
+                self._raise_event(EVENT_DELETE_TODO, todo_id)
+        except HTTPError as err:
+            if err.response is None or err.response.status_code != 404:
+                raise
+            _LOGGER.debug("To Do already deleted - %s", todo_id)
+        if refresh:
+            await self.coordinator.async_refresh()
         return True
 
     async def async_complete_todo(self, todo_id, completed, ms365_todo=None):
