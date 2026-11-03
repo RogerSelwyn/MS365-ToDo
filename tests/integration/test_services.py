@@ -329,6 +329,22 @@ async def test_todo_services_ms365(
     assert len(listener_setup.events) == listener
     assert [x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]
 
+    requests_mock.get(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "Client Error"}})
+    with pytest.raises(ServiceValidationError) as exc_info:
+        await hass.services.async_call(
+            DOMAIN,
+            "delete_todo",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+            },
+            blocking=True,
+            return_response=False,
+        )
+
+    await hass.async_block_till_done()
+    assert "To Do was not found" in str(exc_info.value)
+
 
 async def test_todo_checklist_item_services_ms365(
     hass: HomeAssistant,
@@ -570,7 +586,7 @@ async def test_remove_items_already_deleted(
 ) -> None:
     """Test removing multiple items where one has already been deleted."""
     list_name = "todo.test_todo_list_1"
-    requests_mock.get(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "ErrorItemNotFound"}})
+    requests_mock.get(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "Client Error"}})
     mock_call(requests_mock, URL.TODO_GET_2, "todo_get_2")
 
     with (

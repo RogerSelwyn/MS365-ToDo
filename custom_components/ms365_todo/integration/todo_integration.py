@@ -17,9 +17,7 @@ from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
-from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
-    QueryBuilder,
-)
+from O365.utils.query import QueryBuilder  # pylint: disable=no-name-in-module, import-error
 
 from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
@@ -414,11 +412,11 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         """Delete items from the To Do list."""
         try:
             for todo_id in uids:
-                await self.async_delete_todo(todo_id, refresh=False)
+                await self.async_delete_todo(todo_id, list_call=True)
         finally:
             await self.coordinator.async_refresh()
 
-    async def async_delete_todo(self, todo_id, refresh=True):
+    async def async_delete_todo(self, todo_id, list_call=False):
         """Delete task for this task list."""
         self._validate_task_permissions()
 
@@ -426,15 +424,21 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo = await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
-            if ms365_todo:
-                await self.hass.async_add_executor_job(ms365_todo.delete)
-                self._raise_event(EVENT_DELETE_TODO, todo_id)
         except HTTPError as err:
             if err.response is None or err.response.status_code != 404:
                 raise
-            _LOGGER.debug("To Do already deleted - %s", todo_id)
-        if refresh:
-            await self.coordinator.async_refresh()
+            if not list_call:
+                raise ServiceValidationError(
+                    translation_domain=DOMAIN,
+                    translation_key="todo_not_found",
+                ) from err
+
+            _LOGGER.debug("To Do was not found - %s", todo_id)
+        else:
+            await self.hass.async_add_executor_job(ms365_todo.delete)
+            self._raise_event(EVENT_DELETE_TODO, todo_id)
+            if not list_call:
+                await self.coordinator.async_refresh()
         return True
 
     async def async_complete_todo(self, todo_id, completed, ms365_todo=None):
