@@ -424,6 +424,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo = await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
+            await self.hass.async_add_executor_job(ms365_todo.delete)
         except HTTPError as err:
             if err.response is None or err.response.status_code != 404:
                 raise
@@ -435,7 +436,6 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
 
             _LOGGER.debug("To Do was not found - %s", todo_id)
         else:
-            await self.hass.async_add_executor_job(ms365_todo.delete)
             self._raise_event(EVENT_DELETE_TODO, todo_id)
             if not list_call:
                 await self.coordinator.async_refresh()
