@@ -5,14 +5,12 @@
 - [Add External Secret support](https://github.com/RogerSelwyn/MS365-ToDo/commit/205204de04baa105202874ac72a04673f8bceb30) - @RogerSelwyn
 
 ### 🐛 Fixes
-- [Don't abort clearing completed items when a To Do is already deleted](https://github.com/RogerSelwyn/MS365-ToDo/commit/53187dbcb4b7fee07bdbf0bb063e57aa223c2e5d) - @Jochemp88
-- [Also skip a not found To Do on delete when removing items](https://github.com/RogerSelwyn/MS365-ToDo/commit/a93f6405d2525e0b9a4b5b07aae38fac44e256af) - @Jochemp88
+- [Don't abort "Clear completed items" when a To Do is already deleted](https://github.com/RogerSelwyn/MS365-ToDo/pull/192) - @Jochemp88
 
 ### 🧰 Maintenance
 - [Add categories and bump HA core to 2026.11.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/ba64c36a185827fbfcb18e0418ad536069a64bcf) - @RogerSelwyn
 - [Remove redundant delete_issues](https://github.com/RogerSelwyn/MS365-ToDo/commit/220f01809e9cefb9186b1cfd3f9885aecc0258d4) - @RogerSelwyn
 - [Minor changes to config_entry_methods](https://github.com/RogerSelwyn/MS365-ToDo/commit/e66b93bb875ecfac30cd1538d18fb8807f358a2b) - @RogerSelwyn
-- [Adjusted todo delete processing to return ServiceValidationError](https://github.com/RogerSelwyn/MS365-ToDo/commit/488a17e0edc71400baea37771fce5c1cf1608474) - @RogerSelwyn
 - [Config entry methods now return None](https://github.com/RogerSelwyn/MS365-ToDo/commit/87ebf3f4bc0013bc8afd56979aa0a7cad954a916) - @RogerSelwyn
 - [Config entry unload methods should return None](https://github.com/RogerSelwyn/MS365-ToDo/commit/9442232a57974872d547bf7800ad2d6fd62fbbc8) - @RogerSelwyn
 
@@ -25,8 +23,6 @@
 - [Update testing for completeness](https://github.com/RogerSelwyn/MS365-ToDo/commit/dc5d38f61b6ee1630da5cbb83e37b6d7f958e04e) - @RogerSelwyn
 - [Update test exclusions](https://github.com/RogerSelwyn/MS365-ToDo/commit/0ec86b63b331366c6e061778dc8a40106b85eecd) - @RogerSelwyn
 - [Add environment secret default to tests](https://github.com/RogerSelwyn/MS365-ToDo/commit/006f052638b8b725b96b1cd167cd47d1afb2558e) - @RogerSelwyn
-
-
 
 
 ## v1.13.0 (2026/10/29)
