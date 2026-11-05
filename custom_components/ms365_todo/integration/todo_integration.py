@@ -432,6 +432,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 raise ServiceValidationError(
                     translation_domain=DOMAIN,
                     translation_key="todo_not_found",
+                    translation_placeholders={"method": err.request.method},
                 ) from err
 
             _LOGGER.debug("To Do was not found - %s", todo_id)
