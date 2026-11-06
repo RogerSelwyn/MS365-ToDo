@@ -134,8 +134,11 @@
     "todo_not_completed": {
       "message": "To Do is already incomplete"
     },
-    "todo_not_found": {
-      "message": "To Do was not found - {method}"
+    "todo_not_found_get": {
+      "message": "To Do was not found"
+    },
+    "todo_not_found_delete": {
+      "message": "To Do was not found when deleting, please check to see if it has been deleted."
     },
     "todo_not_retrieved": {
       "message": "To Do has not been retrieved successfully, Action unsuccessful"

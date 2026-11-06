@@ -651,3 +651,30 @@ async def test_remove_items_delete_not_found(
         URL.TODO_GET_2.value,
     ]
     assert len([x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]) == 1
+
+
+async def test_remove_single_item_delete_not_found(
+    hass: HomeAssistant,
+    setup_update_integration,
+    listener_setup: ListenerSetupData,
+    requests_mock: Mocker,
+) -> None:
+    """Test removing sinngle where the delete returns not found."""
+    list_name = "todo.test_todo_list_1"
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    requests_mock.delete(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "Client Error"}})
+
+    with pytest.raises(ServiceValidationError) as exc_info:
+        await hass.services.async_call(
+            DOMAIN,
+            "delete_todo",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+            },
+            blocking=True,
+            return_response=False,
+        )
+
+    await hass.async_block_till_done()
+    assert "To Do was not found when deleting" in str(exc_info.value)

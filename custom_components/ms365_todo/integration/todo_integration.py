@@ -429,10 +429,15 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             if err.response is None or err.response.status_code != 404:
                 raise
             if not list_call:
+                if err.request.method == "GET":
+                    raise ServiceValidationError(
+                        translation_domain=DOMAIN,
+                        translation_key="todo_not_found_get",
+                    ) from err
+
                 raise ServiceValidationError(
                     translation_domain=DOMAIN,
-                    translation_key="todo_not_found",
-                    translation_placeholders={"method": err.request.method},
+                    translation_key="todo_not_found_delete",
                 ) from err
 
             _LOGGER.debug("To Do was not found - %s", todo_id)
