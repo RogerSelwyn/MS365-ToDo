@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.14.1 (2026/11/06)
+### 🧰 Maintenance
+- [Add failing method info to error message](https://github.com/RogerSelwyn/MS365-ToDo/commit/66eba734b65aa5e9f114dc32f1892fb578838082) - @RogerSelwyn
+- [Provide informative message to failed delete](https://github.com/RogerSelwyn/MS365-ToDo/commit/27628fce6802baa974f8627abce05b59601aa0ab) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.14.1](https://github.com/RogerSelwyn/MS365-ToDo/commit/5e88233ecca8ec6151fa78a8307fbf13aeb33bde) - @RogerSelwyn
+
+
+
+
 ## v1.14.0 (2026/11/05)
 ### ✨ Enhancements
 - [Add External Secret support](https://github.com/RogerSelwyn/MS365-ToDo/commit/205204de04baa105202874ac72a04673f8bceb30) - @RogerSelwyn
