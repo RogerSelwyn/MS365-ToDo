@@ -16,19 +16,6 @@ BASE_MISSING_PERMS = BASE_TOKEN_PERMS
 UPDATE_TOKEN_PERMS = "Tasks.ReadWrite"
 UPDATE_OPTIONS = {"enable_update": True}
 
-
-MIGRATION_CONFIG_ENTRY = {
-    "options": {},
-    "todos": {
-        "todolist1": {
-            "name": "ToDo List 1",
-            "show_completed": False,
-            "track": False,
-            "todo_list_id": "todolist1",
-        },
-    },
-}
-
 DIAGNOSTIC_GRANTED_PERMISSIONS = [
     "Tasks.Read",
     "User.Read",
