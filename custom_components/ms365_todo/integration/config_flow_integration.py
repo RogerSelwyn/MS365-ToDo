@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 
-import voluptuous as vol
+import probatio
 
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigFlowResult
@@ -41,7 +41,7 @@ INRTEGRATION_CONFIG_MINOR_VERSION = 0
 def integration_reconfigure_schema(entry_data):
     """Extend the schame with integration specific attributes."""
     return {
-        vol.Optional(
+        probatio.Optional(
             CONF_ENABLE_UPDATE, default=entry_data[CONF_ENABLE_UPDATE]
         ): cv.boolean,
     }
@@ -109,19 +109,21 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
             description_placeholders={
                 CONF_ENTITY_NAME: self.config_entry.data[CONF_ENTITY_NAME]
             },
-            data_schema=vol.Schema(
+            data_schema=probatio.Schema(
                 {
-                    vol.Optional(
+                    probatio.Optional(
                         CONF_TODO_LIST, default=self._todo_list_selected
                     ): cv.multi_select(self._todo_list),
-                    vol.Optional(
+                    probatio.Optional(
                         CONF_TRACK_NEW,
                         default=self._track_new,
                     ): BOOLEAN_SELECTOR,
-                    vol.Optional(
+                    probatio.Optional(
                         CONF_MAX_TODOS,
                         default=self._max_todos,
-                    ): vol.All(vol.Coerce(int), vol.Range(min=10, max=250)),
+                    ): probatio.All(
+                        probatio.Coerce(int), probatio.Range(min=10, max=250)
+                    ),
                 }
             ),
             errors=errors,
@@ -154,13 +156,13 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
                 CONF_ENTITY_NAME: self.config_entry.data[CONF_ENTITY_NAME],
                 CONF_NAME: todo_item[CONF_NAME],
             },
-            data_schema=vol.Schema(
+            data_schema=probatio.Schema(
                 {
-                    vol.Required(
+                    probatio.Required(
                         CONF_SHOW_COMPLETED,
                         default=todo_item[CONF_SHOW_COMPLETED],
                     ): BOOLEAN_SELECTOR,
-                    vol.Optional(
+                    probatio.Optional(
                         CONF_DUE_HOURS_BACKWARD_TO_GET,
                         description={
                             "suggested_value": todo_item.get(
@@ -168,7 +170,7 @@ class MS365OptionsFlowHandler(config_entries.OptionsFlow):
                             )
                         },
                     ): int,
-                    vol.Optional(
+                    probatio.Optional(
                         CONF_DUE_HOURS_FORWARD_TO_GET,
                         description={
                             "suggested_value": todo_item.get(
