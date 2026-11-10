@@ -11,6 +11,9 @@
 - [Sourcery recommendations](https://github.com/RogerSelwyn/MS365-ToDo/commit/ca6a2edaba2991fb11a3e0bdcb712499ea759d30) - @RogerSelwyn
 - [Replace voluptuous with probatio](https://github.com/RogerSelwyn/MS365-ToDo/commit/e8d5e5af284cd2e9cc0fe22257b84c887f832204) - @RogerSelwyn
 - [Configure Renovate and remove Dependabot](https://github.com/RogerSelwyn/MS365-ToDo/commit/fd963d98a4f2e5c875ce0c791ad0ec77ed298d01) - @RogerSelwyn
+- [Add Home Assistant Marketplace badge to README](https://github.com/RogerSelwyn/MS365-ToDo/commit/84a6a3c1d6741d350ef716b2e29889249517897f) - @RogerSelwyn
+- [Add renovate.json](https://github.com/RogerSelwyn/MS365-ToDo/commit/054832f47f99757aba6141f05880d2df3278ab08) - @renovate[bot]
+
 
 ### ⬆️ Dependencies
 - [update dependency ruff to v0.17.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/547a167dfc6390acd96b9f08cc9141d49043522b) - @renovate[bot]
@@ -22,10 +25,6 @@
 
 ### 🔖 Release
 - [Release v1.14.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/14d93a3258c828155b0df7f8a7376767838d5356) - @RogerSelwyn
-
-### Other
-- [Add Home Assistant Marketplace badge to README](https://github.com/RogerSelwyn/MS365-ToDo/commit/84a6a3c1d6741d350ef716b2e29889249517897f) - @RogerSelwyn
-- [Add renovate.json](https://github.com/RogerSelwyn/MS365-ToDo/commit/054832f47f99757aba6141f05880d2df3278ab08) - @renovate[bot]
 
 
 
