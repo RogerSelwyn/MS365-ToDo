@@ -12,6 +12,20 @@ The intention is to phase out the MS365 services once the core services provide 
 Create a new To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.update_todo
 Update a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+The optional `is_important` field sets (`true`) or clears (`false`) the Important star.
+If omitted, the current importance is preserved. Setting `false` changes importance
+to `normal`, not `low`. Updating requires the integration's update option and
+Microsoft Tasks.ReadWrite permission.
+
+```yaml
+action: ms365_todo.update_todo
+target:
+  entity_id: todo.hass_primary
+data:
+  todo_id: todo_guid
+  is_important: true
+```
+
 ### ms365_todo.delete_todo
 Delete a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.complete_todo

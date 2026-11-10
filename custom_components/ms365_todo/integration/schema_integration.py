@@ -12,6 +12,7 @@ from .const_integration import (
     ATTR_COMPLETED,
     ATTR_DESCRIPTION,
     ATTR_DUE,
+    ATTR_IS_IMPORTANT,
     ATTR_NAME,
     ATTR_REMINDER,
     ATTR_REMOVE_DUE,
@@ -42,6 +43,7 @@ TODO_SERVICE_UPDATE_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Optional(ATTR_SUBJECT): cv.string,
+            probatio.Optional(ATTR_IS_IMPORTANT): cv.boolean,
             probatio.Optional(ATTR_DESCRIPTION): cv.string,
             probatio.Optional(ATTR_DUE): probatio.Any(cv.date, cv.datetime),
             probatio.Optional(ATTR_REMOVE_DUE): cv.boolean,

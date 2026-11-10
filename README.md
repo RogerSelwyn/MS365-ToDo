@@ -21,7 +21,9 @@ for an example. Subtask editing uses Home Assistant actions, not nested controls
 in the built-in To-do list UI.
 
 Tasks also expose an `is_important` boolean in `all_todos` and `overdue_todos`,
-reflecting the Important star in Microsoft To Do. See [To Do list attributes](docs/todo.md).
+reflecting the Important star in Microsoft To Do. Set or clear the star with the
+optional `is_important` field on `ms365_todo.update_todo`.
+See [To Do list attributes](docs/todo.md).
 
 This project would not be possible without the wonderful [python-o365 project](https://github.com/O365/python-o365).
 

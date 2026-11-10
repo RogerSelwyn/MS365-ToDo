@@ -147,6 +147,9 @@
     },
     "checklist_item_not_updated": {
       "message": "The To Do Checklist Item could not be updated."
+    },
+    "todo_not_updated": {
+      "message": "The To Do could not be updated."
     }
   },
   "services": {
@@ -183,6 +186,10 @@
         "subject": {
           "description": "The subject of the To Do",
           "name": "Subject"
+        },
+        "is_important": {
+          "description": "Mark the To Do as Important, or clear its Important star. Omit to keep its current importance.",
+          "name": "Important"
         },
         "description": {
           "description": "Description of the To Do",

@@ -9,8 +9,11 @@ One To Do task list entity is created for each to-do list on the user account. E
 
 Each task in `all_todos` and `overdue_todos` includes `is_important`: `true` when
 the task is starred as Important in Microsoft To Do (`importance: high`), and
-`false` otherwise (`normal` or `low`). This read-only flag refreshes with the
-task list and can be used in templates and automations. Checklist items
+`false` otherwise (`normal` or `low`). This flag refreshes with the
+task list and can be used in templates and automations. Set or clear it with
+`ms365_todo.update_todo` by passing `is_important: true` or `is_important: false`.
+Omitting the field leaves the current importance unchanged, including `low`.
+Clearing the star sets Microsoft Graph's importance to `normal`. Checklist items
 (subtasks) do not have a separate importance flag.
 
 For example, select the important tasks with:

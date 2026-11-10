@@ -390,6 +390,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         remove_reminder=None,
         ms365_todo=None,
         hatodo=False,
+        is_important=None,
     ):
         """Update a task for this task list."""
         self._validate_task_permissions()
@@ -398,7 +399,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo = await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
-        if response := await self._async_save_todo(
+        response = await self._async_save_todo(
             ms365_todo,
             subject,
             description,
@@ -407,7 +408,27 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             hatodo,
             remove_due,
             remove_reminder,
-        ):
+        )
+        if response and is_important is not None:
+            # O365 exposes importance as read-only, so update it through Graph.
+            url = ms365_todo.build_url(
+                f"/todo/lists/{ms365_todo.folder_id}/tasks/{ms365_todo.task_id}"
+            )
+            response = bool(
+                await self.hass.async_add_executor_job(
+                    partial(
+                        ms365_todo.con.patch,
+                        url,
+                        data={"importance": "high" if is_important else "normal"},
+                    )
+                )
+            )
+        if is_important is not None and not response:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="todo_not_updated",
+            )
+        if response:
             self._raise_event(EVENT_UPDATE_TODO, todo_id)
             await self.coordinator.async_refresh()
         return response
