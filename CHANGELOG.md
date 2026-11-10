@@ -1,5 +1,35 @@
 # Changelog
 
+## v1.14.2 (2026/11/10)
+### 🐛 Fixes
+- [Add missing translations](https://github.com/RogerSelwyn/MS365-ToDo/commit/de364794f045cc52c5350cd14944247b997d6b8d) - @RogerSelwyn
+- [Add missing translations](https://github.com/RogerSelwyn/MS365-ToDo/commit/ce0cfc4eb1c71afd10622151f8889b38077576c0) - @RogerSelwyn
+- [Fix handling of deleted tasks for personal accounts](https://github.com/RogerSelwyn/MS365-ToDo/commit/006d551dcaf9bbd07d80a0ce2c630a256035fdd9) - @RogerSelwyn
+
+### 🧰 Maintenance
+- [Changes in support of Mail and remove O365 migration support](https://github.com/RogerSelwyn/MS365-ToDo/commit/0a54dd486b2cdb1d002053432c2764c17fec9dc2) - @RogerSelwyn
+- [Sourcery recommendations](https://github.com/RogerSelwyn/MS365-ToDo/commit/ca6a2edaba2991fb11a3e0bdcb712499ea759d30) - @RogerSelwyn
+- [Replace voluptuous with probatio](https://github.com/RogerSelwyn/MS365-ToDo/commit/e8d5e5af284cd2e9cc0fe22257b84c887f832204) - @RogerSelwyn
+- [Configure Renovate and remove Dependabot](https://github.com/RogerSelwyn/MS365-ToDo/commit/fd963d98a4f2e5c875ce0c791ad0ec77ed298d01) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [update dependency ruff to v0.17.4](https://github.com/RogerSelwyn/MS365-ToDo/commit/547a167dfc6390acd96b9f08cc9141d49043522b) - @renovate[bot]
+- [update python docker tag to v3.15](https://github.com/RogerSelwyn/MS365-ToDo/commit/3eb8ffa4aa9db51747f2e36b9914871ed0397269) - @renovate[bot]
+
+### ✅ Test
+- [Change test HA to 2026.11.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/165500544a0c46610fed9aa7bef2def216c3c481) - @RogerSelwyn
+- [Update testing requirements](https://github.com/RogerSelwyn/MS365-ToDo/commit/1070d5edb6176d33749e92117197884ce0dd17f7) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.14.2](https://github.com/RogerSelwyn/MS365-ToDo/commit/14d93a3258c828155b0df7f8a7376767838d5356) - @RogerSelwyn
+
+### Other
+- [Add Home Assistant Marketplace badge to README](https://github.com/RogerSelwyn/MS365-ToDo/commit/84a6a3c1d6741d350ef716b2e29889249517897f) - @RogerSelwyn
+- [Add renovate.json](https://github.com/RogerSelwyn/MS365-ToDo/commit/054832f47f99757aba6141f05880d2df3278ab08) - @renovate[bot]
+
+
+
+
 ## v1.14.1 (2026/11/06)
 ### 🧰 Maintenance
 - [Add failing method info to error message](https://github.com/RogerSelwyn/MS365-ToDo/commit/66eba734b65aa5e9f114dc32f1892fb578838082) - @RogerSelwyn
