@@ -12,9 +12,9 @@
 This integration enables:
 1. Getting, creating and updating Microsoft 365 To Do Lists
 
-## Subtask editing fork
+## Checklist items and importance
 
-This fork adds renaming of Microsoft To Do subtasks (checklist items) through
+Microsoft To Do subtasks (checklist items) can be renamed through
 `ms365_todo.update_todo_checklist_item`. Supply `name` to rename, `status` to
 complete/uncomplete, or both. See the [service documentation](docs/services.md#example-rename-a-subtask)
 for an example. Subtask editing uses Home Assistant actions, not nested controls
