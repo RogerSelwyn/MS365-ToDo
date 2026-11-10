@@ -19,11 +19,27 @@ Delete a To Do task - All parameters are shown in the available parameter list o
 ### ms365_todo.new_todo_checklist_item
 Create a new Checklist Item for an existing To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.update_todo_checklist_item
-Update a To Do Checklist Item to mark complete/incomplete - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+Rename a To Do Checklist Item (subtask), mark it complete/incomplete, or both. Supply `todo_id`, `checklist_item_id`, and at least one of `name` or `status`. The name must not be empty. Omitting `status` preserves the current completion state; omitting `name` preserves the current name. Existing status-only calls remain supported.
 ### ms365_tododelete_todo_checklist_item
 Delete a To Do Checklist Item - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 ### ms365_todo.scan_for_todo_lists
 Scan for new for To Do lists and add to ms365_todos.yaml - No parameters.
+
+#### Example rename a subtask
+
+Find `todo_id` and the checklist item's `id` in the entity's `all_todos` attribute (`checklist_items` contains the subtasks).
+
+```yaml
+action: ms365_todo.update_todo_checklist_item
+target:
+  entity_id: todo.hass_primary
+data:
+  todo_id: todo_guid
+  checklist_item_id: checklist_item_guid
+  name: Go to the main post office
+```
+
+Add `status: completed` or `status: needs_action` to change completion in the same call. This action does not add nested subtask controls to Home Assistant's built-in To-do list UI.
 
 #### Example create To Do service call
 

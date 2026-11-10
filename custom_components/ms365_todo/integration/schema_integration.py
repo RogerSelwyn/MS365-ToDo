@@ -74,11 +74,13 @@ TODO_SERVICE_UPDATE_STEP_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Required(ATTR_CHECKLIST_ITEM_ID): cv.string,
-            probatio.Required(ATTR_STATUS): probatio.In(
+            probatio.Optional(ATTR_NAME): probatio.All(cv.string, probatio.Length(min=1)),
+            probatio.Optional(ATTR_STATUS): probatio.In(
                 {TodoItemStatus.NEEDS_ACTION, TodoItemStatus.COMPLETED},
             ),
         }
     ),
+    cv.has_at_least_one_key(ATTR_NAME, ATTR_STATUS),
 )
 TODO_SERVICE_DELETE_STEP_SCHEMA = probatio.All(
     cv.make_entity_service_schema(

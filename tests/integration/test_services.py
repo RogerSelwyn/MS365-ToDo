@@ -3,6 +3,7 @@
 
 from unittest.mock import patch
 
+import probatio
 import pytest
 from requests.exceptions import HTTPError
 from requests_mock import Mocker
@@ -418,6 +419,115 @@ async def test_todo_checklist_item_services_ms365(
         )
     await hass.async_block_till_done()
     assert mock_delete.called
+
+
+@pytest.mark.parametrize("is_checked", [False, True])
+@pytest.mark.parametrize(
+    ("changes", "payload"),
+    [
+        ({"name": "Renamed step"}, {"displayName": "Renamed step"}),
+        (
+            {"name": "Renamed step", "status": "completed"},
+            {"displayName": "Renamed step", "isChecked": True},
+        ),
+        (
+            {"name": "Renamed step", "status": "needs_action"},
+            {"displayName": "Renamed step", "isChecked": False},
+        ),
+        ({"status": "completed"}, {"isChecked": True}),
+        ({"status": "needs_action"}, {"isChecked": False}),
+    ],
+)
+async def test_update_checklist_item_payload(
+    hass: HomeAssistant,
+    setup_update_integration,
+    requests_mock: Mocker,
+    changes,
+    payload,
+    is_checked,
+) -> None:
+    """Persist only requested checklist changes through Microsoft Graph."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    item = {
+        "id": "list1task1step1",
+        "displayName": "Original step",
+        "isChecked": is_checked,
+    }
+    requests_mock.get(URL.TODO_GET_CHECKLIST_ITEM_1.value, json=item)
+    update = requests_mock.patch(
+        URL.TODO_GET_CHECKLIST_ITEM_1.value, json={**item, **payload}
+    )
+
+    with patch(
+        "homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"
+    ) as mock_refresh:
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+
+    assert update.call_count == 1
+    assert update.last_request.json() == payload
+    mock_refresh.assert_awaited_once()
+
+
+@pytest.mark.parametrize(
+    "changes", [{}, {"name": ""}, {"name": None}, {"status": "invalid"}]
+)
+async def test_update_checklist_item_invalid_changes(
+    hass: HomeAssistant, setup_update_integration, changes
+) -> None:
+    """Reject missing changes, empty names, and invalid completion states."""
+    with pytest.raises(probatio.Invalid):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+
+
+@pytest.mark.parametrize("changes", [{"name": "Renamed step"}, {"status": "completed"}])
+async def test_update_checklist_item_failed_save(
+    hass: HomeAssistant,
+    setup_update_integration,
+    requests_mock: Mocker,
+    changes,
+) -> None:
+    """Report a failed Graph update without refreshing as if it succeeded."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    mock_call(requests_mock, URL.TODO_GET_CHECKLIST_ITEM_1, "todo_get_checklist_item_1")
+    with (
+        patch("O365.connection.Connection.patch", return_value=False),
+        patch(
+            "homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"
+        ) as mock_refresh,
+        pytest.raises(ServiceValidationError, match="could not be updated"),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+    mock_refresh.assert_not_awaited()
 
 
 async def test_failed_permission(

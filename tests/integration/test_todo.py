@@ -1,6 +1,7 @@
 # pylint: disable=unused-argument,line-too-long,wrong-import-order
 """Test main sensors testing."""
 
+import json
 from unittest.mock import patch
 
 import pytest
@@ -19,7 +20,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
 from ..helpers.mock_config_entry import MS365MockConfigEntry
-from ..helpers.utils import check_entity_state, mock_call
+from ..helpers.utils import check_entity_state, load_json, mock_call
 from .const_integration import FULL_INIT_ENTITY_NO, UPDATE_TODO_LIST, URL
 from .data_integration.state import BASE_TODO_1, BASE_TODO_2, TODO_COMPLETED
 from .fixtures import ListenerSetupData
@@ -49,6 +50,34 @@ async def test_get_data(
         "2",
         attributes=BASE_TODO_2,
     )
+
+
+@pytest.mark.parametrize(
+    ("importance", "is_important"), [("high", True), ("normal", False), ("low", False)]
+)
+async def test_task_importance(
+    hass: HomeAssistant,
+    setup_base_integration,
+    base_config_entry: MS365MockConfigEntry,
+    requests_mock: Mocker,
+    importance,
+    is_important,
+) -> None:
+    """Expose the Important star and update it when Microsoft To Do changes."""
+    data = json.loads(load_json("O365/todo_list_1_tasks.json"))
+    coordinator = base_config_entry.runtime_data.coordinator
+    for level, expected in [(importance, is_important), ("normal", False)]:
+        data["value"][0]["importance"] = level
+        requests_mock.get(URL.TODO_LIST_1_TASKS.value, json=data)
+        await coordinator.async_refresh()
+        await hass.async_block_till_done()
+
+        state = hass.states.get("todo.test_todo_list_1")
+        for attribute in ("all_todos", "overdue_todos"):
+            task = next(
+                item for item in state.attributes[attribute] if item["todo_id"] == "list1task1"
+            )
+            assert task["is_important"] is expected
 
 
 async def test_show_completed(
