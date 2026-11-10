@@ -64,7 +64,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             update_interval=timedelta(seconds=30),
         )
         self._entry = entry
-        self._account = account
+        self.account = account
         self._entity_name = entry.data[CONF_ENTITY_NAME]
         self._max_todos = entry.options.get(CONF_MAX_TODOS, CONF_MAX_TODOS_DEFAULT)
         self.keys = []
@@ -80,7 +80,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_todo_sensors(self):
         deleted_todo_lists = await async_scan_for_todo_lists(
-            self.hass, self._account, self._entry
+            self.hass, self.account, self._entry
         )
         await self._async_delete_todo_list_entities(deleted_todo_lists)
 
@@ -94,7 +94,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_todo_entities(self, ms365_todo_lists):
         keys = []
-        ms365_todos = await self.hass.async_add_executor_job(self._account.tasks)
+        ms365_todos = await self.hass.async_add_executor_job(self.account.tasks)
         for ms365_todo_list in ms365_todo_lists:
             track = ms365_todo_list.get(CONF_TRACK)
             if not track:
@@ -141,7 +141,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     # async def _async_planner_entities(self):
     #     keys = []
-    #     planner = await self.hass.async_add_executor_job(self._account.planner)
+    #     planner = await self.hass.async_add_executor_job(self.account.planner)
     #     name = f"{self._entity_name} {PLANNER_NAME}"
     #     unique_id = f"{self._entity_name}_{PLANNER_UNIQUE_ID}"
     #     new_key = {

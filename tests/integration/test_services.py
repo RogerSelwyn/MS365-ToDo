@@ -578,7 +578,10 @@ async def test_todo_services_ms365_errors(
     assert "To Do has not been retrieved successfully, Action unsuccessful" in str(exc_info.value)
 
 
-async def test_remove_items_already_deleted(
+@pytest.mark.parametrize(
+    "setup_update_integration", [{"tenant_id": "9188040d-6c67-4c5b-b112-36a304b66dad"}], indirect=True
+)
+async def test_remove_items_already_deleted_personal_account(
     hass: HomeAssistant,
     setup_update_integration,
     listener_setup: ListenerSetupData,
@@ -622,7 +625,10 @@ async def test_remove_items_already_deleted(
         )
 
 
-async def test_remove_items_delete_not_found(
+@pytest.mark.parametrize(
+    "setup_update_integration", [{"tenant_id": "9188040d-6c67-4c5b-b112-36a304b66dad"}], indirect=True
+)
+async def test_remove_items_delete_not_found_personal_account(
     hass: HomeAssistant,
     setup_update_integration,
     listener_setup: ListenerSetupData,
@@ -650,7 +656,33 @@ async def test_remove_items_delete_not_found(
         URL.TODO_GET_1.value,
         URL.TODO_GET_2.value,
     ]
-    assert len([x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]) == 1
+    assert len([x for x in listener_setup.events if x.event_type == f"{DOMAIN}_delete_todo"]) == 2
+
+
+async def test_remove_single_item_get_not_found(
+    hass: HomeAssistant,
+    setup_update_integration,
+    listener_setup: ListenerSetupData,
+    requests_mock: Mocker,
+) -> None:
+    """Test removing sinngle where the get returns not found."""
+    list_name = "todo.test_todo_list_1"
+    requests_mock.get(URL.TODO_GET_1.value, status_code=404, json={"error": {"code": "Client Error"}})
+
+    with pytest.raises(ServiceValidationError) as exc_info:
+        await hass.services.async_call(
+            DOMAIN,
+            "delete_todo",
+            {
+                "entity_id": list_name,
+                "todo_id": "list1task1",
+            },
+            blocking=True,
+            return_response=False,
+        )
+
+    await hass.async_block_till_done()
+    assert "To Do was not found" in str(exc_info.value)
 
 
 async def test_remove_single_item_delete_not_found(

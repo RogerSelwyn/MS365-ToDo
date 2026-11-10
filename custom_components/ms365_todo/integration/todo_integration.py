@@ -29,6 +29,7 @@ from ..const import (
     DATETIME_FORMAT,
     EVENT_HA_EVENT,
 )
+from ..helpers.utils import async_check_personal_account
 from .const_integration import (
     ATTR_ALL_TODOS,
     ATTR_CHECKLIST_ITEM_ID,
@@ -428,19 +429,26 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         except HTTPError as err:
             if err.response is None or err.response.status_code != 404:
                 raise
-            if not list_call:
-                if err.request.method == "GET":
+
+            if err.request.method == "DELETE":
+                if not await async_check_personal_account(self.hass, self.coordinator):
                     raise ServiceValidationError(
                         translation_domain=DOMAIN,
-                        translation_key="todo_not_found_get",
+                        translation_key="todo_not_found_delete",
                     ) from err
 
+                self._raise_event(EVENT_DELETE_TODO, todo_id)
+
+            elif not list_call:
                 raise ServiceValidationError(
                     translation_domain=DOMAIN,
-                    translation_key="todo_not_found_delete",
+                    translation_key="todo_not_found_get",
                 ) from err
 
-            _LOGGER.debug("To Do was not found - %s", todo_id)
+            _LOGGER.debug(
+                "To Do was not found - %s - for %s", todo_id, err.request.method
+            )
+
         else:
             self._raise_event(EVENT_DELETE_TODO, todo_id)
             if not list_call:
