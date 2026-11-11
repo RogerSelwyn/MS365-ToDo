@@ -52,21 +52,18 @@ async def test_get_data(
     )
 
 
-@pytest.mark.parametrize(
-    ("importance", "is_important"), [("high", True), ("normal", False), ("low", False)]
-)
+@pytest.mark.parametrize("importance", ["high", "normal", "low"])
 async def test_task_importance(
     hass: HomeAssistant,
     setup_base_integration,
     base_config_entry: MS365MockConfigEntry,
     requests_mock: Mocker,
     importance,
-    is_important,
 ) -> None:
-    """Expose the Important star and update it when Microsoft To Do changes."""
+    """Preserve native Graph importance values, including low."""
     data = json.loads(load_json("O365/todo_list_1_tasks.json"))
     coordinator = base_config_entry.runtime_data.coordinator
-    for level, expected in [(importance, is_important), ("normal", False)]:
+    for level in [importance, "normal"]:
         data["value"][0]["importance"] = level
         requests_mock.get(URL.TODO_LIST_1_TASKS.value, json=data)
         await coordinator.async_refresh()
@@ -77,7 +74,8 @@ async def test_task_importance(
             task = next(
                 item for item in state.attributes[attribute] if item["todo_id"] == "list1task1"
             )
-            assert task["is_important"] is expected
+            assert task["importance"] == level
+            assert "is_important" not in task
 
 
 async def test_show_completed(

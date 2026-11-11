@@ -37,10 +37,14 @@ update_todo:
       example: Pick up the mail
       selector:
         text:
-    is_important:
-      example: true
+    importance:
+      example: high
       selector:
-        boolean:
+        select:
+          options:
+            - low
+            - normal
+            - high
     description:
       example: Walk to the post box and collect the mail
       selector:

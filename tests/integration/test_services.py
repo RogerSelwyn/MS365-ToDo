@@ -348,18 +348,17 @@ async def test_todo_services_ms365(
 
 
 @pytest.mark.parametrize("original_importance", ["high", "normal", "low"])
-@pytest.mark.parametrize(("is_important", "importance"), [(True, "high"), (False, "normal")])
+@pytest.mark.parametrize("importance", ["high", "normal", "low"])
 @pytest.mark.parametrize("subject", [None, "Updated task"])
 async def test_update_todo_importance(
     hass: HomeAssistant,
     setup_update_integration,
     requests_mock: Mocker,
     original_importance,
-    is_important,
     importance,
     subject,
 ) -> None:
-    """Set or clear importance without overwriting other task properties."""
+    """Save any native importance value together with other edits through O365."""
     requests_mock.get(
         URL.TODO_GET_1.value,
         json={"id": "list1task1", "title": "Original task", "importance": original_importance},
@@ -368,26 +367,29 @@ async def test_update_todo_importance(
     data = {
         "entity_id": "todo.test_todo_list_1",
         "todo_id": "list1task1",
-        "is_important": is_important,
+        "importance": importance,
     }
     if subject is not None:
         data["subject"] = subject
     with patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh:
         await hass.services.async_call(DOMAIN, "update_todo", data, blocking=True)
 
-    expected = [{"title": subject}] if subject is not None else []
-    expected.append({"importance": importance})
-    assert [request.json() for request in update.request_history] == expected
+    expected = {"importance": importance}
+    if subject is not None:
+        expected["title"] = subject
+    assert update.call_count == 1
+    assert update.last_request.json() == expected
     mock_refresh.assert_awaited_once()
 
 
+@pytest.mark.parametrize("importance", ["high", "normal", "low"])
 async def test_update_todo_preserves_importance(
-    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker, importance
 ) -> None:
-    """Omitting importance must not change the existing Important star."""
+    """Omitting importance must not change any existing Graph importance value."""
     requests_mock.get(
         URL.TODO_GET_1.value,
-        json={"id": "list1task1", "title": "Original task", "importance": "high"},
+        json={"id": "list1task1", "title": "Original task", "importance": importance},
     )
     update = requests_mock.patch(URL.TODO_GET_1.value, json={})
     with patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"):
@@ -405,18 +407,13 @@ async def test_update_todo_preserves_importance(
     assert update.last_request.json() == {"title": "Updated task"}
 
 
-@pytest.mark.parametrize("task_saved", [False, True])
 async def test_update_todo_importance_failure(
-    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker, task_saved
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker
 ) -> None:
-    """Report a failed save or importance write instead of claiming success."""
+    """Report an unsuccessful SDK save instead of claiming success."""
     mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
     with (
-        patch(
-            "custom_components.ms365_todo.integration.todo_integration.MS365TodoList._async_save_todo",
-            return_value=task_saved,
-        ),
-        patch("O365.connection.Connection.patch", return_value=False) as mock_patch,
+        patch("O365.tasks.Task.save", return_value=False) as mock_save,
         patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh,
         pytest.raises(ServiceValidationError, match="could not be updated"),
     ):
@@ -426,11 +423,11 @@ async def test_update_todo_importance_failure(
             {
                 "entity_id": "todo.test_todo_list_1",
                 "todo_id": "list1task1",
-                "is_important": True,
+                "importance": "low",
             },
             blocking=True,
         )
-    assert mock_patch.call_count == int(task_saved)
+    mock_save.assert_called_once()
     mock_refresh.assert_not_awaited()
 
 
@@ -452,7 +449,29 @@ async def test_update_todo_importance_requires_permission(
             {
                 "entity_id": "todo.test_todo_list_1",
                 "todo_id": "list1task1",
-                "is_important": False,
+                "importance": "low",
+            },
+            blocking=True,
+        )
+    mock_get.assert_not_called()
+
+
+@pytest.mark.parametrize("importance", ["urgent", "", None, True, False])
+async def test_update_todo_invalid_importance(
+    hass: HomeAssistant, setup_update_integration, importance
+) -> None:
+    """Reject values outside the three native importance strings before fetching."""
+    with (
+        patch("O365.tasks.Folder.get_task") as mock_get,
+        pytest.raises(probatio.Invalid),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "importance": importance,
             },
             blocking=True,
         )

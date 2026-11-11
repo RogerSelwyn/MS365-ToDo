@@ -187,9 +187,9 @@
           "description": "The subject of the To Do",
           "name": "Subject"
         },
-        "is_important": {
-          "description": "Mark the To Do as Important, or clear its Important star. Omit to keep its current importance.",
-          "name": "Important"
+        "importance": {
+          "description": "Set the task importance to low, normal, or high. High marks the task as Important. Omit to keep its current importance.",
+          "name": "Importance"
         },
         "description": {
           "description": "Description of the To Do",

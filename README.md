@@ -12,19 +12,6 @@
 This integration enables:
 1. Getting, creating and updating Microsoft 365 To Do Lists
 
-## Checklist items and importance
-
-Microsoft To Do subtasks (checklist items) can be renamed through
-`ms365_todo.update_todo_checklist_item`. Supply `name` to rename, `status` to
-complete/uncomplete, or both. See the [service documentation](docs/services.md#example-rename-a-subtask)
-for an example. Subtask editing uses Home Assistant actions, not nested controls
-in the built-in To-do list UI.
-
-Tasks also expose an `is_important` boolean in `all_todos` and `overdue_todos`,
-reflecting the Important star in Microsoft To Do. Set or clear the star with the
-optional `is_important` field on `ms365_todo.update_todo`.
-See [To Do list attributes](docs/todo.md).
-
 This project would not be possible without the wonderful [python-o365 project](https://github.com/O365/python-o365).
 
 ## [Buy Me A Beer 🍻](https://buymeacoffee.com/rogtp)

@@ -1,7 +1,6 @@
 """Todo processing."""
 
 import datetime as dt
-from functools import partial
 import logging
 
 from requests.exceptions import HTTPError
@@ -40,7 +39,7 @@ from .const_integration import (
     ATTR_DUE,
     ATTR_ID,
     ATTR_IS_CHECKED,
-    ATTR_IS_IMPORTANT,
+    ATTR_IMPORTANCE,
     ATTR_IS_RECURRING,
     ATTR_NAME,
     ATTR_OVERDUE_TODOS,
@@ -273,7 +272,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 ATTR_SUBJECT: item.subject,
                 ATTR_TODO_ID: item.task_id,
                 ATTR_STATUS: item.status,
-                ATTR_IS_IMPORTANT: item.is_starred,
+                ATTR_IMPORTANCE: item.importance,
                 ATTR_IS_RECURRING: bool(item.recurrence),
             }
             if item.body:
@@ -291,7 +290,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                         ATTR_SUBJECT: item.subject,
                         ATTR_TODO_ID: item.task_id,
                         ATTR_DUE: item.due,
-                        ATTR_IS_IMPORTANT: item.is_starred,
+                        ATTR_IMPORTANCE: item.importance,
                         ATTR_IS_RECURRING: bool(item.recurrence),
                     }
                     if item.is_reminder_on:
@@ -390,7 +389,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         remove_reminder=None,
         ms365_todo=None,
         hatodo=False,
-        is_important=None,
+        importance=None,
     ):
         """Update a task for this task list."""
         self._validate_task_permissions()
@@ -399,6 +398,8 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo = await self.hass.async_add_executor_job(
                 self.todolist.get_task, todo_id
             )
+        if importance is not None:
+            ms365_todo.importance = importance
         response = await self._async_save_todo(
             ms365_todo,
             subject,
@@ -409,21 +410,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             remove_due,
             remove_reminder,
         )
-        if response and is_important is not None:
-            # O365 exposes importance as read-only, so update it through Graph.
-            url = ms365_todo.build_url(
-                f"/todo/lists/{ms365_todo.folder_id}/tasks/{ms365_todo.task_id}"
-            )
-            response = bool(
-                await self.hass.async_add_executor_job(
-                    partial(
-                        ms365_todo.con.patch,
-                        url,
-                        data={"importance": "high" if is_important else "normal"},
-                    )
-                )
-            )
-        if is_important is not None and not response:
+        if importance is not None and not response:
             raise ServiceValidationError(
                 translation_domain=DOMAIN,
                 translation_key="todo_not_updated",
@@ -564,6 +551,8 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         ms365_todo_checklist_item = await self.hass.async_add_executor_job(
             ms365_todo.get_checklist_item, checklist_item_id
         )
+        if name is not None:
+            ms365_todo_checklist_item.displayname = name
         if status == TodoItemStatus.COMPLETED:
             await self.hass.async_add_executor_job(
                 ms365_todo_checklist_item.mark_checked
@@ -573,23 +562,9 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
                 ms365_todo_checklist_item.mark_unchecked
             )
 
-        if name is not None:
-            # O365 exposes displayname as read-only, so rename through Graph.
-            url = ms365_todo_checklist_item.build_url(
-                f"/todo/lists/{ms365_todo_checklist_item.folder_id}"
-                f"/tasks/{ms365_todo_checklist_item.task_id}"
-                f"/checklistItems/{ms365_todo_checklist_item.item_id}"
-            )
-            data: dict[str, str | bool] = {"displayName": name}
-            if status is not None:
-                data["isChecked"] = ms365_todo_checklist_item.is_checked
-            response = await self.hass.async_add_executor_job(
-                partial(ms365_todo_checklist_item.con.patch, url, data=data)
-            )
-        else:
-            response = await self.hass.async_add_executor_job(
-                ms365_todo_checklist_item.save
-            )
+        response = await self.hass.async_add_executor_job(
+            ms365_todo_checklist_item.save
+        )
         if not response:
             raise ServiceValidationError(
                 translation_domain=DOMAIN,

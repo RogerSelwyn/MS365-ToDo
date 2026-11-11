@@ -7,20 +7,13 @@ nav_order: 9
 
 One To Do task list entity is created for each to-do list on the user account. Each sensor shows the number of incomplete To Do task items as the status of the sensor. The `all_todos` attribute is an array of incomplete To Do tasks. The `overdue_todos` attribute shows any To Do tasks which have a due date and are overdue as an array.
 
-Each task in `all_todos` and `overdue_todos` includes `is_important`: `true` when
-the task is starred as Important in Microsoft To Do (`importance: high`), and
-`false` otherwise (`normal` or `low`). This flag refreshes with the
-task list and can be used in templates and automations. Set or clear it with
-`ms365_todo.update_todo` by passing `is_important: true` or `is_important: false`.
-Omitting the field leaves the current importance unchanged, including `low`.
-Clearing the star sets Microsoft Graph's importance to `normal`. Checklist items
-(subtasks) do not have a separate importance flag.
+Each task in `all_todos` and `overdue_todos` includes the `importance` value returned by Microsoft Graph: `low`, `normal`, or `high`. Microsoft To Do displays `high` as an Important star. Set any of the three values with the optional `importance` field on `ms365_todo.update_todo`; omitting the field preserves the current value. Checklist items (subtasks) do not have a separate importance value.
 
 For example, select the important tasks with:
 
 ```jinja
 {% raw %}{{ state_attr('todo.todos_sc_personal', 'all_todos')
-   | selectattr('is_important', 'eq', true) | list }}{% endraw %}
+   | selectattr('importance', 'eq', 'high') | list }}{% endraw %}
 ```
 
 ### Display
