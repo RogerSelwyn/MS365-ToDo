@@ -37,6 +37,14 @@ update_todo:
       example: Pick up the mail
       selector:
         text:
+    importance:
+      example: high
+      selector:
+        select:
+          options:
+            - low
+            - normal
+            - high
     description:
       example: Walk to the post box and collect the mail
       selector:
@@ -122,8 +130,11 @@ update_todo_checklist_item:
       required: true
       selector:
         text:
+    name:
+      example: Go to the main post office
+      selector:
+        text:
     status:
-      required: true
       selector:
         select:
           translation_key: status

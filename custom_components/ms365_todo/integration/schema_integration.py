@@ -12,6 +12,7 @@ from .const_integration import (
     ATTR_COMPLETED,
     ATTR_DESCRIPTION,
     ATTR_DUE,
+    ATTR_IMPORTANCE,
     ATTR_NAME,
     ATTR_REMINDER,
     ATTR_REMOVE_DUE,
@@ -42,6 +43,7 @@ TODO_SERVICE_UPDATE_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Optional(ATTR_SUBJECT): cv.string,
+            probatio.Optional(ATTR_IMPORTANCE): probatio.In({"low", "normal", "high"}),
             probatio.Optional(ATTR_DESCRIPTION): cv.string,
             probatio.Optional(ATTR_DUE): probatio.Any(cv.date, cv.datetime),
             probatio.Optional(ATTR_REMOVE_DUE): cv.boolean,
@@ -74,11 +76,13 @@ TODO_SERVICE_UPDATE_STEP_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Required(ATTR_CHECKLIST_ITEM_ID): cv.string,
-            probatio.Required(ATTR_STATUS): probatio.In(
+            probatio.Optional(ATTR_NAME): probatio.All(cv.string, probatio.Length(min=1)),
+            probatio.Optional(ATTR_STATUS): probatio.In(
                 {TodoItemStatus.NEEDS_ACTION, TodoItemStatus.COMPLETED},
             ),
         }
     ),
+    cv.has_at_least_one_key(ATTR_NAME, ATTR_STATUS),
 )
 TODO_SERVICE_DELETE_STEP_SCHEMA = probatio.All(
     cv.make_entity_service_schema(

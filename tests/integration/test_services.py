@@ -3,6 +3,7 @@
 
 from unittest.mock import patch
 
+import probatio
 import pytest
 from requests.exceptions import HTTPError
 from requests_mock import Mocker
@@ -346,6 +347,137 @@ async def test_todo_services_ms365(
     assert "To Do was not found" in str(exc_info.value)
 
 
+@pytest.mark.parametrize("original_importance", ["high", "normal", "low"])
+@pytest.mark.parametrize("importance", ["high", "normal", "low"])
+@pytest.mark.parametrize("subject", [None, "Updated task"])
+async def test_update_todo_importance(
+    hass: HomeAssistant,
+    setup_update_integration,
+    requests_mock: Mocker,
+    original_importance,
+    importance,
+    subject,
+) -> None:
+    """Save any native importance value together with other edits through O365."""
+    requests_mock.get(
+        URL.TODO_GET_1.value,
+        json={"id": "list1task1", "title": "Original task", "importance": original_importance},
+    )
+    update = requests_mock.patch(URL.TODO_GET_1.value, json={})
+    data = {
+        "entity_id": "todo.test_todo_list_1",
+        "todo_id": "list1task1",
+        "importance": importance,
+    }
+    if subject is not None:
+        data["subject"] = subject
+    with patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh:
+        await hass.services.async_call(DOMAIN, "update_todo", data, blocking=True)
+
+    expected = {"importance": importance}
+    if subject is not None:
+        expected["title"] = subject
+    assert update.call_count == 1
+    assert update.last_request.json() == expected
+    mock_refresh.assert_awaited_once()
+
+
+@pytest.mark.parametrize("importance", ["high", "normal", "low"])
+async def test_update_todo_preserves_importance(
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker, importance
+) -> None:
+    """Omitting importance must not change any existing Graph importance value."""
+    requests_mock.get(
+        URL.TODO_GET_1.value,
+        json={"id": "list1task1", "title": "Original task", "importance": importance},
+    )
+    update = requests_mock.patch(URL.TODO_GET_1.value, json={})
+    with patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "subject": "Updated task",
+            },
+            blocking=True,
+        )
+    assert update.call_count == 1
+    assert update.last_request.json() == {"title": "Updated task"}
+
+
+async def test_update_todo_importance_failure(
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker
+) -> None:
+    """Report an unsuccessful SDK save instead of claiming success."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    with (
+        patch("O365.tasks.Task.save", return_value=False) as mock_save,
+        patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh,
+        pytest.raises(ServiceValidationError, match="could not be updated"),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "importance": "low",
+            },
+            blocking=True,
+        )
+    mock_save.assert_called_once()
+    mock_refresh.assert_not_awaited()
+
+
+async def test_update_todo_importance_requires_permission(
+    hass: HomeAssistant, setup_update_integration
+) -> None:
+    """Do not access Microsoft Graph without task write permission."""
+    with (
+        patch(
+            "custom_components.ms365_todo.integration.todo_integration.PERM_TASKS_READWRITE",
+            "todo.failed_perm",
+        ),
+        patch("O365.tasks.Folder.get_task") as mock_get,
+        pytest.raises(ServiceValidationError, match="Not authorised"),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "importance": "low",
+            },
+            blocking=True,
+        )
+    mock_get.assert_not_called()
+
+
+@pytest.mark.parametrize("importance", ["urgent", "", None, True, False])
+async def test_update_todo_invalid_importance(
+    hass: HomeAssistant, setup_update_integration, importance
+) -> None:
+    """Reject values outside the three native importance strings before fetching."""
+    with (
+        patch("O365.tasks.Folder.get_task") as mock_get,
+        pytest.raises(probatio.Invalid),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "importance": importance,
+            },
+            blocking=True,
+        )
+    mock_get.assert_not_called()
+
+
 async def test_todo_checklist_item_services_ms365(
     hass: HomeAssistant,
     setup_update_integration,
@@ -418,6 +550,115 @@ async def test_todo_checklist_item_services_ms365(
         )
     await hass.async_block_till_done()
     assert mock_delete.called
+
+
+@pytest.mark.parametrize("is_checked", [False, True])
+@pytest.mark.parametrize(
+    ("changes", "payload"),
+    [
+        ({"name": "Renamed step"}, {"displayName": "Renamed step"}),
+        (
+            {"name": "Renamed step", "status": "completed"},
+            {"displayName": "Renamed step", "isChecked": True},
+        ),
+        (
+            {"name": "Renamed step", "status": "needs_action"},
+            {"displayName": "Renamed step", "isChecked": False},
+        ),
+        ({"status": "completed"}, {"isChecked": True}),
+        ({"status": "needs_action"}, {"isChecked": False}),
+    ],
+)
+async def test_update_checklist_item_payload(
+    hass: HomeAssistant,
+    setup_update_integration,
+    requests_mock: Mocker,
+    changes,
+    payload,
+    is_checked,
+) -> None:
+    """Persist only requested checklist changes through Microsoft Graph."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    item = {
+        "id": "list1task1step1",
+        "displayName": "Original step",
+        "isChecked": is_checked,
+    }
+    requests_mock.get(URL.TODO_GET_CHECKLIST_ITEM_1.value, json=item)
+    update = requests_mock.patch(
+        URL.TODO_GET_CHECKLIST_ITEM_1.value, json={**item, **payload}
+    )
+
+    with patch(
+        "homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"
+    ) as mock_refresh:
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+
+    assert update.call_count == 1
+    assert update.last_request.json() == payload
+    mock_refresh.assert_awaited_once()
+
+
+@pytest.mark.parametrize(
+    "changes", [{}, {"name": ""}, {"name": None}, {"status": "invalid"}]
+)
+async def test_update_checklist_item_invalid_changes(
+    hass: HomeAssistant, setup_update_integration, changes
+) -> None:
+    """Reject missing changes, empty names, and invalid completion states."""
+    with pytest.raises(probatio.Invalid):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+
+
+@pytest.mark.parametrize("changes", [{"name": "Renamed step"}, {"status": "completed"}])
+async def test_update_checklist_item_failed_save(
+    hass: HomeAssistant,
+    setup_update_integration,
+    requests_mock: Mocker,
+    changes,
+) -> None:
+    """Report a failed Graph update without refreshing as if it succeeded."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    mock_call(requests_mock, URL.TODO_GET_CHECKLIST_ITEM_1, "todo_get_checklist_item_1")
+    with (
+        patch("O365.connection.Connection.patch", return_value=False),
+        patch(
+            "homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"
+        ) as mock_refresh,
+        pytest.raises(ServiceValidationError, match="could not be updated"),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo_checklist_item",
+            {
+                "entity_id": "todo.test_todo_list_1",
+                "todo_id": "list1task1",
+                "checklist_item_id": "list1task1step1",
+                **changes,
+            },
+            blocking=True,
+        )
+    mock_refresh.assert_not_awaited()
 
 
 async def test_failed_permission(
