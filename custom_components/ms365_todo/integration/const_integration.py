@@ -40,8 +40,6 @@ CONF_TODO_LIST_ID = "todo_list_id"
 CONF_TRACK = "track"
 CONF_TRACK_NEW = "track_new"
 
-ENTITY_ID_FORMAT_TODO = "todo.{}"
-
 EVENT_COMPLETED_PLANNER_TASK = "completed_planner_task"
 EVENT_COMPLETED_TODO = "completed_todo"
 EVENT_DELETE_TODO = "delete_todo"

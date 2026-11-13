@@ -168,11 +168,11 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         name,
         yaml_todo_list,
         entry: MS365ConfigEntry,
-        entity_id,
+        entity_key,
         unique_id,
     ) -> None:
         """Initialise the To Do List."""
-        super().__init__(coordinator, entry, name, entity_id, unique_id)
+        super().__init__(coordinator, entry, name, entity_key, unique_id)
         self.todolist = ms365_todo_folder
         self._show_completed = yaml_todo_list.get(CONF_SHOW_COMPLETED)
 

@@ -20,7 +20,6 @@ from ..const import (
     CONF_ENTITY_NAME,
     CONF_ENTITY_TYPE,
 )
-from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
     CONF_MAX_TODOS,
@@ -30,7 +29,6 @@ from .const_integration import (
     CONF_TODO_LIST,
     CONF_TODO_LIST_ID,
     CONF_TRACK,
-    ENTITY_ID_FORMAT_TODO,
     # PLANNER_NAME,
     # PLANNER_UNIQUE_ID,
     # TODO_PLANNER,
@@ -112,9 +110,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 )
                 unique_id = f"{self._entity_name}_{ms365_todo_list_id}"
                 new_key = {
-                    CONF_ENTITY_KEY: build_entity_id(
-                        self.hass, ENTITY_ID_FORMAT_TODO, name
-                    ),
+                    CONF_ENTITY_KEY: name,
                     CONF_UNIQUE_ID: unique_id,
                     CONF_MS365_TODO_FOLDER: ms365_todo,
                     CONF_NAME: name,
@@ -145,7 +141,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
     #     name = f"{self._entity_name} {PLANNER_NAME}"
     #     unique_id = f"{self._entity_name}_{PLANNER_UNIQUE_ID}"
     #     new_key = {
-    #         CONF_ENTITY_KEY: build_entity_id(self.hass, ENTITY_ID_FORMAT_TODO, name),
+    #         CONF_ENTITY_KEY: name,
     #         CONF_UNIQUE_ID: unique_id,
     #         CONF_NAME: name,
     #         CONF_PLANNER: planner,
