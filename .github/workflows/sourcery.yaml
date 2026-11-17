@@ -1,4 +1,4 @@
-name: Sourcery - Push
+name: Sourcery
 
 on:
   push:
