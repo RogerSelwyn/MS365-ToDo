@@ -1,20 +1,18 @@
-name: Sourcery
+name: Sourcery - Push
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches: [main]
 
 jobs:
   review-with-sourcery:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.15"
+          python-version: '3.10'
 
       - uses: sourcery-ai/action@v1
         with:
