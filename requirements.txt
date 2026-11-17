@@ -1,3 +1,3 @@
-O365>=2.1.10
+O365>=2.1.11
 portalocker>=3.2.0
 oauthlib
