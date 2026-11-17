@@ -3,7 +3,6 @@
 import os
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import async_generate_entity_id
 
 from ..const import (
     AUTH_ERROR_ENVIRONMENT_VARIABLE_EMPTY,
@@ -16,6 +15,7 @@ from ..const import (
     CONF_ENVIRONMENT_SECRET,
     CONF_TENANT_ID,
     DEFAULT_TENANT_ID,
+    PERSONAL_ACCOUNT_TENANTID,
     CountryOptions,
 )
 
@@ -27,15 +27,6 @@ def add_attribute_to_item(item, user_input, attribute):
         item[attribute] = value
     elif attribute in item:
         del item[attribute]
-
-
-def build_entity_id(hass: HomeAssistant, entity_id_format, name):
-    """Build an entity ID."""
-    return async_generate_entity_id(
-        entity_id_format,
-        name,
-        hass=hass,
-    )
 
 
 def get_country(entry_data):
@@ -73,3 +64,15 @@ def get_credentials(config):
         else:
             error = AUTH_ERROR_ENVIRONMENT_VARIABLE_INVALID
     return (config.get(CONF_CLIENT_ID), client_secret), error
+
+
+async def async_check_personal_account(hass: HomeAssistant, coordinator):
+    """Check if account is a personal account."""
+    account = await hass.async_add_executor_job(
+        coordinator.account.connection.token_backend.get_account
+    )
+
+    tenant_id = account["home_account_id"].removeprefix(
+        f"{account['local_account_id']}."
+    )
+    return tenant_id == PERSONAL_ACCOUNT_TENANTID

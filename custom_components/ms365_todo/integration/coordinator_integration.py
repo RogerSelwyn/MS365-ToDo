@@ -20,7 +20,6 @@ from ..const import (
     CONF_ENTITY_NAME,
     CONF_ENTITY_TYPE,
 )
-from ..helpers.utils import build_entity_id
 from .const_integration import (
     ATTR_TODOS,
     CONF_MAX_TODOS,
@@ -30,7 +29,6 @@ from .const_integration import (
     CONF_TODO_LIST,
     CONF_TODO_LIST_ID,
     CONF_TRACK,
-    ENTITY_ID_FORMAT_TODO,
     # PLANNER_NAME,
     # PLANNER_UNIQUE_ID,
     # TODO_PLANNER,
@@ -64,7 +62,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
             update_interval=timedelta(seconds=30),
         )
         self._entry = entry
-        self._account = account
+        self.account = account
         self._entity_name = entry.data[CONF_ENTITY_NAME]
         self._max_todos = entry.options.get(CONF_MAX_TODOS, CONF_MAX_TODOS_DEFAULT)
         self.keys = []
@@ -80,7 +78,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_todo_sensors(self):
         deleted_todo_lists = await async_scan_for_todo_lists(
-            self.hass, self._account, self._entry
+            self.hass, self.account, self._entry
         )
         await self._async_delete_todo_list_entities(deleted_todo_lists)
 
@@ -94,7 +92,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     async def _async_todo_entities(self, ms365_todo_lists):
         keys = []
-        ms365_todos = await self.hass.async_add_executor_job(self._account.tasks)
+        ms365_todos = await self.hass.async_add_executor_job(self.account.tasks)
         for ms365_todo_list in ms365_todo_lists:
             track = ms365_todo_list.get(CONF_TRACK)
             if not track:
@@ -112,9 +110,7 @@ class MS365SensorCordinator(DataUpdateCoordinator):
                 )
                 unique_id = f"{self._entity_name}_{ms365_todo_list_id}"
                 new_key = {
-                    CONF_ENTITY_KEY: build_entity_id(
-                        self.hass, ENTITY_ID_FORMAT_TODO, name
-                    ),
+                    CONF_ENTITY_KEY: name,
                     CONF_UNIQUE_ID: unique_id,
                     CONF_MS365_TODO_FOLDER: ms365_todo,
                     CONF_NAME: name,
@@ -141,11 +137,11 @@ class MS365SensorCordinator(DataUpdateCoordinator):
 
     # async def _async_planner_entities(self):
     #     keys = []
-    #     planner = await self.hass.async_add_executor_job(self._account.planner)
+    #     planner = await self.hass.async_add_executor_job(self.account.planner)
     #     name = f"{self._entity_name} {PLANNER_NAME}"
     #     unique_id = f"{self._entity_name}_{PLANNER_UNIQUE_ID}"
     #     new_key = {
-    #         CONF_ENTITY_KEY: build_entity_id(self.hass, ENTITY_ID_FORMAT_TODO, name),
+    #         CONF_ENTITY_KEY: name,
     #         CONF_UNIQUE_ID: unique_id,
     #         CONF_NAME: name,
     #         CONF_PLANNER: planner,

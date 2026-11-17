@@ -2,7 +2,9 @@ name: "Lint"
 
 on:
   push:
+    branches: ["main"]
   pull_request:
+    branches: ["main"]
   schedule:
     - cron: "0 0 * * *"
 
@@ -18,7 +20,6 @@ jobs:
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
       - name: Install Python 3.14
         run: uv python install 3.14
-
 
       - name: "Create venv"
         run: uv venv

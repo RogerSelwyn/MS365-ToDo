@@ -8,9 +8,7 @@ from homeassistant.const import CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
-from O365.utils.query import (  # pylint: disable=no-name-in-module, import-error
-    QueryBuilder,
-)
+from O365.utils.query import QueryBuilder  # pylint: disable=no-name-in-module, import-error
 
 from ..classes.config_entry import MS365ConfigEntry
 from ..classes.entity import MS365Entity
@@ -72,11 +70,11 @@ class MS365Planner(MS365Entity, TodoListEntity):  # pylint: disable=abstract-met
         coordinator,
         name,
         entry: MS365ConfigEntry,
-        entity_id,
+        entity_key,
         unique_id,
     ) -> None:
         """Initialise the Planner List."""
-        super().__init__(coordinator, entry, name, entity_id, unique_id)
+        super().__init__(coordinator, entry, name, entity_key, unique_id)
 
         self.todo_last_created = dt_util.utcnow() - dt.timedelta(minutes=5)
         self.todo_last_completed = dt_util.utcnow() - dt.timedelta(minutes=5)
