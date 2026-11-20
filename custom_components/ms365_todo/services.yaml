@@ -13,6 +13,14 @@ new_todo:
       example: Walk to the post box and collect the mail
       selector:
         text:
+    importance:
+      example: high
+      selector:
+        select:
+          options:
+            - low
+            - normal
+            - high
     due:
       example: '"2025-01-01"'
       selector:
@@ -41,6 +49,14 @@ update_todo:
       example: Walk to the post box and collect the mail
       selector:
         text:
+    importance:
+      example: high
+      selector:
+        select:
+          options:
+            - low
+            - normal
+            - high
     due:
       example: '"2025-01-01"'
       selector:
@@ -122,8 +138,11 @@ update_todo_checklist_item:
       required: true
       selector:
         text:
+    name:
+      example: Go to the main post office
+      selector:
+        text:
     status:
-      required: true
       selector:
         select:
           translation_key: status
