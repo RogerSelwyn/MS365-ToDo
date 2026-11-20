@@ -348,6 +348,47 @@ async def test_todo_services_ms365(
     assert "To Do was not found" in str(exc_info.value)
 
 
+@pytest.mark.parametrize("importance", [None, "low", "normal", "high"])
+async def test_new_todo_importance(
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker, importance
+) -> None:
+    """Create tasks with native importance, omitting it when not supplied."""
+    create = requests_mock.post(URL.TODO_SAVE.value, json={"id": "new-task"})
+    data = {"entity_id": "todo.test_todo_list_1", "subject": "New task"}
+    if importance is not None:
+        data["importance"] = importance
+    with patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh"):
+        await hass.services.async_call(DOMAIN, "new_todo", data, blocking=True)
+
+    assert create.call_count == 1
+    payload = create.last_request.json()
+    assert payload["title"] == "New task"
+    if importance is None:
+        assert "importance" not in payload
+    else:
+        assert payload["importance"] == importance
+
+
+@pytest.mark.parametrize("changes", [{"subject": "Updated task"}, {"importance": "low"}])
+async def test_update_todo_failed_save(
+    hass: HomeAssistant, setup_update_integration, requests_mock: Mocker, changes
+) -> None:
+    """Reject failed updates with or without an importance change."""
+    mock_call(requests_mock, URL.TODO_GET_1, "todo_get_1")
+    with (
+        patch("O365.tasks.Task.save", return_value=False),
+        patch("homeassistant.helpers.update_coordinator.DataUpdateCoordinator.async_refresh") as mock_refresh,
+        pytest.raises(ServiceValidationError, match="could not be updated"),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "update_todo",
+            {"entity_id": "todo.test_todo_list_1", "todo_id": "list1task1", **changes},
+            blocking=True,
+        )
+    mock_refresh.assert_not_awaited()
+
+
 @pytest.mark.parametrize("original_importance", ["high", "normal", "low"])
 @pytest.mark.parametrize("importance", ["high", "normal", "low"])
 @pytest.mark.parametrize("subject", [None, "Updated task"])

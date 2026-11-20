@@ -10,6 +10,7 @@ The intention is to phase out the MS365 services once the core services provide 
 
 ### ms365_todo.new_todo
 Create a new To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
+The optional `importance` field accepts `low`, `normal`, or `high`. Omit it to use Microsoft To Do's default importance.
 ### ms365_todo.update_todo
 Update a To Do task - All parameters are shown in the available parameter list on the Developer Tools/Services tab.
 The optional `importance` field accepts `low`, `normal`, or `high`. The value `high` marks the task as Important in Microsoft To Do. Omitting `importance` preserves its current value. Updating requires the integration's update option and Microsoft Tasks.ReadWrite permission.
