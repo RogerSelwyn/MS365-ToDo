@@ -39,8 +39,8 @@ from .const_integration import (
     ATTR_DESCRIPTION,
     ATTR_DUE,
     ATTR_ID,
-    ATTR_IS_CHECKED,
     ATTR_IMPORTANCE,
+    ATTR_IS_CHECKED,
     ATTR_IS_RECURRING,
     ATTR_NAME,
     ATTR_OVERDUE_TODOS,
@@ -329,13 +329,15 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         )
 
     async def async_new_todo(
-        self, subject, description=None, due=None, reminder=None
+        self, subject, description=None, due=None, reminder=None, importance=None
     ) -> ServiceResponse:
         """Create a new task for this task list."""
         self._validate_task_permissions()
 
         new_ms365_todo = await self.hass.async_add_executor_job(self.todolist.new_task)
-        await self._async_save_todo(new_ms365_todo, subject, description, due, reminder)
+        await self._async_save_todo(
+            new_ms365_todo, subject, description, due, reminder, importance=importance
+        )
         self._raise_event(
             EVENT_NEW_TODO, new_ms365_todo.task_id, new_ms365_todo.subject
         )
@@ -411,14 +413,15 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             remove_due,
             remove_reminder,
         )
-        if importance is not None and not response:
+
+        if not response:
             raise ServiceValidationError(
                 translation_domain=DOMAIN,
                 translation_key="todo_not_updated",
             )
-        if response:
-            self._raise_event(EVENT_UPDATE_TODO, todo_id)
-            await self.coordinator.async_refresh()
+
+        self._raise_event(EVENT_UPDATE_TODO, todo_id)
+        await self.coordinator.async_refresh()
         return response
 
     async def async_delete_todo_items(self, uids: list[str]) -> None:
@@ -514,6 +517,7 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
         hatodo=False,
         remove_due=None,
         remove_reminder=None,
+        importance=None,
     ):
         # sourcery skip: raise-from-previous-error
         if subject or hatodo:
@@ -530,6 +534,8 @@ class MS365TodoList(MS365Entity, TodoListEntity):  # pylint: disable=abstract-me
             ms365_todo.reminder = self._add_timezone(reminder)
         if remove_reminder:
             ms365_todo.reminder = None
+        if importance:
+            ms365_todo.importance = importance
 
         return await self.hass.async_add_executor_job(ms365_todo.save)
 

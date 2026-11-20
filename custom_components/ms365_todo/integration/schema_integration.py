@@ -5,6 +5,7 @@ import probatio
 from homeassistant.components.todo import TodoItemStatus
 from homeassistant.const import CONF_NAME
 import homeassistant.helpers.config_validation as cv
+from O365.utils import ImportanceLevel
 
 from ..const import CONF_ENABLE_UPDATE
 from .const_integration import (
@@ -34,6 +35,7 @@ CONFIG_SCHEMA_INTEGRATION = {
 TODO_SERVICE_NEW_SCHEMA = {
     probatio.Required(ATTR_SUBJECT): cv.string,
     probatio.Optional(ATTR_DESCRIPTION): cv.string,
+    probatio.Optional(ATTR_IMPORTANCE): ImportanceLevel,
     probatio.Optional(ATTR_DUE): probatio.Any(cv.date, cv.datetime),
     probatio.Optional(ATTR_REMINDER): probatio.Any(cv.date, cv.datetime),
 }
@@ -43,8 +45,8 @@ TODO_SERVICE_UPDATE_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Optional(ATTR_SUBJECT): cv.string,
-            probatio.Optional(ATTR_IMPORTANCE): probatio.In({"low", "normal", "high"}),
             probatio.Optional(ATTR_DESCRIPTION): cv.string,
+            probatio.Optional(ATTR_IMPORTANCE): ImportanceLevel,
             probatio.Optional(ATTR_DUE): probatio.Any(cv.date, cv.datetime),
             probatio.Optional(ATTR_REMOVE_DUE): cv.boolean,
             probatio.Optional(ATTR_REMINDER): probatio.Any(cv.date, cv.datetime),
@@ -76,7 +78,9 @@ TODO_SERVICE_UPDATE_STEP_SCHEMA = probatio.All(
         {
             probatio.Required(ATTR_TODO_ID): cv.string,
             probatio.Required(ATTR_CHECKLIST_ITEM_ID): cv.string,
-            probatio.Optional(ATTR_NAME): probatio.All(cv.string, probatio.Length(min=1)),
+            probatio.Optional(ATTR_NAME): probatio.All(
+                cv.string, probatio.Length(min=1)
+            ),
             probatio.Optional(ATTR_STATUS): probatio.In(
                 {TodoItemStatus.NEEDS_ACTION, TodoItemStatus.COMPLETED},
             ),
