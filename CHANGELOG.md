@@ -1,5 +1,40 @@
 # Changelog
 
+## v1.15.0 (2026/11/21)
+### 🧰 Maintenance
+- [Minor code tidy up](https://github.com/RogerSelwyn/MS365-ToDo/commit/7972088c1da0b209e279eed2b14c1d789ffde2ec) - @RogerSelwyn
+- [Update workflows](https://github.com/RogerSelwyn/MS365-ToDo/commit/d88c846605d2cb464d3279d9f29890a07661b332) - @RogerSelwyn
+- [Fix workflow](https://github.com/RogerSelwyn/MS365-ToDo/commit/166ab9e9570138a30ff425a7f21ded42eb74bd9f) - @RogerSelwyn
+- [Use central renovate config](https://github.com/RogerSelwyn/MS365-ToDo/commit/1ad9c10fed0145956b4c19a5b57d11188c3f9f04) - @RogerSelwyn
+- [Add support for integration specific migrations](https://github.com/RogerSelwyn/MS365-ToDo/commit/cbc292ade7d8ae6149ddd0fc47bc6ab2ce77687d) - @RogerSelwyn
+- [Update Sourcery workflow for version changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/82a4c9b27e81dabef28413b39a993e74d50e17ea) - @RogerSelwyn
+- [Update Python version in Sourcery workflow](https://github.com/RogerSelwyn/MS365-ToDo/commit/d20dd18e385fd78e2c052615904ed2c3cc019cb0) - @RogerSelwyn
+- [Rename Sourcery workflow for clarity](https://github.com/RogerSelwyn/MS365-ToDo/commit/70381ceb44108669c16561afe5d2dde04feb0409) - @RogerSelwyn
+- [Update to include importance on new todo, plus other changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/4b116f5cdf7eb9f340af7f729bb379810e40f84c) - @RogerSelwyn
+
+### ⬆️ Dependencies
+- [update dependency ruff to v0.17.5 (#200)](https://github.com/RogerSelwyn/MS365-ToDo/commit/1b5143cab0e84ed9b90955235a86ba07eedb26c4) - @renovate[bot]
+- [update actions/checkout action to v7](https://github.com/RogerSelwyn/MS365-ToDo/commit/626cb9e34adb3eff8f1fb3bd8fa16b27b59a9889) - @renovate[bot]
+- [update actions/setup-python action to v7](https://github.com/RogerSelwyn/MS365-ToDo/commit/c98e796f4193470a2415eb74e20169c00a72b4b4) - @renovate[bot]
+- [update dependency ruff to v0.17.6 (#204)](https://github.com/RogerSelwyn/MS365-ToDo/commit/64bb8b782643ca3e6f3deae7aba14677c9652ad5) - @renovate[bot]
+- [update astral-sh/setup-uv action to v10.4.0 (#205)](https://github.com/RogerSelwyn/MS365-ToDo/commit/f7bf4750c7be694332604e9035d8c53f0a053981) - @renovate[bot]
+
+### ✅ Test
+- [Update GitHub Actions to trigger on pull requests](https://github.com/RogerSelwyn/MS365-ToDo/commit/a265395aac709eed0c333cd7bcb8096d193b79fc) - @RogerSelwyn
+
+### 🔖 Release
+- [Release v1.15.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/ecbe270fdc74476ce60d39e3500d37debdefc7a0) - @RogerSelwyn
+
+### Other
+- [Address review: preserve native importance and use SDK setters](https://github.com/RogerSelwyn/MS365-ToDo/commit/ca079b3e164a45cdce18827e457bbbdd06ee0c10) - @snfx-johaver
+- [Require released O365 setters from 2.1.11](https://github.com/RogerSelwyn/MS365-ToDo/commit/37a3591131d2d2de0064beae0dd8b97888695336) - @snfx-johaver
+- [Allow running integration tests manually](https://github.com/RogerSelwyn/MS365-ToDo/commit/f8248ccb4767f09b0678e02944d6244188eaee96) - @snfx-johaver
+- [Merge upstream main and preserve released SDK minimum](https://github.com/RogerSelwyn/MS365-ToDo/commit/847c46dabd89f58472311354150c5a50bb9ec3df) - @snfx-johaver
+- [Cover creation importance and failed task updates](https://github.com/RogerSelwyn/MS365-ToDo/commit/efac8fed3f4aa47758aaca95c81f4a983aa6bc3a) - @snfx-johaver
+
+
+
+
 ## v1.14.2 (2026/11/10)
 ### 🐛 Fixes
 - [Add missing translations](https://github.com/RogerSelwyn/MS365-ToDo/commit/de364794f045cc52c5350cd14944247b997d6b8d) - @RogerSelwyn
