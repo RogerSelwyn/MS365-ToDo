@@ -1,6 +1,9 @@
 # Changelog
 
 ## v1.15.0 (2026/11/21)
+### ✨ Enhancements
+- [Add checklist item renaming and native task importance⁠](https://github.com/RogerSelwyn/MS365-ToDo/pull/199) - @snfx-johaver
+
 ### 🧰 Maintenance
 - [Minor code tidy up](https://github.com/RogerSelwyn/MS365-ToDo/commit/7972088c1da0b209e279eed2b14c1d789ffde2ec) - @RogerSelwyn
 - [Update workflows](https://github.com/RogerSelwyn/MS365-ToDo/commit/d88c846605d2cb464d3279d9f29890a07661b332) - @RogerSelwyn
@@ -10,7 +13,7 @@
 - [Update Sourcery workflow for version changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/82a4c9b27e81dabef28413b39a993e74d50e17ea) - @RogerSelwyn
 - [Update Python version in Sourcery workflow](https://github.com/RogerSelwyn/MS365-ToDo/commit/d20dd18e385fd78e2c052615904ed2c3cc019cb0) - @RogerSelwyn
 - [Rename Sourcery workflow for clarity](https://github.com/RogerSelwyn/MS365-ToDo/commit/70381ceb44108669c16561afe5d2dde04feb0409) - @RogerSelwyn
-- [Update to include importance on new todo, plus other changes](https://github.com/RogerSelwyn/MS365-ToDo/commit/4b116f5cdf7eb9f340af7f729bb379810e40f84c) - @RogerSelwyn
+
 
 ### ⬆️ Dependencies
 - [update dependency ruff to v0.17.5 (#200)](https://github.com/RogerSelwyn/MS365-ToDo/commit/1b5143cab0e84ed9b90955235a86ba07eedb26c4) - @renovate[bot]
@@ -24,13 +27,6 @@
 
 ### 🔖 Release
 - [Release v1.15.0](https://github.com/RogerSelwyn/MS365-ToDo/commit/ecbe270fdc74476ce60d39e3500d37debdefc7a0) - @RogerSelwyn
-
-### Other
-- [Address review: preserve native importance and use SDK setters](https://github.com/RogerSelwyn/MS365-ToDo/commit/ca079b3e164a45cdce18827e457bbbdd06ee0c10) - @snfx-johaver
-- [Require released O365 setters from 2.1.11](https://github.com/RogerSelwyn/MS365-ToDo/commit/37a3591131d2d2de0064beae0dd8b97888695336) - @snfx-johaver
-- [Allow running integration tests manually](https://github.com/RogerSelwyn/MS365-ToDo/commit/f8248ccb4767f09b0678e02944d6244188eaee96) - @snfx-johaver
-- [Merge upstream main and preserve released SDK minimum](https://github.com/RogerSelwyn/MS365-ToDo/commit/847c46dabd89f58472311354150c5a50bb9ec3df) - @snfx-johaver
-- [Cover creation importance and failed task updates](https://github.com/RogerSelwyn/MS365-ToDo/commit/efac8fed3f4aa47758aaca95c81f4a983aa6bc3a) - @snfx-johaver
 
 
 
